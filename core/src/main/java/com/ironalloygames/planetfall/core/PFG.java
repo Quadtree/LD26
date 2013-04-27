@@ -17,11 +17,14 @@ import playn.core.ImmediateLayer.Renderer;
 import playn.core.Keyboard.Event;
 import playn.core.Keyboard.Listener;
 import playn.core.Keyboard.TypedEvent;
+import playn.core.Mouse.ButtonEvent;
+import playn.core.Mouse.MotionEvent;
+import playn.core.Mouse.WheelEvent;
 import playn.core.PlayN;
 import playn.core.Surface;
 import playn.core.TextFormat;
 
-public class PFG extends Game.Default implements Renderer, Listener {
+public class PFG extends Game.Default implements Renderer, Listener, playn.core.Mouse.Listener {
 	private static final int CHAR_WIDTH = 13;
 	private static final int CHAR_HEIGHT = 21;
 	CanvasImage img;
@@ -87,6 +90,7 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		planetLevel.actors.add(pc);
 		
 		keyboard().setListener(this);
+		mouse().setListener(this);
 	}
 	
 	int lastSecond = 0;
@@ -99,16 +103,17 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		camY = pc.y;
 		
 		while(!pc.canAct()){
-			
-			for(int x=0;x<renderBuffer.length;++x){
-				for(int y=0;y<renderBuffer[0].length;++y){
-					renderBufferColor[x][y] = 0;
-				}
-			}
-			
 			currentLevel.update();
 			tick++;
 		}
+		
+		for(int x=0;x<renderBuffer.length;++x){
+			for(int y=0;y<renderBuffer[0].length;++y){
+				renderBufferColor[x][y] = 0;
+			}
+		}
+		
+		currentLevel.render();
 		
 		if(movX != 0 || movY != 0) pc.move(movX, movY);
 		
@@ -123,6 +128,10 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		}
 		
 		setTextAt(0,1, "T" + tick, Color.rgb(255, 255, 255));
+		
+		setCharAtReal(mouseRealTileX, mouseRealTileY, '\0', Color.rgb(255, 255, 255));
+		
+		setTextAt(8,0, currentLevel.getDesc(mouseRealTileX, mouseRealTileY), Color.rgb(255, 255, 255));
 	}
 	
 	public void setCharAtReal(int x, int y, char text, int color){
@@ -134,7 +143,7 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		int screenTileY = y - camY + screenTileHeight / 2;
 		
 		if(screenTileX >= 0 && screenTileY >= 0 && screenTileX < screenTileWidth && screenTileY < screenTileHeight){
-			renderBuffer[screenTileX][screenTileY] = text;
+			if(text != '\0') renderBuffer[screenTileX][screenTileY] = text;
 			renderBufferColor[screenTileX][screenTileY] = color;
 			renderBufferChanged = true;
 		}
@@ -197,5 +206,38 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		if(event.key() == Key.D) movX = 0;
 		if(event.key() == Key.W) movY = 0;
 		if(event.key() == Key.S) movY = 0;
+	}
+	
+	public int mouseRealTileX, mouseRealTileY;
+
+	@Override
+	public void onMouseDown(ButtonEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseUp(ButtonEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseMove(MotionEvent event) {
+		mouseRealTileX = (int)event.x() / CHAR_WIDTH - screenTileWidth / 2 + camX;
+		mouseRealTileY = (int)event.y() / CHAR_HEIGHT - screenTileHeight / 2 + camY;
+		
+		//log().debug(mouseRealTileX + " " + mouseRealTileY);
+		//log().debug(pc.x + " " + pc.y);
+		
+		//renderBufferColor[msotX][msotY] = Color.rgb(255, 255, 255);
+		
+		
+	}
+
+	@Override
+	public void onMouseWheelScroll(WheelEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

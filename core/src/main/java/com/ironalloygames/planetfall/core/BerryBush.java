@@ -14,7 +14,7 @@ public abstract class BerryBush extends Actor {
 	}
 	
 	@Override
-	public void update() {
+	public void render() {
 		PFG.s.setCharAtReal(x, y, '%', getColor());
 		super.update();
 	}

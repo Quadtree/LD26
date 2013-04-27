@@ -5,7 +5,6 @@ public class Actor {
 	
 	public Level curLevel;
 	
-	public void update(){
-		
-	}
+	public void update(){}
+	public void render(){}
 }

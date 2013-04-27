@@ -24,7 +24,7 @@ public class Level {
 		
 	}
 	
-	public void update(){
+	public void render(){
 		
 		String chars = ".,'`:;*#";
 		
@@ -49,6 +49,12 @@ public class Level {
 			}
 		}
 		
+		for(Actor a : actors){
+			a.render();
+		}
+	}
+	
+	public void update(){
 		for(Actor a : actors){
 			a.update();
 		}
@@ -76,5 +82,11 @@ public class Level {
 		}
 		
 		return true;
+	}
+	
+	public String getDesc(int x, int y){
+		if(!hasLOS(PFG.s.pc.x, PFG.s.pc.y, x, y)) return "???";
+		
+		return "!";
 	}
 }

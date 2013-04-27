@@ -11,7 +11,7 @@ public class Wood extends Actor {
 	}
 	
 	@Override
-	public void update() {
+	public void render() {
 		PFG.s.setCharAtReal(x, y, 'w', Color.rgb(255, 128, 0));
 		
 		super.update();
