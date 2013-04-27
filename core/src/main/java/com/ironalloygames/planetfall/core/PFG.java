@@ -79,10 +79,22 @@ public class PFG extends Game.Default {
 	}
 	
 	private void render(){
-		for(int x=0;x<screenTileWidth;++x){
-			for(int y=0;y<screenTileHeight;++y){
-				img.canvas().setFillColor(renderBufferColor[x][y]);
-				img.canvas().fillText(graphics().layoutText("" + renderBuffer[x][y], new TextFormat().withFont(font)), x*CHAR_WIDTH, y*CHAR_HEIGHT);
+		int currentColor;
+		int lastFlushX = 0;
+		String currentString;
+		for(int y=0;y<screenTileHeight;++y){
+			currentColor = -1;
+			currentString = "";
+			for(int x=0;x<screenTileWidth;++x){
+				if(renderBufferColor[x][y] != currentColor || x == screenTileWidth - 1){
+					img.canvas().setFillColor(currentColor);
+					img.canvas().fillText(graphics().layoutText(currentString, new TextFormat().withFont(font)), lastFlushX*CHAR_WIDTH, y*CHAR_HEIGHT);
+					currentString = "";
+					currentColor = renderBufferColor[x][y];
+					lastFlushX = x;
+				}
+				
+				currentString += renderBuffer[x][y];
 			}
 		}
 	}
