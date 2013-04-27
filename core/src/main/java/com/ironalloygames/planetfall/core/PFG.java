@@ -70,8 +70,14 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		planetLevel = new PlanetLevel();
 		
 		pc = new PC();
-		pc.x = PlanetLevel.MAP_SIZE / 2;
-		pc.y = PlanetLevel.MAP_SIZE / 2;
+		pc.x = r.nextInt(PlanetLevel.MAP_WIDTH);
+		pc.y = r.nextInt(PlanetLevel.MAP_WIDTH);
+		
+		while(!planetLevel.isPassable(pc.x, pc.y)){
+			pc.x = r.nextInt(PlanetLevel.MAP_WIDTH);
+			pc.y = r.nextInt(PlanetLevel.MAP_WIDTH);
+		}
+		
 		pc.curLevel = planetLevel;
 		
 		planetLevel.actors.add(pc);

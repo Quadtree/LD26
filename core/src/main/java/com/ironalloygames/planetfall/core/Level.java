@@ -26,7 +26,7 @@ public class Level {
 	
 	public void update(){
 		
-		String chars = ".,'`:;%#";
+		String chars = ".,'`:;*#";
 		
 		for(int x=0;x<map.length;x++){
 			if(Math.abs(PFG.s.pc.x - x) > 30) continue;
@@ -56,12 +56,16 @@ public class Level {
 	}
 	
 	public boolean isPassable(int x, int y){
+		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return false;
 		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal();
 	}
 	
 	public boolean hasLOS(int sx, int sy, int ex, int ey){
 		float curX = sx, curY = sy;
 		float dist = (float)Math.sqrt(Math.pow(sx - ex, 2) + Math.pow(sy - ey, 2));
+		
+		//if(dist > 7) return false;
+		
 		float mx = (ex - sx) / dist / 2;
 		float my = (ey - sy) / dist / 2;
 		
