@@ -1,6 +1,9 @@
 package com.ironalloygames.planetfall.core;
 
 import static playn.core.PlayN.*;
+
+import java.util.HashMap;
+
 import playn.core.CanvasImage;
 import playn.core.Color;
 import playn.core.Font;
@@ -8,10 +11,12 @@ import playn.core.Font.Style;
 import playn.core.Game;
 import playn.core.Image;
 import playn.core.ImageLayer;
+import playn.core.ImmediateLayer.Renderer;
 import playn.core.PlayN;
+import playn.core.Surface;
 import playn.core.TextFormat;
 
-public class PFG extends Game.Default {
+public class PFG extends Game.Default implements Renderer {
 	private static final int CHAR_WIDTH = 13;
 	private static final int CHAR_HEIGHT = 21;
 	CanvasImage img;
@@ -39,9 +44,7 @@ public class PFG extends Game.Default {
 		renderBuffer = new char[screenTileWidth][screenTileHeight];
 		renderBufferColor = new int[screenTileWidth][screenTileHeight];
 		
-		img = graphics().createImage(graphics().width(), graphics().height());
-		imgLayer = graphics().createImageLayer(img);
-		graphics().rootLayer().add(imgLayer);
+		graphics().rootLayer().add(graphics().createImmediateLayer(this));
 		
 		font = graphics().createFont("Mono", Style.BOLD, 20);
 	}
@@ -52,22 +55,7 @@ public class PFG extends Game.Default {
 
 	@Override
 	public void update(int delta) {
-		//img.canvas().setFillColor(Color.rgb(255, 255, 255));
-		img.canvas().clear();
-		
-		//img.canvas().setStrokeColor(Color.rgb(255, 0, 0));
-		//img.canvas().setFillColor(Color.rgb(255, 0, 0));
-		//img.canvas().drawLine(50, 50, 150, 150);
-		
-		//img.canvas().fillText(graphics().layoutText("ABCDEFG", new TextFormat().withFont(font)), 0, 0);
-		
-		setTextAt(10,20, "Test", Color.rgb(0, 255, 0));
-		setTextAt(0,0, "FPS: " + fps, Color.rgb(0, 255, 0));
-		
-		if(renderBufferChanged){
-			render();
-			renderBufferChanged = false;
-		}
+		setTextAt(0,0,"FPS " + fps, Color.rgb(0, 0, 255));
 		
 		framesThisSecond++;
 		
@@ -75,27 +63,6 @@ public class PFG extends Game.Default {
 			lastSecond = PlayN.tick() / 1000;
 			fps = framesThisSecond;
 			framesThisSecond = 0;
-		}
-	}
-	
-	private void render(){
-		int currentColor;
-		int lastFlushX = 0;
-		String currentString;
-		for(int y=0;y<screenTileHeight;++y){
-			currentColor = -1;
-			currentString = "";
-			for(int x=0;x<screenTileWidth;++x){
-				if(renderBufferColor[x][y] != currentColor || x == screenTileWidth - 1){
-					img.canvas().setFillColor(currentColor);
-					img.canvas().fillText(graphics().layoutText(currentString, new TextFormat().withFont(font)), lastFlushX*CHAR_WIDTH, y*CHAR_HEIGHT);
-					currentString = "";
-					currentColor = renderBufferColor[x][y];
-					lastFlushX = x;
-				}
-				
-				currentString += renderBuffer[x][y];
-			}
 		}
 	}
 	
@@ -117,5 +84,24 @@ public class PFG extends Game.Default {
 
 	@Override
 	public void paint(float alpha) {
+	}
+	
+	HashMap<Character, Image> glyphs = new HashMap<Character, Image>();;
+
+	@Override
+	public void render(Surface surface) {
+		for(int y=0;y<screenTileHeight;++y){
+			for(int x=0;x<screenTileWidth;++x){
+				if(!glyphs.containsKey(renderBuffer[x][y])){
+					CanvasImage ci = graphics().createImage(CHAR_WIDTH, CHAR_HEIGHT);
+					ci.canvas().setFillColor(Color.rgb(255, 255, 255));
+					ci.canvas().fillText(graphics().layoutText("" + renderBuffer[x][y], new TextFormat().withFont(font)), 0, 0);
+					glyphs.put(renderBuffer[x][y], ci);
+				}
+				
+				surface.setTint(renderBufferColor[x][y]);
+				surface.drawImage(glyphs.get(renderBuffer[x][y]), x*CHAR_WIDTH, y*CHAR_HEIGHT);
+			}
+		}
 	}
 }
