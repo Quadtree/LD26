@@ -3,6 +3,7 @@ package com.ironalloygames.planetfall.core;
 import static playn.core.PlayN.*;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import playn.core.CanvasImage;
 import playn.core.Color;
@@ -32,12 +33,22 @@ public class PFG extends Game.Default implements Renderer {
 	
 	boolean renderBufferChanged = true;
 	
+	public static PFG s;
+	
+	int camX, camY;
+	
+	PlanetLevel planetLevel;
+	
+	public Random r = new Random();
+	
 	public PFG() {
 		super(33); // call update every 33ms (30 times per second)
 	}
 
 	@Override
 	public void init() {
+		s = this;
+		
 		screenTileWidth = graphics().width() / CHAR_WIDTH;
 		screenTileHeight = graphics().height() / CHAR_HEIGHT;
 		
@@ -47,6 +58,8 @@ public class PFG extends Game.Default implements Renderer {
 		graphics().rootLayer().add(graphics().createImmediateLayer(this));
 		
 		font = graphics().createFont("Mono", Style.BOLD, 20);
+		
+		planetLevel = new PlanetLevel();
 	}
 	
 	int lastSecond = 0;
@@ -55,7 +68,9 @@ public class PFG extends Game.Default implements Renderer {
 
 	@Override
 	public void update(int delta) {
-		setTextAt(0,0,"FPS " + fps, Color.rgb(0, 0, 255));
+		planetLevel.update();
+		
+		setTextAt(0,0,"FPS " + fps, Color.rgb(255, 255, 255));
 		
 		framesThisSecond++;
 		
@@ -67,7 +82,15 @@ public class PFG extends Game.Default implements Renderer {
 	}
 	
 	public void setCharAtReal(int x, int y, char text, int color){
-		renderBufferChanged = true;
+		
+		int screenTileX = x - camX + screenTileWidth / 2;
+		int screenTileY = y - camY + screenTileHeight / 2;
+		
+		if(screenTileX > 0 && screenTileY > 0 && screenTileX < screenTileWidth && screenTileY < screenTileHeight){
+			renderBuffer[screenTileX][screenTileY] = text;
+			renderBufferColor[screenTileX][screenTileY] = color;
+			renderBufferChanged = true;
+		}
 	}
 	
 	public void setTextAt(int x, int y, String text, int color){
