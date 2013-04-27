@@ -12,4 +12,9 @@ public class GreenBerry extends Berry {
 	public int getColor() {
 		return Color.rgb(255, 255, 0);
 	}
+	
+	@Override
+	public String getDesc() {
+		return "A green colored berry. Tasty?";
+	}
 }

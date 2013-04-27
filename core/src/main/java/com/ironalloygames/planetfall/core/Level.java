@@ -15,7 +15,12 @@ public class Level {
 		GRASS5,
 		GRASS6,
 		ROCK,
-		WALL
+		WALL,
+		WATER,
+		DRY_POOL,
+		SHIP_WALL,
+		SHIP_FLOOR,
+		SHIP_DOOR
 	}
 	
 	protected GroundType[][] map;
@@ -26,7 +31,7 @@ public class Level {
 	
 	public void render(){
 		
-		String chars = ".,'`:;*#";
+		String chars = ".,'`:;*#@@X-=";
 		
 		for(int x=0;x<map.length;x++){
 			if(Math.abs(PFG.s.pc.x - x) > 30) continue;
@@ -41,6 +46,10 @@ public class Level {
 					color = Color.rgb(190, 90, 0);
 				else if(map[x][y] == GroundType.ROCK)
 					color = Color.rgb(100, 100, 100);
+				else if(map[x][y] == GroundType.WATER)
+					color = Color.rgb(0, 160, 255);
+				else if(map[x][y] == GroundType.DRY_POOL)
+					color = Color.rgb(190, 90, 0);
 				else
 					color = Color.rgb(0, 255, 0);
 				
@@ -65,6 +74,11 @@ public class Level {
 		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal();
 	}
 	
+	public boolean isLOSable(int x, int y){
+		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return false;
+		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.WATER || map[x][y] == GroundType.DRY_POOL;
+	}
+	
 	public boolean hasLOS(int sx, int sy, int ex, int ey){
 		float curX = sx, curY = sy;
 		float dist = (float)Math.sqrt(Math.pow(sx - ex, 2) + Math.pow(sy - ey, 2));
@@ -78,7 +92,7 @@ public class Level {
 			curX += mx;
 			curY += my;
 			
-			if(!isPassable((int)curX, (int)curY)) return false;
+			if(!isLOSable((int)curX, (int)curY)) return false;
 		}
 		
 		return true;
@@ -87,6 +101,25 @@ public class Level {
 	public String getDesc(int x, int y){
 		if(!hasLOS(PFG.s.pc.x, PFG.s.pc.y, x, y)) return "???";
 		
-		return "!";
+		Actor topActor = null;
+		
+		for(Actor a : actors){
+			if(a.x == x && a.y == y) topActor = a;
+		}
+		
+		if(topActor != null){
+			return topActor.getDesc();
+		} else {
+			if(map[x][y] == GroundType.WALL)
+				return "A high dirt cliff. Weird terrain on this planet";
+			else if(map[x][y] == GroundType.ROCK)
+				return "A big rock. If only you were a giant";
+			else if(map[x][y] == GroundType.WATER)
+				return "A pool of stagnant water";
+			else if(map[x][y] == GroundType.DRY_POOL)
+				return "Bah, it looks like this pool has evaporated";
+			else
+				return "Grassy meadow";
+		}
 	}
 }

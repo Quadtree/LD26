@@ -5,6 +5,8 @@ import static playn.core.PlayN.*;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.ironalloygames.planetfall.core.info.Ship;
+
 import playn.core.CanvasImage;
 import playn.core.Color;
 import playn.core.Font;
@@ -91,6 +93,9 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		keyboard().setListener(this);
 		mouse().setListener(this);
+		
+		Ship s = new Ship();
+		log().debug("The " + s.className + " " + s.name);
 	}
 	
 	int lastSecond = 0;

@@ -23,4 +23,8 @@ public class Tree extends Actor {
 		super.update();
 	}
 
+	@Override
+	public String getDesc() {
+		return "A large tree. Probably too heavy to carry";
+	}
 }

@@ -7,4 +7,7 @@ public class Actor {
 	
 	public void update(){}
 	public void render(){}
+	public String getDesc() {
+		return "";
+	}
 }

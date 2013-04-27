@@ -11,4 +11,9 @@ public class PC extends Unit {
 		super.update();
 	}
 
+	@Override
+	public String getDesc() {
+		return "Intrepid space explorer";
+	}
+
 }

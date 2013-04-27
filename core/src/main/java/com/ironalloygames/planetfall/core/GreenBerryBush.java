@@ -19,4 +19,8 @@ public class GreenBerryBush extends BerryBush {
 		return new GreenBerry(x,y);
 	}
 
+	@Override
+	public String getDesc() {
+		return "A bush with some green colored berries lying around";
+	}
 }

@@ -83,6 +83,53 @@ public class PlanetLevel extends Level {
 			}
 		}
 		
+		for(int i=0;i<30;++i){
+			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
+			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
+			
+			while(!isPassable(groveX, groveY)){
+				groveX = PFG.s.r.nextInt(MAP_WIDTH);
+				groveY = PFG.s.r.nextInt(MAP_HEIGHT);
+			}
+			
+			map[groveX][groveY] = GroundType.WATER;
+		}
+		
+		for(int i=0;i<30*15;++i){
+			while(true){
+				int x = PFG.s.r.nextInt(MAP_WIDTH - PADDING*2) + PADDING;
+				int y = PFG.s.r.nextInt(MAP_HEIGHT - PADDING*2) + PADDING;
+				
+				if(map[x + 1][y] == GroundType.WATER || map[x - 1][y] == GroundType.WATER || map[x][y + 1] == GroundType.WATER || map[x][y - 1] == GroundType.WATER){
+					map[x][y] = GroundType.WATER;
+					break;
+				}
+			}
+		}
+		
+		boolean onePlaced;
+		
+		do {
+			onePlaced = false;
+			
+			for(int x=1;x<map.length - 1;x++){
+				for(int y=1;y<map[0].length - 1;++y){
+					if(map[x][y] == GroundType.WATER) continue;
+					
+					int sides = 0;
+					if(map[x + 1][y] == GroundType.WATER) sides++;
+					if(map[x - 1][y] == GroundType.WATER) sides++;
+					if(map[x][y - 1] == GroundType.WATER) sides++;
+					if(map[x][y + 1] == GroundType.WATER) sides++;
+					
+					if(sides >= 3){
+						map[x][y] = GroundType.WATER;
+						onePlaced = true;
+					}
+				}
+			}
+		} while(onePlaced);
+		
 		for(int x=0;x<map.length;x++){
 			for(int y=0;y<map[0].length;++y){
 				if(map[x][y] == GroundType.WALL){

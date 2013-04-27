@@ -16,4 +16,9 @@ public class Wood extends Actor {
 		
 		super.update();
 	}
+	
+	@Override
+	public String getDesc() {
+		return "Some wood. Good for fires!";
+	}
 }
