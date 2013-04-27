@@ -2,6 +2,8 @@ package com.ironalloygames.planetfall.dialog;
 
 import java.util.HashMap;
 
+import com.ironalloygames.planetfall.core.PFG;
+
 public class StartCinematic extends Dialog {
 	public StartCinematic(){
 		states.put("Start", new HashMap<String, StateTransition>());
@@ -34,12 +36,49 @@ public class StartCinematic extends Dialog {
 		states.put("Reflect", new HashMap<String, StateTransition>());
 		states.get("Reflect").put("P", new StateTransition("You remember how it all started...", ""));
 		states.get("Reflect").put("1", new StateTransition("Continue", "DoReflect"));
+		
+		states.put("DoReflect", new HashMap<String, StateTransition>());
+		states.get("DoReflect").put("P", new StateTransition("It all began with your (in retrospect) possibly poor decision to join the " + PFG.s.alliedEmpire.name + " space forces.", ""));
+		states.get("DoReflect").put("1", new StateTransition("Continue", "DoReflect2"));
+		
+		states.put("DoReflect2", new HashMap<String, StateTransition>());
+		states.get("DoReflect2").put("P", new StateTransition("After the outbreak of the war with the " + PFG.s.enemyEmpire.name + ", you visited " + PFG.s.rec.getDesc() + "'s office to join up", ""));
+		states.get("DoReflect2").put("1", new StateTransition("Continue", "DoReflect3"));
+		
+		states.put("DoReflect3", new HashMap<String, StateTransition>());
+		states.get("DoReflect3").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"Let's start with the basics. What is your name?\"", ""));
+		states.get("DoReflect3").put("1", new StateTransition(PFG.s.pc.pd.firstName + " " + PFG.s.pc.pd.lastName, "DoReflect4"));
+		
+		states.put("DoReflect4", new HashMap<String, StateTransition>());
+		states.get("DoReflect4").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"What skills do you have that would be useful to the space forces?\"", ""));
+		states.get("DoReflect4").put("1", new StateTransition("\"I'm an ace fighter pilot!\"", "AceFighterPilot"));
+		states.get("DoReflect4").put("2", new StateTransition("\"I'm a good mechanic.\"", "Mechanic1"));
+		states.get("DoReflect4").put("3", new StateTransition("\"I've gotten 120,000 points playing Space Buster!\"", "SpaceBuster"));
+		
+		states.put("AceFighterPilot", new HashMap<String, StateTransition>());
+		states.get("AceFighterPilot").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"I'm sorry to say the obsolete fighter forces were retired years ago. Any other skills?\"", ""));
+		states.get("AceFighterPilot").put("1", new StateTransition("\"I'm a good mechanic.\"", "Mechanic1"));
+		states.get("AceFighterPilot").put("2", new StateTransition("\"I've gotten 120,000 points playing Space Buster!\"", "SpaceBuster"));
+		
+		states.put("SpaceBuster", new HashMap<String, StateTransition>());
+		states.get("SpaceBuster").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"How nice. Any *useful* skills?\"", ""));
+		states.get("SpaceBuster").put("1", new StateTransition("\"I'm an ace fighter pilot!\"", "AceFighterPilot"));
+		states.get("SpaceBuster").put("2", new StateTransition("\"I'm a good mechanic.\"", "Mechanic1"));
+		
+		states.put("Mechanic1", new HashMap<String, StateTransition>());
+		states.get("Mechanic1").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"That'll do. Welcome to the space forces.\"", ""));
+		states.get("Mechanic1").put("1", new StateTransition("Continue", "Mechanic2"));
 	}
 	
 	@Override
 	public void newState(String stateName){
 		if(stateName.equals("DoReflect")){
-			active = false;
+			PFG.s.currentLevel.actors.remove(PFG.s.pc);
+			PFG.s.currentLevel = PFG.s.officeLevel;
+			PFG.s.currentLevel.actors.add(PFG.s.pc);
+			PFG.s.pc.curLevel = PFG.s.officeLevel;
+			PFG.s.pc.x = 8;
+			PFG.s.pc.y = 5;
 		}
 		super.newState(stateName);
 	}

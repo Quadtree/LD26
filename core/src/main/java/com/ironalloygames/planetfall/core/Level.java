@@ -20,7 +20,8 @@ public class Level {
 		DRY_POOL,
 		SHIP_WALL,
 		SHIP_FLOOR,
-		SHIP_DOOR
+		SHIP_DOOR,
+		DESK
 	}
 	
 	protected GroundType[][] map;
@@ -31,7 +32,7 @@ public class Level {
 	
 	public void render(){
 		
-		String chars = ".,'`:;*#@@X-=";
+		String chars = ".,'`:;*#@@X-==";
 		
 		for(int x=0;x<map.length;x++){
 			if(Math.abs(PFG.s.pc.x - x) > 30) continue;
@@ -42,7 +43,7 @@ public class Level {
 				
 				int color = 0;
 				
-				if(map[x][y] == GroundType.WALL)
+				if(map[x][y] == GroundType.WALL || map[x][y] == GroundType.DESK)
 					color = Color.rgb(190, 90, 0);
 				else if(map[x][y] == GroundType.ROCK)
 					color = Color.rgb(100, 100, 100);
@@ -50,6 +51,12 @@ public class Level {
 					color = Color.rgb(0, 160, 255);
 				else if(map[x][y] == GroundType.DRY_POOL)
 					color = Color.rgb(190, 90, 0);
+				else if(map[x][y] == GroundType.SHIP_FLOOR)
+					color = Color.rgb(160, 160, 190);
+				else if(map[x][y] == GroundType.SHIP_WALL)
+					color = Color.rgb(100, 100, 140);
+				else if(map[x][y] == GroundType.SHIP_DOOR)
+					color = Color.rgb(90, 90, 120);
 				else
 					color = Color.rgb(0, 255, 0);
 				
@@ -71,12 +78,12 @@ public class Level {
 	
 	public boolean isPassable(int x, int y){
 		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return false;
-		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal();
+		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.SHIP_FLOOR;
 	}
 	
 	public boolean isLOSable(int x, int y){
 		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return false;
-		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.WATER || map[x][y] == GroundType.DRY_POOL;
+		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.WATER || map[x][y] == GroundType.DRY_POOL || map[x][y] == GroundType.SHIP_FLOOR || map[x][y] == GroundType.DESK;
 	}
 	
 	public boolean hasLOS(int sx, int sy, int ex, int ey){
@@ -100,6 +107,7 @@ public class Level {
 	
 	public String getDesc(int x, int y){
 		if(!hasLOS(PFG.s.pc.x, PFG.s.pc.y, x, y)) return "???";
+		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return "???";
 		
 		Actor topActor = null;
 		
@@ -118,6 +126,14 @@ public class Level {
 				return "A pool of stagnant water";
 			else if(map[x][y] == GroundType.DRY_POOL)
 				return "Bah, it looks like this pool has evaporated";
+			else if(map[x][y] == GroundType.SHIP_FLOOR)
+				return "Gunmetal starship floor";
+			else if(map[x][y] == GroundType.SHIP_WALL)
+				return "Tough starship bulkhead";
+			else if(map[x][y] == GroundType.SHIP_DOOR)
+				return "Heavy starship door, currently closed";
+			else if(map[x][y] == GroundType.DESK)
+				return "Elegant mahogany desk";
 			else
 				return "Grassy meadow";
 		}

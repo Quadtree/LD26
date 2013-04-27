@@ -51,9 +51,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	
 	int camX, camY;
 	
-	PlanetLevel planetLevel;
+	public PlanetLevel planetLevel;
+	public PodLevel podLevel;
+	public RecruitingOfficeLevel officeLevel;
 	
-	public PlanetLevel currentLevel;
+	public Level currentLevel;
 	
 	public Random r = new Random();
 	
@@ -63,9 +65,14 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	
 	public Dialog curDialog;
 	
+	public Empire alliedEmpire;
+	public Empire enemyEmpire;
+	
 	public PFG() {
 		super(33); // call update every 33ms (30 times per second)
 	}
+	
+	public Recruiter rec;
 
 	@Override
 	public void init() {
@@ -82,21 +89,31 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		font = graphics().createFont("Mono", Style.BOLD, 20);
 		
 		planetLevel = new PlanetLevel();
+		podLevel = new PodLevel();
+		officeLevel = new RecruitingOfficeLevel();
 		
-		currentLevel = planetLevel;
+		rec = new Recruiter();
+		rec.x = 8;
+		rec.y = 3;
+		officeLevel.actors.add(rec);
+		
+		currentLevel = podLevel;
+		
+		alliedEmpire = new Empire();
+		enemyEmpire = new Empire();
 		
 		pc = new PC();
 		pc.x = r.nextInt(PlanetLevel.MAP_WIDTH);
 		pc.y = r.nextInt(PlanetLevel.MAP_WIDTH);
 		
-		while(!planetLevel.isPassable(pc.x, pc.y)){
+		while(!podLevel.isPassable(pc.x, pc.y)){
 			pc.x = r.nextInt(PlanetLevel.MAP_WIDTH);
 			pc.y = r.nextInt(PlanetLevel.MAP_WIDTH);
 		}
 		
-		pc.curLevel = planetLevel;
+		pc.curLevel = currentLevel;
 		
-		planetLevel.actors.add(pc);
+		currentLevel.actors.add(pc);
 		
 		keyboard().setListener(this);
 		mouse().setListener(this);

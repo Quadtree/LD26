@@ -1,8 +1,12 @@
 package com.ironalloygames.planetfall.core;
 
+import com.ironalloygames.planetfall.core.info.Person;
+
 import playn.core.Color;
 
 public class PC extends Unit {
+	
+	public Person pd = new Person();
 
 	@Override
 	public void render() {
