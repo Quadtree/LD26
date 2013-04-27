@@ -5,7 +5,12 @@ import static playn.core.PlayN.*;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.ironalloygames.planetfall.core.info.Empire;
+import com.ironalloygames.planetfall.core.info.Person;
+import com.ironalloygames.planetfall.core.info.Person.NameGender;
 import com.ironalloygames.planetfall.core.info.Ship;
+import com.ironalloygames.planetfall.dialog.Dialog;
+import com.ironalloygames.planetfall.dialog.StartCinematic;
 
 import playn.core.CanvasImage;
 import playn.core.Color;
@@ -56,6 +61,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	
 	int tick = 0;
 	
+	public Dialog curDialog;
+	
 	public PFG() {
 		super(33); // call update every 33ms (30 times per second)
 	}
@@ -94,8 +101,14 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		keyboard().setListener(this);
 		mouse().setListener(this);
 		
-		Ship s = new Ship();
-		log().debug("The " + s.className + " " + s.name);
+		for(int i=0;i<10;++i){
+			Ship s = new Ship();
+			Empire e = new Empire();
+			Person p = new Person();
+			log().debug("The " + s.className + " " + s.name + " of the " + e.name + " under " + p.firstName + " " + p.lastName);
+		}
+		
+		curDialog = new StartCinematic();
 	}
 	
 	int lastSecond = 0;
@@ -107,7 +120,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		camX = pc.x;
 		camY = pc.y;
 		
-		while(!pc.canAct()){
+		while(!pc.canAct() && curDialog == null){
 			currentLevel.update();
 			tick++;
 		}
@@ -137,6 +150,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		setCharAtReal(mouseRealTileX, mouseRealTileY, '\0', Color.rgb(255, 255, 255));
 		
 		setTextAt(8,0, currentLevel.getDesc(mouseRealTileX, mouseRealTileY), Color.rgb(255, 255, 255));
+		
+		if(curDialog != null){
+			curDialog.render();
+			if(!curDialog.active) curDialog = null;
+		}
 	}
 	
 	public void setCharAtReal(int x, int y, char text, int color){
@@ -155,11 +173,17 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	}
 	
 	public void setTextAt(int x, int y, String text, int color){
+		int cx = x;
+		int cy = y;
 		
 		for(int i=0;i<text.length();++i){
-			if(renderBuffer.length > x+i){
-				renderBuffer[x+i][y] = text.charAt(i);
-				renderBufferColor[x+i][y] = color;
+			renderBuffer[cx][cy] = text.charAt(i);
+			renderBufferColor[cx][cy] = color;
+			
+			cx++;
+			if(cx >= screenTileWidth){
+				cx = x;
+				cy++;
 			}
 		}
 		
@@ -197,6 +221,12 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if(event.key() == Key.D) movX = 1;
 		if(event.key() == Key.W) movY = -1;
 		if(event.key() == Key.S) movY = 1;
+		
+		if(event.key() == Key.K1 && curDialog != null) curDialog.pick(1);
+		if(event.key() == Key.K2 && curDialog != null) curDialog.pick(2);
+		if(event.key() == Key.K3 && curDialog != null) curDialog.pick(3);
+		if(event.key() == Key.K4 && curDialog != null) curDialog.pick(4);
+		if(event.key() == Key.K5 && curDialog != null) curDialog.pick(5);
 	}
 
 	@Override
