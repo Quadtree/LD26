@@ -8,16 +8,20 @@ import java.util.Random;
 import playn.core.CanvasImage;
 import playn.core.Color;
 import playn.core.Font;
+import playn.core.Key;
 import playn.core.Font.Style;
 import playn.core.Game;
 import playn.core.Image;
 import playn.core.ImageLayer;
 import playn.core.ImmediateLayer.Renderer;
+import playn.core.Keyboard.Event;
+import playn.core.Keyboard.Listener;
+import playn.core.Keyboard.TypedEvent;
 import playn.core.PlayN;
 import playn.core.Surface;
 import playn.core.TextFormat;
 
-public class PFG extends Game.Default implements Renderer {
+public class PFG extends Game.Default implements Renderer, Listener {
 	private static final int CHAR_WIDTH = 13;
 	private static final int CHAR_HEIGHT = 21;
 	CanvasImage img;
@@ -41,6 +45,10 @@ public class PFG extends Game.Default implements Renderer {
 	
 	public Random r = new Random();
 	
+	public PC pc;
+	
+	int tick = 0;
+	
 	public PFG() {
 		super(33); // call update every 33ms (30 times per second)
 	}
@@ -60,6 +68,14 @@ public class PFG extends Game.Default implements Renderer {
 		font = graphics().createFont("Mono", Style.BOLD, 20);
 		
 		planetLevel = new PlanetLevel();
+		
+		pc = new PC();
+		pc.x = 30;
+		pc.y = 30;
+		
+		planetLevel.actors.add(pc);
+		
+		keyboard().setListener(this);
 	}
 	
 	int lastSecond = 0;
@@ -68,9 +84,15 @@ public class PFG extends Game.Default implements Renderer {
 
 	@Override
 	public void update(int delta) {
-		planetLevel.update();
+		camX = pc.x;
+		camY = pc.y;
 		
-		setTextAt(0,0,"FPS " + fps, Color.rgb(255, 255, 255));
+		while(!pc.canAct()){
+			planetLevel.update();
+			tick++;
+		}
+		
+		setTextAt(0,0, "FPS " + fps, Color.rgb(255, 255, 255));
 		
 		framesThisSecond++;
 		
@@ -79,6 +101,8 @@ public class PFG extends Game.Default implements Renderer {
 			fps = framesThisSecond;
 			framesThisSecond = 0;
 		}
+		
+		setTextAt(0,1, "T" + tick, Color.rgb(255, 255, 255));
 	}
 	
 	public void setCharAtReal(int x, int y, char text, int color){
@@ -86,7 +110,7 @@ public class PFG extends Game.Default implements Renderer {
 		int screenTileX = x - camX + screenTileWidth / 2;
 		int screenTileY = y - camY + screenTileHeight / 2;
 		
-		if(screenTileX > 0 && screenTileY > 0 && screenTileX < screenTileWidth && screenTileY < screenTileHeight){
+		if(screenTileX >= 0 && screenTileY >= 0 && screenTileX < screenTileWidth && screenTileY < screenTileHeight){
 			renderBuffer[screenTileX][screenTileY] = text;
 			renderBufferColor[screenTileX][screenTileY] = color;
 			renderBufferChanged = true;
@@ -116,15 +140,35 @@ public class PFG extends Game.Default implements Renderer {
 		for(int y=0;y<screenTileHeight;++y){
 			for(int x=0;x<screenTileWidth;++x){
 				if(!glyphs.containsKey(renderBuffer[x][y])){
-					CanvasImage ci = graphics().createImage(CHAR_WIDTH, CHAR_HEIGHT);
+					CanvasImage ci = graphics().createImage(CHAR_WIDTH+3, CHAR_HEIGHT+3);
 					ci.canvas().setFillColor(Color.rgb(255, 255, 255));
 					ci.canvas().fillText(graphics().layoutText("" + renderBuffer[x][y], new TextFormat().withFont(font)), 0, 0);
 					glyphs.put(renderBuffer[x][y], ci);
 				}
 				
 				surface.setTint(renderBufferColor[x][y]);
-				surface.drawImage(glyphs.get(renderBuffer[x][y]), x*CHAR_WIDTH, y*CHAR_HEIGHT);
+				surface.drawImage(glyphs.get(renderBuffer[x][y]), x*CHAR_WIDTH+3, y*CHAR_HEIGHT+3);
 			}
 		}
+	}
+
+	@Override
+	public void onKeyDown(Event event) {
+		if(event.key() == Key.A) pc.move(-1, 0);
+		if(event.key() == Key.D) pc.move(1, 0);
+		if(event.key() == Key.W) pc.move(0, -1);
+		if(event.key() == Key.S) pc.move(0, 1);
+	}
+
+	@Override
+	public void onKeyTyped(TypedEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyUp(Event event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

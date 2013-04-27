@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import playn.core.Color;
 
 public class Level {
-	ArrayList<Actor> actors = new ArrayList<Actor>();
+	public ArrayList<Actor> actors = new ArrayList<Actor>();
 	
 	enum GroundType {
 		GRASS1,
@@ -32,6 +32,10 @@ public class Level {
 			for(int y=0;y<map[0].length;++y){
 				PFG.s.setCharAtReal(x, y, chars.charAt(map[x][y].ordinal()), Color.rgb(0, 255, 0));
 			}
+		}
+		
+		for(Actor a : actors){
+			a.update();
 		}
 	}
 }
