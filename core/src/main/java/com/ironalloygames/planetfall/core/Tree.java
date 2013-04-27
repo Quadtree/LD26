@@ -10,7 +10,7 @@ public class Tree extends Actor {
 		this.y = y;
 		this.curLevel = curLevel;
 		
-		for(int i=0;i<1;++i){
+		if(PFG.s.r.nextInt(3) == 0){
 			curLevel.actors.add(new Wood((int)(x + PFG.s.r.nextGaussian() * 2), (int)(y + PFG.s.r.nextGaussian() * 2)));
 		}
 	}

@@ -43,6 +43,8 @@ public class PFG extends Game.Default implements Renderer, Listener {
 	
 	PlanetLevel planetLevel;
 	
+	public PlanetLevel currentLevel;
+	
 	public Random r = new Random();
 	
 	public PC pc;
@@ -68,6 +70,8 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		font = graphics().createFont("Mono", Style.BOLD, 20);
 		
 		planetLevel = new PlanetLevel();
+		
+		currentLevel = planetLevel;
 		
 		pc = new PC();
 		pc.x = r.nextInt(PlanetLevel.MAP_WIDTH);
@@ -95,7 +99,14 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		camY = pc.y;
 		
 		while(!pc.canAct()){
-			planetLevel.update();
+			
+			for(int x=0;x<renderBuffer.length;++x){
+				for(int y=0;y<renderBuffer[0].length;++y){
+					renderBufferColor[x][y] = 0;
+				}
+			}
+			
+			currentLevel.update();
 			tick++;
 		}
 		
@@ -115,6 +126,9 @@ public class PFG extends Game.Default implements Renderer, Listener {
 	}
 	
 	public void setCharAtReal(int x, int y, char text, int color){
+		
+		if(Math.abs(x - camX) > 30 || Math.abs(y - camY) > 30) return;
+		if(!currentLevel.hasLOS(pc.x, pc.y, x, y)) return;
 		
 		int screenTileX = x - camX + screenTileWidth / 2;
 		int screenTileY = y - camY + screenTileHeight / 2;

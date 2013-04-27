@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import playn.core.PlayN;
 
 public class PlanetLevel extends Level {
-	private static final int GROVE_SIZE = 3;
+	private static final int GROVE_SIZE = 9;
 	private static final int PADDING = 20;
 	public static final int MAP_WIDTH = 384;
 	public static final int MAP_HEIGHT = 384*2;
@@ -93,7 +93,7 @@ public class PlanetLevel extends Level {
 			}
 		}
 		
-		for(int i=0;i<150;++i){
+		for(int i=0;i<90;++i){
 			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
 			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
 			

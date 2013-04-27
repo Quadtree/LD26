@@ -13,9 +13,9 @@ public class YellowBerryBush extends BerryBush {
 	public int getColor() {
 		return Color.rgb(255, 255, 0);
 	}
-
+	
 	@Override
-	public Class<? extends Berry> getBerry() {
-		return YellowBerry.class;
+	public Berry getBerry(int x, int y) {
+		return new YellowBerry(x,y);
 	}
 }

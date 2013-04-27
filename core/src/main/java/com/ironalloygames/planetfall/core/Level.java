@@ -37,14 +37,13 @@ public class Level {
 				
 				int color = 0;
 				
-				if(hasLOS(PFG.s.pc.x, PFG.s.pc.y, x, y)){
-					if(map[x][y] == GroundType.WALL)
-						color = Color.rgb(190, 90, 0);
-					else if(map[x][y] == GroundType.ROCK)
-						color = Color.rgb(100, 100, 100);
-					else
-						color = Color.rgb(0, 255, 0);
-				}
+				if(map[x][y] == GroundType.WALL)
+					color = Color.rgb(190, 90, 0);
+				else if(map[x][y] == GroundType.ROCK)
+					color = Color.rgb(100, 100, 100);
+				else
+					color = Color.rgb(0, 255, 0);
+				
 				
 				PFG.s.setCharAtReal(x, y, chars.charAt(map[x][y].ordinal()), color);
 			}

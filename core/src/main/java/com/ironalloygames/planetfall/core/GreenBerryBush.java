@@ -15,8 +15,8 @@ public class GreenBerryBush extends BerryBush {
 	}
 
 	@Override
-	public Class<? extends Berry> getBerry() {
-		return GreenBerry.class;
+	public Berry getBerry(int x, int y) {
+		return new GreenBerry(x,y);
 	}
 
 }
