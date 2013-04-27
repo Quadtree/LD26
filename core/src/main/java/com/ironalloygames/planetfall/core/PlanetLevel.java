@@ -1,5 +1,7 @@
 package com.ironalloygames.planetfall.core;
 
+import java.lang.reflect.InvocationTargetException;
+
 import playn.core.PlayN;
 
 public class PlanetLevel extends Level {
@@ -91,7 +93,7 @@ public class PlanetLevel extends Level {
 			}
 		}
 		
-		for(int i=0;i<30;++i){
+		for(int i=0;i<150;++i){
 			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
 			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
 			
@@ -102,7 +104,21 @@ public class PlanetLevel extends Level {
 			
 			PlayN.log().debug("Grove placed at " + groveX + " " + groveY);
 			
-			for(int j=0;j<10;++j){
+			Class<? extends Actor> treeType;
+			
+			if(PFG.s.r.nextBoolean()){
+				treeType = Tree.class;
+			} else {
+				if(PFG.s.r.nextBoolean()){
+					treeType = GreenBerryBush.class;
+				} else {
+					treeType = YellowBerryBush.class;
+				}
+			}
+			
+			int groveSize = PFG.s.r.nextInt(20);
+			
+			for(int j=0;j<groveSize;++j){
 				int treeX = (int)(groveX + PFG.s.r.nextGaussian() * GROVE_SIZE);
 				int treeY = (int)(groveY + PFG.s.r.nextGaussian() * GROVE_SIZE);
 				
@@ -111,7 +127,11 @@ public class PlanetLevel extends Level {
 					treeY = (int)(groveY + PFG.s.r.nextGaussian() * GROVE_SIZE);
 				}
 				
-				actors.add(new Tree(treeX, treeY, this));
+				try {
+					actors.add(treeType.getConstructor(int.class, int.class, Level.class).newInstance(treeX, treeY, this));
+				} catch (Exception e){
+					PlayN.log().error("Tree creation error", e);
+				}
 			}
 		}
 		
