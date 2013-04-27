@@ -65,7 +65,7 @@ public class Level {
 		float mx = (ex - sx) / dist / 2;
 		float my = (ey - sy) / dist / 2;
 		
-		while(Math.abs(curX - ex) > 2 && Math.abs(curY - ey) > 2){
+		while(Math.abs(curX - ex) > 2 || Math.abs(curY - ey) > 2){
 			curX += mx;
 			curY += my;
 			
