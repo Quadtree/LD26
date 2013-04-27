@@ -4,10 +4,12 @@ public class Unit extends Actor {
 	int actionTimer = 1;
 	
 	public void move(int dx, int dy){
-		x += dx;
-		y += dy;
-		
-		actionTimer = 10;
+		if(curLevel.isPassable(x + dx, y + dy)){
+			x += dx;
+			y += dy;
+			
+			actionTimer = 5;
+		}
 	}
 	
 	public boolean canAct(){

@@ -70,8 +70,9 @@ public class PFG extends Game.Default implements Renderer, Listener {
 		planetLevel = new PlanetLevel();
 		
 		pc = new PC();
-		pc.x = 30;
-		pc.y = 30;
+		pc.x = PlanetLevel.MAP_SIZE / 2;
+		pc.y = PlanetLevel.MAP_SIZE / 2;
+		pc.curLevel = planetLevel;
 		
 		planetLevel.actors.add(pc);
 		
@@ -91,6 +92,8 @@ public class PFG extends Game.Default implements Renderer, Listener {
 			planetLevel.update();
 			tick++;
 		}
+		
+		if(movX != 0 || movY != 0) pc.move(movX, movY);
 		
 		setTextAt(0,0, "FPS " + fps, Color.rgb(255, 255, 255));
 		
@@ -151,13 +154,15 @@ public class PFG extends Game.Default implements Renderer, Listener {
 			}
 		}
 	}
+	
+	int movX, movY;
 
 	@Override
 	public void onKeyDown(Event event) {
-		if(event.key() == Key.A) pc.move(-1, 0);
-		if(event.key() == Key.D) pc.move(1, 0);
-		if(event.key() == Key.W) pc.move(0, -1);
-		if(event.key() == Key.S) pc.move(0, 1);
+		if(event.key() == Key.A) movX = -1;
+		if(event.key() == Key.D) movX = 1;
+		if(event.key() == Key.W) movY = -1;
+		if(event.key() == Key.S) movY = 1;
 	}
 
 	@Override
@@ -168,7 +173,9 @@ public class PFG extends Game.Default implements Renderer, Listener {
 
 	@Override
 	public void onKeyUp(Event event) {
-		// TODO Auto-generated method stub
-		
+		if(event.key() == Key.A) movX = 0;
+		if(event.key() == Key.D) movX = 0;
+		if(event.key() == Key.W) movY = 0;
+		if(event.key() == Key.S) movY = 0;
 	}
 }
