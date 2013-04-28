@@ -3,6 +3,8 @@ package com.ironalloygames.planetfall.dialog;
 import java.util.HashMap;
 
 import com.ironalloygames.planetfall.core.PFG;
+import com.ironalloygames.planetfall.core.PlanetLevel;
+import com.ironalloygames.planetfall.core.Level.GroundType;
 import com.ironalloygames.planetfall.dialog.Dialog.StateTransition;
 
 public class EscapeShip extends Dialog {
@@ -54,14 +56,16 @@ public class EscapeShip extends Dialog {
 		if(stateName.equals("OutsideDoors")){
 			states.get("Atmo").put("1", new StateTransition("Venture forth into the unknown!", "End"));
 			states.get("BeaconCheck").put("2", new StateTransition("Venture forth into the unknown!", "End"));
+			
+			PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;
 		}
 		if(stateName.equals("Landing")){
 			PFG.s.currentLevel.actors.remove(PFG.s.pc);
 			PFG.s.currentLevel = PFG.s.planetLevel;
 			PFG.s.currentLevel.actors.add(PFG.s.pc);
 			PFG.s.pc.curLevel = PFG.s.planetLevel;
-			PFG.s.pc.x = 8;
-			PFG.s.pc.y = 5;
+			
+			
 		}
 	}
 }

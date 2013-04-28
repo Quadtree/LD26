@@ -10,7 +10,7 @@ public class PodLevel extends Level {
 			for(int y=0;y<16;++y){
 				double dist = Math.sqrt(Math.pow(x - 8, 2) + Math.pow(y - 8, 2));
 				
-				if(dist > 3){
+				if(dist > 2.2){
 					if(x != 8 && y != 8){
 						map[x][y] = GroundType.SHIP_WALL;
 					} else {

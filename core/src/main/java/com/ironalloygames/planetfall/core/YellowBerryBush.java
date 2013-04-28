@@ -16,7 +16,7 @@ public class YellowBerryBush extends BerryBush {
 	
 	@Override
 	public Berry getBerry(int x, int y) {
-		return new YellowBerry(x,y);
+		return new YellowBerry(x,y,curLevel);
 	}
 	
 	@Override

@@ -7,7 +7,7 @@ import playn.core.Color;
 public class Level {
 	public ArrayList<Actor> actors = new ArrayList<Actor>();
 	
-	enum GroundType {
+	public enum GroundType {
 		GRASS1,
 		GRASS2,
 		GRASS3,
@@ -24,7 +24,7 @@ public class Level {
 		DESK
 	}
 	
-	protected GroundType[][] map;
+	public GroundType[][] map;
 	
 	public Level(){
 		

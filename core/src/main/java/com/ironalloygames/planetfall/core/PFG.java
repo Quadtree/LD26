@@ -356,17 +356,19 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		if(movX == 0 && movY == 0) autoMoveTimer = 6;
 		
-		if(!isUsingItemInDirection){
-			if(event.key() == Key.A) movX = -1;
-			if(event.key() == Key.D) movX = 1;
-			if(event.key() == Key.W) movY = -1;
-			if(event.key() == Key.S) movY = 1;
-		} else {
-			if(event.key() == Key.A) pc.inventory.get(equippedItem).useInDirection((float)Math.PI, pc);
-			if(event.key() == Key.D) pc.inventory.get(equippedItem).useInDirection(0, pc);
-			if(event.key() == Key.W) pc.inventory.get(equippedItem).useInDirection(MathUtil.TWO_PI - MathUtil.HALF_PI, pc);
-			if(event.key() == Key.S) pc.inventory.get(equippedItem).useInDirection(MathUtil.HALF_PI, pc);
-			isUsingItemInDirection = false;
+		if(curDialog == null){
+			if(!isUsingItemInDirection){
+				if(event.key() == Key.A) movX = -1;
+				if(event.key() == Key.D) movX = 1;
+				if(event.key() == Key.W) movY = -1;
+				if(event.key() == Key.S) movY = 1;
+			} else {
+				if(event.key() == Key.A) pc.inventory.get(equippedItem).useInDirection((float)Math.PI, pc);
+				if(event.key() == Key.D) pc.inventory.get(equippedItem).useInDirection(0, pc);
+				if(event.key() == Key.W) pc.inventory.get(equippedItem).useInDirection(MathUtil.TWO_PI - MathUtil.HALF_PI, pc);
+				if(event.key() == Key.S) pc.inventory.get(equippedItem).useInDirection(MathUtil.HALF_PI, pc);
+				isUsingItemInDirection = false;
+			}
 		}
 		
 		if(movX != 0 || movY != 0) pc.move(movX, movY);

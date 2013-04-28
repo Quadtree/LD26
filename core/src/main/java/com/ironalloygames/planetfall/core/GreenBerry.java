@@ -3,9 +3,9 @@ package com.ironalloygames.planetfall.core;
 import playn.core.Color;
 
 public class GreenBerry extends Berry {
-	public GreenBerry(int x, int y) {
+	public GreenBerry(int x, int y, Level lvl) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
+		this.curLevel = lvl;
 	}
 
 	@Override

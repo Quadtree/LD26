@@ -2,6 +2,8 @@ package com.ironalloygames.planetfall.core;
 
 import java.lang.reflect.InvocationTargetException;
 
+import com.ironalloygames.planetfall.core.Level.GroundType;
+
 import playn.core.PlayN;
 
 public class PlanetLevel extends Level {
@@ -9,6 +11,8 @@ public class PlanetLevel extends Level {
 	private static final int PADDING = 20;
 	public static final int MAP_WIDTH = 384;
 	public static final int MAP_HEIGHT = 384*2;
+	
+	int pcLifepodX, pcLifepodY;
 	
 	private static final byte[][] MAP_BIGTILES = {
 		{0,0,0,0,0,0,0},
@@ -184,6 +188,13 @@ public class PlanetLevel extends Level {
 		
 		PlayN.log().debug(actors.toString());
 		
+		PlayN.log().debug("Placing lifepods");
+		
+		placeLifepod(0,0,0,100000);
+		
+		pcLifepodX = lastLifepodX;
+		pcLifepodY = lastLifepodY;
+		
 		PlayN.log().debug("World generation complete");
 	}
 	
@@ -202,5 +213,48 @@ public class PlanetLevel extends Level {
 	
 	private boolean isGrass(int x, int y){
 		return map[x][y].ordinal() >= GroundType.GRASS1.ordinal() && map[x][y].ordinal() <= GroundType.GRASS6.ordinal();
+	}
+	
+	public int lastLifepodX, lastLifepodY;
+	
+	public void placeLifepod(int x, int y, int minRange, int maxRange){
+		while(true){
+			lastLifepodX = PFG.s.r.nextInt(MAP_WIDTH - 40) + 20;
+			lastLifepodY = PFG.s.r.nextInt(MAP_HEIGHT - 40) + 20;
+			
+			double dist1 = Math.sqrt(Math.pow(x - lastLifepodX, 2) + Math.pow(y - lastLifepodY, 2));
+			
+			if(dist1 < minRange || dist1 > maxRange) continue;
+			
+			boolean passable = true;
+			
+			for(int tx=lastLifepodX - 6;tx <= lastLifepodX + 6;++tx){
+				for(int ty=lastLifepodY - 6;ty <= lastLifepodY + 6;++ty){
+					passable = passable && isPassable(tx,ty);
+				}
+			}
+			
+			if(passable){
+				for(int tx=lastLifepodX - 6;tx <= lastLifepodX + 6;++tx){
+					for(int ty=lastLifepodY - 6;ty <= lastLifepodY + 6;++ty){
+						double dist = Math.sqrt(Math.pow(tx - lastLifepodX, 2) + Math.pow(ty - lastLifepodY, 2));
+						
+						//PlayN.log().info("" + dist);
+						
+						if(dist > 2.2 && dist < 3.2){
+							if(tx == lastLifepodX && ty > lastLifepodY){
+								map[tx][ty] = GroundType.SHIP_DOOR;
+							} else {
+								map[tx][ty] = GroundType.SHIP_WALL;
+							}
+						} else if(dist < 3){
+							map[tx][ty] = GroundType.SHIP_FLOOR;
+						}
+					}
+				}
+				
+				break;
+			}
+		}
 	}
 }
