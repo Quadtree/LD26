@@ -12,6 +12,7 @@ import com.ironalloygames.planetfall.core.info.Empire;
 import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.info.Person.NameGender;
 import com.ironalloygames.planetfall.core.info.Ship;
+import com.ironalloygames.planetfall.dialog.CommOfficerComa;
 import com.ironalloygames.planetfall.dialog.Dialog;
 import com.ironalloygames.planetfall.dialog.EscapeShip;
 import com.ironalloygames.planetfall.dialog.StartCinematic;
@@ -82,6 +83,9 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	
 	public Ship alliedShip;
 	public Ship enemyShip;
+	
+	public EnemyDoctor enemyDoctor;
+	public CommOfficer commOfficer;
 	
 	public PFG() {
 		super(33); // call update every 33ms (30 times per second)
@@ -212,6 +216,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	int fps = 0;
 	
 	boolean titleScreenUp = true;
+	
+	public boolean talkedToCommOfficer = false;
+	public boolean talkedToEnemyDoctor = false;
+	public boolean talkedToEnemyDoctorAboutCommOfficer = false;
+	public boolean talkedToCommOfficerAboutEscaping = false;
 
 	@Override
 	public void update(int delta) {
@@ -280,6 +289,21 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if((pc.temperature > 345  || tick > 340) && currentLevel == shipLevel && curDialog == null){
 			this.curDialog = new EscapeShip();
 			this.curDialog.curState = "StartAlt";
+		}
+		
+		if(curDialog == null && currentLevel == planetLevel){
+			if(!talkedToCommOfficerAboutEscaping && !this.commOfficerStillInjured){
+				
+			} else if(!talkedToEnemyDoctor && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y)){
+				
+			}
+			else if(!talkedToCommOfficer && commOfficerStillInjured && currentLevel.hasLOS(pc.x, pc.y, commOfficer.x, commOfficer.y)){
+				curDialog = new CommOfficerComa();
+				talkedToCommOfficer = true;
+			}
+			else if(!talkedToEnemyDoctorAboutCommOfficer && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y)){
+				
+			}
 		}
 	}
 	

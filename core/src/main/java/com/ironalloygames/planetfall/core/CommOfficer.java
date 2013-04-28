@@ -5,7 +5,7 @@ import playn.core.Color;
 import com.ironalloygames.planetfall.core.info.Person;
 
 public class CommOfficer extends Unit {
-	public Person pd;
+	public Person pd = new Person();
 	
 	@Override
 	public String getDesc() {
@@ -21,6 +21,13 @@ public class CommOfficer extends Unit {
 	public void render() {
 		PFG.s.setCharAtReal(x, y, 'C', Color.rgb(0, 0, 255));
 		super.render();
+	}
+	
+	public CommOfficer(int x, int y, Level lvl) {
+		this.x = x;
+		this.y = y;
+		this.curLevel = lvl;
+		PFG.s.commOfficer = this;
 	}
 	
 }
