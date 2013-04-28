@@ -14,6 +14,7 @@ import com.ironalloygames.planetfall.core.info.Person.NameGender;
 import com.ironalloygames.planetfall.core.info.Ship;
 import com.ironalloygames.planetfall.dialog.CommOfficerComa;
 import com.ironalloygames.planetfall.dialog.Dialog;
+import com.ironalloygames.planetfall.dialog.EnemyDoctorDialog;
 import com.ironalloygames.planetfall.dialog.EscapeShip;
 import com.ironalloygames.planetfall.dialog.StartCinematic;
 
@@ -292,16 +293,16 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		}
 		
 		if(curDialog == null && currentLevel == planetLevel){
-			if(!talkedToCommOfficerAboutEscaping && !this.commOfficerStillInjured){
+			if(!talkedToCommOfficerAboutEscaping && commOfficer.hp > 0 && !this.commOfficerStillInjured){
 				
-			} else if(!talkedToEnemyDoctor && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y)){
-				
+			} else if(!talkedToEnemyDoctor && enemyDoctor.hp > 0 && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y) && Math.abs(pc.x - enemyDoctor.x) < 3 && Math.abs(pc.y - enemyDoctor.y) < 3){
+				curDialog = new EnemyDoctorDialog();
 			}
-			else if(!talkedToCommOfficer && commOfficerStillInjured && currentLevel.hasLOS(pc.x, pc.y, commOfficer.x, commOfficer.y)){
+			else if(!talkedToCommOfficer && commOfficer.hp > 0 && commOfficerStillInjured && currentLevel.hasLOS(pc.x, pc.y, commOfficer.x, commOfficer.y)){
 				curDialog = new CommOfficerComa();
 				talkedToCommOfficer = true;
 			}
-			else if(!talkedToEnemyDoctorAboutCommOfficer && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y)){
+			else if(!talkedToEnemyDoctorAboutCommOfficer && enemyDoctor.hp > 0 && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y) && Math.abs(pc.x - enemyDoctor.x) < 3 && Math.abs(pc.y - enemyDoctor.y) < 3){
 				
 			}
 		}
