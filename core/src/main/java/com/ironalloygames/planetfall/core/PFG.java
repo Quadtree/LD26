@@ -346,7 +346,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				vfx.remove(i--);
 		}
 		
-		if((pc.temperature > 345  || tick > 340) && currentLevel == shipLevel && curDialog == null){
+		if((pc.temperature > 345  || tick > 410) && currentLevel == shipLevel && curDialog == null){
 			this.curDialog = new EscapeShip();
 			
 			if(pc.temperature > 345)

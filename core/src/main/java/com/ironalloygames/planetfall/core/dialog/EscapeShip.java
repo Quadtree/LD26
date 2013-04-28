@@ -75,6 +75,7 @@ public class EscapeShip extends Dialog {
 			PFG.s.pc.x = PFG.s.planetLevel.pcLifepodX;
 			PFG.s.pc.y = PFG.s.planetLevel.pcLifepodY;
 			PFG.s.pc.temperature = PFG.s.planetLevel.ambientTemp;
+			PFG.s.pc.hp = 1;
 		}
 		if(stateName.equals("VentureForth")){
 			PFG.s.planetLevel.actors.add(new PowerCell(PFG.s.planetLevel.pcLifepodX, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));

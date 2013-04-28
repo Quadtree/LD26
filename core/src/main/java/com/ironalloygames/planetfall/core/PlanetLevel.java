@@ -3,10 +3,12 @@ package com.ironalloygames.planetfall.core;
 import java.lang.reflect.InvocationTargetException;
 
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.item.AntiSicknessPill;
 import com.ironalloygames.planetfall.core.item.Flint;
 import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.PowerCell;
+import com.ironalloygames.planetfall.core.item.StarshipFuelCan;
 
 import playn.core.PlayN;
 
@@ -224,27 +226,27 @@ public class PlanetLevel extends Level {
 		
 		PlayN.log().debug("Placing lifepods");
 		
-		placeLifepod(0,0,0,100000);
+		placeLifepod(0,0,0,100000,false);
 		
 		pcLifepodX = lastLifepodX;
 		pcLifepodY = lastLifepodY;
 		
 		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.alliedShip, PFG.s.alliedEmpire));
 		
-		placeLifepod(pcLifepodX,pcLifepodY,0,5000);
+		placeLifepod(pcLifepodX,pcLifepodY,0,5000,true);
 		
 		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.alliedShip, PFG.s.alliedEmpire));
 		actors.add(new PodDoor(lastLifepodX, lastLifepodY + 3, this));
 		actors.add(new CommOfficer(lastLifepodX, lastLifepodY, this));
 		
-		placeLifepod(pcLifepodX,pcLifepodY,0,5000);
+		placeLifepod(pcLifepodX,pcLifepodY,0,5000,true);
 		
 		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.enemyShip, PFG.s.enemyEmpire));
 		actors.add(new PodDoor(lastLifepodX, lastLifepodY + 3, this));
 		actors.add(new EnemyDoctor(lastLifepodX, lastLifepodY, this));
 		
-		actors.add(new FusionTorch(pcLifepodX, pcLifepodY, this));
-		actors.add(new FusionLancePistol(pcLifepodX, pcLifepodY+1, this));
+		for(int i=0;i<6;++i)
+			placeLifepod(pcLifepodX,pcLifepodY,0,5000,true);
 		
 		PlayN.log().debug("World generation complete");
 	}
@@ -268,7 +270,7 @@ public class PlanetLevel extends Level {
 	
 	public int lastLifepodX, lastLifepodY;
 	
-	public void placeLifepod(int x, int y, int minRange, int maxRange){
+	public void placeLifepod(int x, int y, int minRange, int maxRange, boolean placeExtraGear){
 		while(true){
 			lastLifepodX = PFG.s.r.nextInt(MAP_WIDTH - 40) + 20;
 			lastLifepodY = PFG.s.r.nextInt(MAP_HEIGHT - 40) + 20;
@@ -307,6 +309,14 @@ public class PlanetLevel extends Level {
 				}
 				
 				PlayN.log().debug("DIST1 " + dist1);
+				
+				switch(PFG.s.r.nextInt(5)){
+					case 0: actors.add(new FusionTorch(lastLifepodX+1, lastLifepodY, this)); break;
+					case 1: actors.add(new FusionLancePistol(lastLifepodX+1, lastLifepodY, this)); break;
+					case 2: actors.add(new PowerCell(lastLifepodX+1, lastLifepodY, this)); actors.add(new PowerCell(lastLifepodX+1, lastLifepodY, this)); break;
+					case 3: actors.add(new StarshipFuelCan(lastLifepodX+1, lastLifepodY, this)); break;
+					case 4: actors.add(new AntiSicknessPill(lastLifepodX+1, lastLifepodY, this)); break;
+				}
 				
 				break;
 			}

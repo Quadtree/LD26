@@ -57,7 +57,7 @@ public class Javelin extends Actor {
 					if(a instanceof PodDoor)
 						a.hp -= 0.07f;
 					else
-						a.hp -= 0.5f;
+						a.hp -= PFG.s.r.nextFloat() * 1.3f;
 					
 					return;
 				}
