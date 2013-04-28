@@ -42,6 +42,9 @@ import pythagoras.f.MathUtil;
 public class PFG extends Game.Default implements Renderer, Listener, playn.core.Mouse.Listener {
 	private static final int CHAR_WIDTH = 13;
 	private static final int CHAR_HEIGHT = 21;
+	
+	public static final int DAY_LENGTH = 2100;
+	
 	CanvasImage img;
 	ImageLayer imgLayer;
 	
@@ -223,6 +226,22 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	public boolean talkedToEnemyDoctor = false;
 	public boolean talkedToEnemyDoctorAboutCommOfficer = false;
 	public boolean talkedToCommOfficerAboutEscaping = false;
+	
+	public String getHour(){
+		float time = ((tick + 400) % DAY_LENGTH) / (float)DAY_LENGTH;
+		String hour = "";
+		
+		if(time < 0.15f)
+			hour = "Dawn";
+		else if(time < 0.4f)
+			hour = "Day";
+		else if(time < 0.65f)
+			hour = "Dusk";
+		else
+			hour = "Night";
+		
+		return hour;
+	}
 
 	@Override
 	public void update(int delta) {
@@ -255,7 +274,13 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			framesThisSecond = 0;
 		}
 		
-		setTextAt(0,0, "T" + tick, Color.rgb(255, 255, 255));
+		if(getHour().equals("Night")) planetLevel.ambientTemp = 250;
+		if(getHour().equals("Dusk")) planetLevel.ambientTemp = 285;
+		if(getHour().equals("Dawn")) planetLevel.ambientTemp = 260;
+		if(getHour().equals("Day")) planetLevel.ambientTemp = 292;
+		
+		setTextAt(0,0, "Day " + ((tick / DAY_LENGTH)+1), Color.rgb(255, 255, 255));
+		setTextAt(0,1, getHour(), Color.rgb(255, 255, 255));
 		
 		setCharAtReal(mouseRealTileX, mouseRealTileY, '\0', Color.rgb(255, 255, 255));
 		
@@ -264,6 +289,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		setTextAt(0,2, "Body: " + (int)(pc.temperature - 273) + (char)0xB0 + "C", getTempColor(pc.temperature));
 		
 		setTextAt(12,2, "Ambient: " + (int)(currentLevel.ambientTemp - 273) + (char)0xB0 + "C", getTempColor(currentLevel.ambientTemp));
+		
+		setTextAt(30,2, "Health: " + (int)(pc.hp * 100) + "%", Color.rgb(255, 255, 255));
 		
 		if(pc.inventory.size() > 0){
 			if(!isUsingItemInDirection){
@@ -414,6 +441,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if(event.key() == Key.K3 && curDialog != null) curDialog.pick(3);
 		if(event.key() == Key.K4 && curDialog != null) curDialog.pick(4);
 		if(event.key() == Key.K5 && curDialog != null) curDialog.pick(5);
+		
+		if(event.key() == Key.R) pc.actionTimer = DAY_LENGTH / 12;
 		
 		if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableInDirection()) isUsingItemInDirection = true;
 		

@@ -24,4 +24,14 @@ public class PC extends Unit {
 	public int getRenderPriority() {
 		return super.getRenderPriority()+1;
 	}
+
+	@Override
+	public void update() {
+		
+		if(temperature < 278){
+			hp -= (278 - temperature) / 20 / 1800;
+		}
+		
+		super.update();
+	}
 }

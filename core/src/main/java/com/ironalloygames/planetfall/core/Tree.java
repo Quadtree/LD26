@@ -34,4 +34,9 @@ public class Tree extends Actor {
 	public boolean isPickupable() {
 		return false;
 	}
+
+	@Override
+	public float fireDamageMultiplier() {
+		return 1.f / 1500.f;
+	}
 }

@@ -30,6 +30,17 @@ public class FusionLancePistol extends Actor {
 	@Override
 	public void useInDirection(float dir, Unit user) {
 		
+		PowerCell cell = null;
+		
+		for(Actor a : user.inventory){
+			if(a instanceof PowerCell) cell = (PowerCell) a;
+		}
+	
+		if(cell != null)
+			user.inventory.remove(cell);
+		else
+			return;
+		
 		int cx = user.x;
 		int cy = user.y;
 		

@@ -99,5 +99,5 @@ public class Actor implements Comparable<Actor>{
 		return this.getRenderPriority() - o.getRenderPriority();
 	}
 	
-	public float fireDamageMultiplier(){ return 1; }
+	public float fireDamageMultiplier(){ return 1.f / 500.f; }
 }

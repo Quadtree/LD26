@@ -98,7 +98,9 @@ public class Level {
 		float curX = sx, curY = sy;
 		float dist = (float)Math.sqrt(Math.pow(sx - ex, 2) + Math.pow(sy - ey, 2));
 		
-		//if(dist > 7) return false;
+		if(PFG.s.getHour().equals("Night") && dist > 7) return false;
+		if(PFG.s.getHour().equals("Dusk") && dist > 15) return false;
+		if(PFG.s.getHour().equals("Dawn") && dist > 15) return false;
 		
 		float mx = (ex - sx) / dist / 4;
 		float my = (ey - sy) / dist / 4;
