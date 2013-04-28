@@ -3,7 +3,7 @@ package com.ironalloygames.planetfall.core;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.ironalloygames.planetfall.dialog.DeadEnding;
+import com.ironalloygames.planetfall.core.dialog.DeadEnding;
 
 import playn.core.Color;
 

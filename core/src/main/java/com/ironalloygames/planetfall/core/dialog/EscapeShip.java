@@ -1,13 +1,13 @@
-package com.ironalloygames.planetfall.dialog;
+package com.ironalloygames.planetfall.core.dialog;
 
 import java.util.HashMap;
 
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.PlanetLevel;
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.dialog.Dialog.StateTransition;
 import com.ironalloygames.planetfall.core.item.AntiSicknessPill;
 import com.ironalloygames.planetfall.core.item.PowerCell;
-import com.ironalloygames.planetfall.dialog.Dialog.StateTransition;
 
 public class EscapeShip extends Dialog {
 	public EscapeShip(){

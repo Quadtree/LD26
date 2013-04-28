@@ -1,4 +1,4 @@
-package com.ironalloygames.planetfall.dialog;
+package com.ironalloygames.planetfall.core.dialog;
 
 import java.util.HashMap;
 
