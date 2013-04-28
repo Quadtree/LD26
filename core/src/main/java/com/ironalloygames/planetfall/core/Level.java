@@ -92,14 +92,14 @@ public class Level {
 		
 		//if(dist > 7) return false;
 		
-		float mx = (ex - sx) / dist / 2;
-		float my = (ey - sy) / dist / 2;
+		float mx = (ex - sx) / dist / 4;
+		float my = (ey - sy) / dist / 4;
 		
-		while(Math.abs(curX - ex) > 2 || Math.abs(curY - ey) > 2){
+		while(Math.abs(curX - ex) > 1 || Math.abs(curY - ey) > 1){
 			curX += mx;
 			curY += my;
 			
-			if(!isLOSable((int)curX, (int)curY)) return false;
+			if(!isLOSable((int)(curX + 0.5f), (int)(curY + 0.5f))) return false;
 		}
 		
 		return true;
@@ -138,4 +138,6 @@ public class Level {
 				return "Grassy meadow";
 		}
 	}
+	
+	public float ambientTemp = 300;
 }

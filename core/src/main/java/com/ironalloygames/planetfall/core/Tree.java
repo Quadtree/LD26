@@ -20,11 +20,11 @@ public class Tree extends Actor {
 		PFG.s.setCharAtReal(x, y, 'Y', Color.rgb(0, 128, 0));
 		PFG.s.setCharAtReal(x, y - 1, '@', Color.rgb(0, 128, 0));
 		
-		super.update();
+		super.render();
 	}
 
 	@Override
 	public String getDesc() {
-		return "A large tree. Probably too heavy to carry";
+		return "A large tree. Probably too heavy to carry" + super.getDesc();
 	}
 }

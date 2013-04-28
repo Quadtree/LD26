@@ -21,4 +21,9 @@ public class Unit extends Actor {
 		actionTimer--;
 		super.update();
 	}
+
+	@Override
+	public float getHeatGainMultiplier() {
+		return 0.18f;
+	}
 }

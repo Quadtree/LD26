@@ -54,6 +54,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	public PlanetLevel planetLevel;
 	public PodLevel podLevel;
 	public RecruitingOfficeLevel officeLevel;
+	public ShipLevel shipLevel;
+	
+	public Person captain;
+	public Person dco;
+	public Person fco;
 	
 	public Level currentLevel;
 	
@@ -67,6 +72,9 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	
 	public Empire alliedEmpire;
 	public Empire enemyEmpire;
+	
+	public Ship alliedShip;
+	public Ship enemyShip;
 	
 	public PFG() {
 		super(33); // call update every 33ms (30 times per second)
@@ -91,6 +99,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		planetLevel = new PlanetLevel();
 		podLevel = new PodLevel();
 		officeLevel = new RecruitingOfficeLevel();
+		shipLevel = new ShipLevel();
+		
+		captain = new Person();
+		dco = new Person();
+		fco = new Person();
 		
 		rec = new Recruiter();
 		rec.x = 8;
@@ -101,6 +114,9 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		alliedEmpire = new Empire();
 		enemyEmpire = new Empire();
+		
+		alliedShip = new Ship();
+		enemyShip = new Ship();
 		
 		pc = new PC();
 		pc.x = r.nextInt(PlanetLevel.MAP_WIDTH);
@@ -150,7 +166,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		currentLevel.render();
 		
-		if(movX != 0 || movY != 0) pc.move(movX, movY);
+		if((movX != 0 || movY != 0) && autoMoveTimer-- <= 0) pc.move(movX, movY);
 		
 		setTextAt(0,0, "FPS " + fps, Color.rgb(255, 255, 255));
 		
@@ -231,13 +247,19 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	}
 	
 	int movX, movY;
+	int autoMoveTimer = 6;
 
 	@Override
 	public void onKeyDown(Event event) {
+		if(movX == 0 && movY == 0) autoMoveTimer = 6;
+		
 		if(event.key() == Key.A) movX = -1;
 		if(event.key() == Key.D) movX = 1;
 		if(event.key() == Key.W) movY = -1;
 		if(event.key() == Key.S) movY = 1;
+		
+		if(movX != 0 || movY != 0) pc.move(movX, movY);
+		
 		
 		if(event.key() == Key.K1 && curDialog != null) curDialog.pick(1);
 		if(event.key() == Key.K2 && curDialog != null) curDialog.pick(2);

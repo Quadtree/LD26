@@ -25,7 +25,7 @@ public class Recruiter extends Unit {
 
 	@Override
 	public String getDesc() {
-		return title + " " + pd.lastName;
+		return title + " " + pd.lastName + super.getDesc();
 	}
 	
 }

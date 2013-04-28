@@ -21,6 +21,8 @@ public class YellowBerryBush extends BerryBush {
 	
 	@Override
 	public String getDesc() {
-		return "A bush with some yellow colored berries lying around";
+		return "A bush with some yellow colored berries lying around." + super.getDesc();
 	}
+	
+	public float heatGainModifier(){ return 1; }
 }

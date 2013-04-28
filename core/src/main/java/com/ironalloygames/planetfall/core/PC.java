@@ -12,12 +12,12 @@ public class PC extends Unit {
 	public void render() {
 		PFG.s.setCharAtReal(x, y, '@', Color.rgb(255, 255, 255));
 		
-		super.update();
+		super.render();
 	}
 
 	@Override
 	public String getDesc() {
-		return "Intrepid space explorer";
+		return "Intrepid space explorer." + super.getDesc();
 	}
 
 }

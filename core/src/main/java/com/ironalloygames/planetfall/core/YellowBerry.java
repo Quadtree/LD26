@@ -15,6 +15,6 @@ public class YellowBerry extends Berry {
 	
 	@Override
 	public String getDesc() {
-		return "A yellow colored berry. Tasty?";
+		return "A yellow colored berry. Tasty?" + super.getDesc();
 	}
 }

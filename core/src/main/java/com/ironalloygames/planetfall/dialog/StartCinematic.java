@@ -3,12 +3,14 @@ package com.ironalloygames.planetfall.dialog;
 import java.util.HashMap;
 
 import com.ironalloygames.planetfall.core.PFG;
+import com.ironalloygames.planetfall.core.ShipLevel;
 
 public class StartCinematic extends Dialog {
 	public StartCinematic(){
 		states.put("Start", new HashMap<String, StateTransition>());
 		states.get("Start").put("P", new StateTransition("You feel a sudden lurch as the pod springs to life. Well, at least you're away... (Press 1 to continue)", ""));
 		states.get("Start").put("1", new StateTransition("Continue", "Start2"));
+		states.get("Start").put("2", new StateTransition("Skip Opening Cinematic", "Skip"));
 		
 		states.put("Start2", new HashMap<String, StateTransition>());
 		states.get("Start2").put("P", new StateTransition("Apruptly, an alarm begins to blare. Its too far away for you to read it exactly. Could be enemy fire, or an air leak or...", ""));
@@ -50,7 +52,7 @@ public class StartCinematic extends Dialog {
 		states.get("DoReflect3").put("1", new StateTransition(PFG.s.pc.pd.firstName + " " + PFG.s.pc.pd.lastName, "DoReflect4"));
 		
 		states.put("DoReflect4", new HashMap<String, StateTransition>());
-		states.get("DoReflect4").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"What skills do you have that would be useful to the space forces?\"", ""));
+		states.get("DoReflect4").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"Alright " + PFG.s.pc.pd.firstName + ", what skills do you have that would be useful to the space forces?\"", ""));
 		states.get("DoReflect4").put("1", new StateTransition("\"I'm an ace fighter pilot!\"", "AceFighterPilot"));
 		states.get("DoReflect4").put("2", new StateTransition("\"I'm a good mechanic.\"", "Mechanic1"));
 		states.get("DoReflect4").put("3", new StateTransition("\"I've gotten 120,000 points playing Space Buster!\"", "SpaceBuster"));
@@ -66,8 +68,29 @@ public class StartCinematic extends Dialog {
 		states.get("SpaceBuster").put("2", new StateTransition("\"I'm a good mechanic.\"", "Mechanic1"));
 		
 		states.put("Mechanic1", new HashMap<String, StateTransition>());
-		states.get("Mechanic1").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"That'll do. Welcome to the space forces.\"", ""));
+		states.get("Mechanic1").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"That'll do. Welcome to the space forces, mechanic trainee " + PFG.s.pc.pd.lastName + ".\"", ""));
 		states.get("Mechanic1").put("1", new StateTransition("Continue", "Mechanic2"));
+		
+		states.put("Mechanic2", new HashMap<String, StateTransition>());
+		states.get("Mechanic2").put("P", new StateTransition("After some brief basic training, you are assigned to the " + PFG.s.alliedShip.className + " " + PFG.s.alliedShip.name + 
+				". Your fleet is assigned to the battlefront, and you are assigned to repair Fuel Pump Room 2.", ""));
+		states.get("Mechanic2").put("1", new StateTransition("Continue", "Mechanic3"));
+		
+		states.put("Mechanic3", new HashMap<String, StateTransition>());
+		states.get("Mechanic3").put("P", new StateTransition("One day, while you are fixing a small pressure imbalance in the system, you hear a voice come over the shipwide PA system.", ""));
+		states.get("Mechanic3").put("1", new StateTransition("Continue", "Mechanic4"));
+		
+		states.put("Mechanic4", new HashMap<String, StateTransition>());
+		states.get("Mechanic4").put("P", new StateTransition("Captain " + PFG.s.captain.lastName + ": \"We're seeing multiple unidentified jump-in signatures on scan. Command assumes that they are hostile. Estimated contact in four minutes, all crew to combat alert red.\"", ""));
+		states.get("Mechanic4").put("1", new StateTransition("Continue", "Mechanic5"));
+		
+		states.put("Mechanic5", new HashMap<String, StateTransition>());
+		states.get("Mechanic5").put("P", new StateTransition("This *is* your battle station. How lucky! Now all you need to do is wait for something to break. Things are mostly boring, just a few tremors, until...", ""));
+		states.get("Mechanic5").put("1", new StateTransition("Continue", "Mechanic6"));
+		
+		states.put("Mechanic6", new HashMap<String, StateTransition>());
+		states.get("Mechanic6").put("P", new StateTransition("An enemy fusion lance cuts through the wall! EVERYTHING IS ON FIRE! (Walk to the red F, press P to pick up the fire extinguisher, walk back to the fire and press U to use it)", ""));
+		states.get("Mechanic6").put("1", new StateTransition("Continue", "Mechanic7"));
 	}
 	
 	@Override
@@ -79,6 +102,17 @@ public class StartCinematic extends Dialog {
 			PFG.s.pc.curLevel = PFG.s.officeLevel;
 			PFG.s.pc.x = 8;
 			PFG.s.pc.y = 5;
+		}
+		if(stateName.equals("Mechanic2") || stateName.equals("Skip")){
+			PFG.s.currentLevel.actors.remove(PFG.s.pc);
+			PFG.s.currentLevel = PFG.s.shipLevel;
+			PFG.s.currentLevel.actors.add(PFG.s.pc);
+			PFG.s.pc.curLevel = PFG.s.shipLevel;
+			PFG.s.pc.x = 18;
+			PFG.s.pc.y = 25;
+		}
+		if(stateName.equals("Mechanic6") || stateName.equals("Skip")){
+			((ShipLevel) PFG.s.currentLevel).cataclysm();
 		}
 		super.newState(stateName);
 	}

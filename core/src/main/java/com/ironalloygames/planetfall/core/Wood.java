@@ -14,11 +14,11 @@ public class Wood extends Actor {
 	public void render() {
 		PFG.s.setCharAtReal(x, y, 'w', Color.rgb(255, 128, 0));
 		
-		super.update();
+		super.render();
 	}
 	
 	@Override
 	public String getDesc() {
-		return "Some wood. Good for fires!";
+		return "Some wood. Good for fires!" + super.getDesc();
 	}
 }
