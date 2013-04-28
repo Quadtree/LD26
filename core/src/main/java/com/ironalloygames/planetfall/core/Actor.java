@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import playn.core.Color;
 import playn.core.PlayN;
 
-public class Actor {
+public class Actor implements Comparable<Actor>{
 	public int x, y;
 	
 	public Level curLevel;
@@ -35,16 +35,16 @@ public class Actor {
 		temperature = ((temperature - curLevel.ambientTemp) * 0.995f) + curLevel.ambientTemp;
 		
 		if(temperature > getHeatDamagePoint()){
-			hp -= (temperature - getHeatDamagePoint()) / 200;
+			hp -= (temperature - getHeatDamagePoint()) / 200 * fireDamageMultiplier();
 		}
 	}
 	public void render(){}
 	public String getDesc() {
 		return "";
 	}
-	public String getLongDesc(){ return getDesc() + " " + (int)(temperature - 273) + (char)0xB0 + "C" + (temperature > getIgnitionPoint() ? " ON FIRE!" : ""); }
+	public String getLongDesc(){ return getDesc() + " " + (int)(temperature - 273) + (char)0xB0 + "C" + (temperature > getIgnitionPoint() ? " ON FIRE!" : "") + " " + (int)(hp*100) + "%"; }
 	public float getIgnitionPoint(){ return 450; }
-	public float getBurnTemperature(){ return 600; }
+	public float getBurnTemperature(){ return 550; }
 	public float getHeatDamagePoint(){ return 345; }
 	
 	protected int fixCol(int col){
@@ -86,4 +86,18 @@ public class Actor {
 	
 	public void useInDirection(float dir, Unit user){
 	}
+	
+	public void destroyed(){
+		
+	}
+	
+	public int getRenderPriority(){
+		return 0;
+	}
+	@Override
+	public int compareTo(Actor o) {
+		return this.getRenderPriority() - o.getRenderPriority();
+	}
+	
+	public float fireDamageMultiplier(){ return 1; }
 }

@@ -17,7 +17,11 @@ public class PC extends Unit {
 
 	@Override
 	public String getDesc() {
-		return "Intrepid space explorer." + super.getDesc();
+		return "Mechanic Trainee " + pd.firstName + " " + pd.lastName + "." + super.getDesc();
 	}
 
+	@Override
+	public int getRenderPriority() {
+		return super.getRenderPriority()+1;
+	}
 }

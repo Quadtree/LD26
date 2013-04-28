@@ -30,7 +30,12 @@ public class StarshipFuel extends Actor {
 
 	@Override
 	public float getBurnTemperature() {
-		return 1200;
+		return 700;
+	}
+
+	@Override
+	public float fireDamageMultiplier() {
+		return 1.f / 2000.f;
 	}
 	
 }

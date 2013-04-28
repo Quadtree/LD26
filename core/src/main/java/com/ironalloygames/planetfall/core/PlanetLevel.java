@@ -196,9 +196,17 @@ public class PlanetLevel extends Level {
 		pcLifepodX = lastLifepodX;
 		pcLifepodY = lastLifepodY;
 		
-		placeLifepod(pcLifepodX,pcLifepodX,0,30);
+		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.alliedShip, PFG.s.alliedEmpire));
 		
-		placeLifepod(pcLifepodX,pcLifepodX,0,30);
+		placeLifepod(pcLifepodX,pcLifepodY,0,30);
+		
+		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.alliedShip, PFG.s.alliedEmpire));
+		actors.add(new PodDoor(lastLifepodX, lastLifepodY + 3, this));
+		
+		placeLifepod(pcLifepodX,pcLifepodY,0,30);
+		
+		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.enemyShip, PFG.s.enemyEmpire));
+		actors.add(new PodDoor(lastLifepodX, lastLifepodY + 3, this));
 		
 		actors.add(new FusionTorch(pcLifepodX, pcLifepodY, this));
 		
@@ -261,6 +269,8 @@ public class PlanetLevel extends Level {
 						}
 					}
 				}
+				
+				PlayN.log().debug("DIST1 " + dist1);
 				
 				break;
 			}

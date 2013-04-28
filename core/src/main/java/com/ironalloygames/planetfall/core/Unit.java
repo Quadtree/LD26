@@ -26,4 +26,9 @@ public class Unit extends Actor {
 	public float getHeatGainMultiplier() {
 		return 0.18f;
 	}
+
+	@Override
+	public int getRenderPriority() {
+		return super.getRenderPriority()+1;
+	}
 }

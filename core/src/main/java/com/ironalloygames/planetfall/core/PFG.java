@@ -65,6 +65,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	public Person dco;
 	public Person fco;
 	
+	public boolean commOfficerStillInjured = true;
+	
 	public Level currentLevel;
 	
 	public Random r = new Random();
@@ -128,6 +130,12 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	public void init() {
 		s = this;
 		
+		alliedEmpire = new Empire();
+		enemyEmpire = new Empire();
+		
+		alliedShip = new Ship();
+		enemyShip = new Ship();
+		
 		screenTileWidth = graphics().width() / CHAR_WIDTH;
 		screenTileHeight = graphics().height() / CHAR_HEIGHT;
 		
@@ -152,11 +160,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		rec.y = 3;
 		officeLevel.actors.add(rec);
 		
-		alliedEmpire = new Empire();
-		enemyEmpire = new Empire();
 		
-		alliedShip = new Ship();
-		enemyShip = new Ship();
 		
 		pc = new PC();
 		pc.x = r.nextInt(PlanetLevel.MAP_WIDTH);
@@ -167,13 +171,13 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			pc.y = r.nextInt(PlanetLevel.MAP_WIDTH);
 		}
 		
-		curDialog = new StartCinematic();
-		currentLevel = podLevel;
+		//curDialog = new StartCinematic();
+		//currentLevel = podLevel;
 				
-		/*currentLevel = planetLevel;
+		currentLevel = planetLevel;
 		pc.x = planetLevel.pcLifepodX;
 		pc.y = planetLevel.pcLifepodY;
-		PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;*/
+		PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;
 		
 		pc.curLevel = currentLevel;
 		
@@ -273,7 +277,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				vfx.remove(i--);
 		}
 		
-		if(pc.temperature > 345 && currentLevel == shipLevel && curDialog == null){
+		if((pc.temperature > 345  || tick > 340) && currentLevel == shipLevel && curDialog == null){
 			this.curDialog = new EscapeShip();
 			this.curDialog.curState = "StartAlt";
 		}
@@ -375,6 +379,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				isUsingItemInDirection = false;
 			}
 		}
+		
+		if(event.key() == Key.PERIOD) pc.actionTimer = 10;
 		
 		if(movX != 0 || movY != 0) pc.move(movX, movY);
 		

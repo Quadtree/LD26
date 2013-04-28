@@ -1,6 +1,7 @@
 package com.ironalloygames.planetfall.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import playn.core.Color;
 
@@ -71,8 +72,15 @@ public class Level {
 	}
 	
 	public void update(){
-		for(Actor a : actors){
-			a.update();
+		Collections.sort(actors);
+		
+		for(int i=0;i<actors.size();++i){
+			if(actors.get(i).hp > 0)
+				actors.get(i).update();
+			else{
+				actors.get(i).destroyed();
+				actors.remove(i--);
+			}
 		}
 	}
 	

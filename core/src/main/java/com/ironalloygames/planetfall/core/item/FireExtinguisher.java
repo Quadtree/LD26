@@ -67,7 +67,7 @@ public class FireExtinguisher extends Actor {
 		for(Actor a : PFG.s.currentLevel.actors)
 		{
 			if(a.x == px && a.y == py){
-				a.temperature = ((a.temperature - 280) * 0.5f) + 280;
+				a.temperature = ((a.temperature - 280) * 0.25f) + 280;
 			}
 		}
 	}
