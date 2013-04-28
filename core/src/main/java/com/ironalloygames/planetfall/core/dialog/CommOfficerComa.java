@@ -26,7 +26,7 @@ public class CommOfficerComa extends Dialog {
 		states.get("Wake").put("2", new StateTransition("Leave", "End"));
 		
 		states.put("Wounds", new HashMap<String, StateTransition>());
-		states.get("Wounds").put("P", new StateTransition(PFG.s.commOfficer.pd.getHeShe() + " has several deep gashes, probably from falling debris. These have become infected, and " +
+		states.get("Wounds").put("P", new StateTransition(PFG.s.commOfficer.pd.genderSpecific("He", "She") + " has several deep gashes, probably from falling debris. These have become infected, and " +
 				PFG.s.commOfficer.pd.getHeShe() + " is now running a high fever. This is well beyond your ability to treat. You're a mechanic, not a doctor.", ""));
 		states.get("Wounds").put("1", new StateTransition("Try to wake " + PFG.s.commOfficer.pd.getHimHer(), "Wake"));
 		states.get("Wounds").put("2", new StateTransition("Leave", "End"));
