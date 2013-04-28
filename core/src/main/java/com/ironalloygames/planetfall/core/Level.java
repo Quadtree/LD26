@@ -139,5 +139,5 @@ public class Level {
 		}
 	}
 	
-	public float ambientTemp = 300;
+	public float ambientTemp = 292;
 }

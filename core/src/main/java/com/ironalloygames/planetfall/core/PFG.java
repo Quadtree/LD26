@@ -32,6 +32,7 @@ import playn.core.Mouse.WheelEvent;
 import playn.core.PlayN;
 import playn.core.Surface;
 import playn.core.TextFormat;
+import pythagoras.f.MathUtil;
 
 public class PFG extends Game.Default implements Renderer, Listener, playn.core.Mouse.Listener {
 	private static final int CHAR_WIDTH = 13;
@@ -207,7 +208,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		if((movX != 0 || movY != 0) && autoMoveTimer-- <= 0) pc.move(movX, movY);
 		
-		setTextAt(0,0, "FPS " + fps, Color.rgb(255, 255, 255));
+		//setTextAt(0,0, "FPS " + fps, Color.rgb(255, 255, 255));
 		
 		framesThisSecond++;
 		
@@ -217,11 +218,15 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			framesThisSecond = 0;
 		}
 		
-		setTextAt(0,1, "T" + tick, Color.rgb(255, 255, 255));
+		setTextAt(0,0, "T" + tick, Color.rgb(255, 255, 255));
 		
 		setCharAtReal(mouseRealTileX, mouseRealTileY, '\0', Color.rgb(255, 255, 255));
 		
 		setTextAt(8,0, currentLevel.getDesc(mouseRealTileX, mouseRealTileY), Color.rgb(255, 255, 255));
+		
+		setTextAt(0,1, "Body: " + (int)(pc.temperature - 273) + (char)0xB0 + "C", getTempColor(pc.temperature));
+		
+		setTextAt(12,1, "Ambient: " + (int)(currentLevel.ambientTemp - 273) + (char)0xB0 + "C", getTempColor(currentLevel.ambientTemp));
 		
 		if(pc.inventory.size() > 0){
 			if(!isUsingItemInDirection){
@@ -245,6 +250,19 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			else
 				vfx.remove(i--);
 		}
+	}
+	
+	public int getTempColor(float temp){
+		if(temp < 260)
+			return Color.rgb(0, 0, 255);
+		if(temp < 280)
+			return Color.rgb(128, 128, 255);
+		if(temp > 320)
+			return Color.rgb(255, 255, 0);
+		if(temp > 345)
+			return Color.rgb(255, 0, 0);
+		
+		return Color.rgb(255, 255, 255);
 	}
 	
 	boolean isUsingItemInDirection = false;
@@ -320,10 +338,10 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			if(event.key() == Key.W) movY = -1;
 			if(event.key() == Key.S) movY = 1;
 		} else {
-			if(event.key() == Key.A) pc.inventory.get(equippedItem).useInDirection(UseDirection.WEST, pc);
-			if(event.key() == Key.D) pc.inventory.get(equippedItem).useInDirection(UseDirection.EAST, pc);
-			if(event.key() == Key.W) pc.inventory.get(equippedItem).useInDirection(UseDirection.NORTH, pc);
-			if(event.key() == Key.S) pc.inventory.get(equippedItem).useInDirection(UseDirection.SOUTH, pc);
+			if(event.key() == Key.A) pc.inventory.get(equippedItem).useInDirection((float)Math.PI, pc);
+			if(event.key() == Key.D) pc.inventory.get(equippedItem).useInDirection(0, pc);
+			if(event.key() == Key.W) pc.inventory.get(equippedItem).useInDirection(MathUtil.TWO_PI - MathUtil.HALF_PI, pc);
+			if(event.key() == Key.S) pc.inventory.get(equippedItem).useInDirection(MathUtil.HALF_PI, pc);
 			isUsingItemInDirection = false;
 		}
 		

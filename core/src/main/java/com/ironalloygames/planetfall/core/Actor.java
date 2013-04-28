@@ -10,7 +10,7 @@ public class Actor {
 	
 	public Level curLevel;
 	
-	public float temperature = 300;
+	public float temperature = 292;
 	
 	public void update(){
 		if(curLevel == null) PlayN.log().warn("no curlevel " + this);
