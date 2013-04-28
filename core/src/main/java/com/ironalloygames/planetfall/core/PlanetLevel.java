@@ -3,6 +3,8 @@ package com.ironalloygames.planetfall.core;
 import java.lang.reflect.InvocationTargetException;
 
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.item.Canteen;
+import com.ironalloygames.planetfall.core.item.Flint;
 import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.PowerCell;
@@ -142,6 +144,10 @@ public class PlanetLevel extends Level {
 				if(map[x][y] == GroundType.WALL){
 					if(isPassable(x - 1, y) && isPassable(x + 1, y) && isPassable(x, y - 1) && isPassable(x, y + 1)){
 						map[x][y] = GroundType.ROCK;
+						
+						if(PFG.s.r.nextInt(6) == 0){
+							actors.add(new Flint(x - 1, y - 1, this));
+						}
 					}
 				}
 			}
@@ -241,6 +247,7 @@ public class PlanetLevel extends Level {
 		actors.add(new FusionLancePistol(pcLifepodX, pcLifepodY+1, this));
 		actors.add(new PowerCell(pcLifepodX, pcLifepodY+1, this));
 		actors.add(new PowerCell(pcLifepodX, pcLifepodY+1, this));
+		actors.add(new Canteen(pcLifepodX, pcLifepodY+2, this));
 		
 		PlayN.log().debug("World generation complete");
 	}

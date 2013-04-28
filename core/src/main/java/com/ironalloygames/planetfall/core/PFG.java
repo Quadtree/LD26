@@ -12,12 +12,14 @@ import com.ironalloygames.planetfall.core.info.Empire;
 import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.info.Person.NameGender;
 import com.ironalloygames.planetfall.core.info.Ship;
+import com.ironalloygames.planetfall.dialog.BadEnding;
 import com.ironalloygames.planetfall.dialog.CommOfficerComa;
 import com.ironalloygames.planetfall.dialog.Dialog;
 import com.ironalloygames.planetfall.dialog.EnemyDoctorAboutCommDialog;
 import com.ironalloygames.planetfall.dialog.EnemyDoctorDialog;
 import com.ironalloygames.planetfall.dialog.EscapeShip;
 import com.ironalloygames.planetfall.dialog.FirstNight;
+import com.ironalloygames.planetfall.dialog.MediumEnding;
 import com.ironalloygames.planetfall.dialog.StartCinematic;
 
 import playn.core.CanvasImage;
@@ -44,7 +46,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	private static final int CHAR_WIDTH = 13;
 	private static final int CHAR_HEIGHT = 21;
 	
-	public static final int DAY_LENGTH = 3200;
+	public static final int DAY_LENGTH = 4200;
 	
 	CanvasImage img;
 	ImageLayer imgLayer;
@@ -135,10 +137,14 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	}
 	
 	public ArrayList<VisualEffect> vfx = new ArrayList<VisualEffect>();
+	
+	public boolean yellowBerriesPoisonous = false;
 
 	@Override
 	public void init() {
 		s = this;
+		
+		yellowBerriesPoisonous = r.nextBoolean();
 		
 		alliedEmpire = new Empire();
 		enemyEmpire = new Empire();
@@ -229,7 +235,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	public boolean talkedToCommOfficerAboutEscaping = false;
 	
 	public String getHour(){
-		float time = ((tick + 400) % DAY_LENGTH) / (float)DAY_LENGTH;
+		float time = ((tick + (DAY_LENGTH * 0.17f)) % DAY_LENGTH) / (float)DAY_LENGTH;
 		String hour = "";
 		
 		if(time < 0.15f)
@@ -289,6 +295,27 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		setTextAt(45,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour(), Color.rgb(255, 255, 255));
 		
+		if(pc.waterNeed > 1.5f){
+			setTextAt(0,screenTileHeight - 1, "Parched", Color.rgb(255, 150, 0));
+		} else if(pc.waterNeed > 0.5f){
+			setTextAt(0,screenTileHeight - 1, "Thirsty", Color.rgb(0, 0, 255));
+			pc.hp -= 1.f / DAY_LENGTH / 3;
+		}
+		
+		if(pc.foodNeed > 1.5f){
+			setTextAt(0,screenTileHeight - 1, "Starving", Color.rgb(255, 150, 0));
+		} else if(pc.foodNeed > 0.5f){
+			setTextAt(0,screenTileHeight - 1, "Hungry", Color.rgb(0, 0, 255));
+			pc.hp -= 1.f / DAY_LENGTH / 3;
+		}
+		
+		if(pc.sickness > 1){
+			setTextAt(0,screenTileHeight - 1, "Very Sick", Color.rgb(0, 255, 0));
+		} else if(pc.sickness > 0){
+			setTextAt(0,screenTileHeight - 1, "Sick", Color.rgb(90, 255, 0));
+			pc.hp -= 1.f / DAY_LENGTH;
+		}
+		
 		setCharAtReal(mouseRealTileX, mouseRealTileY, '\0', Color.rgb(255, 255, 255));
 		
 		setTextAt(8,0, currentLevel.getDesc(mouseRealTileX, mouseRealTileY), Color.rgb(255, 255, 255));
@@ -304,7 +331,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				if(equippedItem >= pc.inventory.size()) equippedItem = 0;
 				setTextAt(0,3, (equippedItem+1) + " - " + pc.inventory.get(equippedItem).getName() + 
 						(pc.inventory.get(equippedItem).isUsableInDirection() || pc.inventory.get(equippedItem).isUsableOnSelf() ? ", U=Use" : "") + ", I=Info, O=Drop" + 
-						(pc.inventory.get(equippedItem).isCraftable() ? ", C=Craft" : ""), 
+						(pc.inventory.get(equippedItem).isCraftable(pc) ? ", C=Craft" : ""), 
 				Color.rgb(255, 255, 255));
 			} else {
 				setTextAt(0,3, "Use the WASD keys to determine direction of use", Color.rgb(255, 255, 255));
@@ -339,6 +366,13 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			else if(!talkedToEnemyDoctorAboutCommOfficer && talkedToCommOfficer && enemyDoctor.hp > 0 && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y) && Math.abs(pc.x - enemyDoctor.x) < 3 && Math.abs(pc.y - enemyDoctor.y) < 3){
 				curDialog = new EnemyDoctorAboutCommDialog();
 			}
+		}
+		
+		if(tick / DAY_LENGTH == 8){
+			if(talkedToEnemyDoctor)
+				curDialog = new MediumEnding();
+			else
+				curDialog = new BadEnding();
 		}
 	}
 	
@@ -462,6 +496,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		}
 		
 		if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableInDirection()) isUsingItemInDirection = true;
+		if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableOnSelf()) pc.inventory.get(equippedItem).useOnSelf(pc);
 		
 		if(event.key() == Key.DOWN) equippedItem++;
 		if(event.key() == Key.UP) equippedItem--;

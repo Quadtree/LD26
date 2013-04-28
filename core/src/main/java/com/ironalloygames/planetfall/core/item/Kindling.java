@@ -16,7 +16,7 @@ public class Kindling extends Actor {
 	
 	@Override
 	public void render() {
-		PFG.s.setCharAtReal(x, y, 'k', Color.rgb(255, 128, 0));
+		PFG.s.setCharAtReal(x, y, 'k', fixCol(Color.rgb(255, 128, 0)));
 		
 		super.render();
 	}

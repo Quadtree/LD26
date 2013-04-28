@@ -32,6 +32,11 @@ public class PC extends Unit {
 			hp -= (278 - temperature) / 20 / 1800;
 		}
 		
+		waterNeed += 1.f / PFG.DAY_LENGTH;
+		foodNeed += 1.f / PFG.DAY_LENGTH;
+		
+		if(sickness > 0) sickness += 1.f / PFG.DAY_LENGTH;
+		
 		super.update();
 	}
 }

@@ -65,7 +65,7 @@ public class Actor implements Comparable<Actor>{
 		return this.getClass().getSimpleName().replaceAll("([a-z])([A-Z])", "$1 $2");
 	}
 	
-	public boolean isCraftable(){
+	public boolean isCraftable(Unit user){
 		return false;
 	}
 	
@@ -102,5 +102,8 @@ public class Actor implements Comparable<Actor>{
 	public float fireDamageMultiplier(){ return 1.f / 500.f; }
 	
 	public void craft(Unit user){
+	}
+	
+	public void useOnSelf(Unit user){
 	}
 }

@@ -36,4 +36,13 @@ public class Unit extends Actor {
 	public float getHeatDamagePoint() {
 		return 345;
 	}
+	
+	public float waterNeed = 0;
+	public float foodNeed = 0;
+	public float sickness = 0;
+
+	@Override
+	public float fireDamageMultiplier() {
+		return 1.f / 20.f;
+	}
 }

@@ -1,5 +1,6 @@
 package com.ironalloygames.planetfall.core;
 
+import com.ironalloygames.planetfall.core.item.Kindling;
 import com.ironalloygames.planetfall.core.item.Wood;
 
 import playn.core.Color;
@@ -13,7 +14,10 @@ public class Tree extends Actor {
 		this.curLevel = curLevel;
 		
 		if(PFG.s.r.nextInt(3) == 0){
-			curLevel.actors.add(new Wood((int)(x + PFG.s.r.nextGaussian() * 2), (int)(y + PFG.s.r.nextGaussian() * 2), curLevel));
+			if(PFG.s.r.nextBoolean())
+				curLevel.actors.add(new Wood((int)(x + PFG.s.r.nextGaussian() * 2), (int)(y + PFG.s.r.nextGaussian() * 2), curLevel));
+			else
+				curLevel.actors.add(new Kindling((int)(x + PFG.s.r.nextGaussian() * 2), (int)(y + PFG.s.r.nextGaussian() * 2), curLevel));
 		}
 	}
 

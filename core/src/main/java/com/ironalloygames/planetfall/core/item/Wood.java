@@ -17,7 +17,7 @@ public class Wood extends Actor {
 	
 	@Override
 	public void render() {
-		PFG.s.setCharAtReal(x, y, 'w', Color.rgb(255, 128, 0));
+		PFG.s.setCharAtReal(x, y, 'w', fixCol(Color.rgb(255, 128, 0)));
 		
 		super.render();
 	}
@@ -28,7 +28,7 @@ public class Wood extends Actor {
 	}
 
 	@Override
-	public boolean isCraftable() {
+	public boolean isCraftable(Unit user) {
 		return true;
 	}
 
