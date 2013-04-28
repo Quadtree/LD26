@@ -30,8 +30,8 @@ public class FusionTorch extends Actor {
 
 	@Override
 	public void useInDirection(float dir, Unit user) {
-		int tx = user.x + (int)(Math.cos(dir) * 1.5);
-		int ty = user.y + (int)(Math.sin(dir) * 1.5);
+		int tx = user.x + (int)Math.round(Math.cos(dir));
+		int ty = user.y + (int)Math.round(Math.sin(dir));
 		
 		PFG.s.vfx.add(new VisualEffect(0, 12, tx, ty, Color.rgb(0, 192, 255), '%'));
 		
@@ -41,5 +41,7 @@ public class FusionTorch extends Actor {
 				a.temperature += 200 * a.getHeatGainMultiplier();
 			}
 		}
+		
+		user.actionTimer = 10;
 	}
 }
