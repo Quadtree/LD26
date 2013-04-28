@@ -89,7 +89,7 @@ public class StartCinematic extends Dialog {
 		states.get("Mechanic5").put("1", new StateTransition("Continue", "Mechanic6"));
 		
 		states.put("Mechanic6", new HashMap<String, StateTransition>());
-		states.get("Mechanic6").put("P", new StateTransition("An enemy fusion lance cuts through the wall! EVERYTHING IS ON FIRE! (Walk to the red F, press P to pick up the fire extinguisher, walk back to the fire and press U to use it)", ""));
+		states.get("Mechanic6").put("P", new StateTransition("An enemy fusion lance cuts through the wall! EVERYTHING IS ON FIRE! Bulkheads slam to keep the air in, but the fires still rage. (Walk to the red F, press P to pick up the fire extinguisher, walk back to the fire and press U to use it)", ""));
 		states.get("Mechanic6").put("1", new StateTransition("Continue", "Mechanic7"));
 	}
 	

@@ -167,13 +167,13 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			pc.y = r.nextInt(PlanetLevel.MAP_WIDTH);
 		}
 		
-		//curDialog = new StartCinematic();
-		//currentLevel = podLevel;
+		curDialog = new StartCinematic();
+		currentLevel = podLevel;
 				
-		currentLevel = planetLevel;
+		/*currentLevel = planetLevel;
 		pc.x = planetLevel.pcLifepodX;
 		pc.y = planetLevel.pcLifepodY;
-		PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;
+		PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;*/
 		
 		pc.curLevel = currentLevel;
 		

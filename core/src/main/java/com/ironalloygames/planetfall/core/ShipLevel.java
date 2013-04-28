@@ -1,6 +1,9 @@
 package com.ironalloygames.planetfall.core;
 
+import playn.core.Color;
+
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.PFG.VisualEffect;
 import com.ironalloygames.planetfall.core.item.FireExtinguisher;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.StarshipFuel;
@@ -56,6 +59,8 @@ public class ShipLevel extends Level {
 		for(int x=21;x<23;++x){
 			for(int y=10;y<=40;++y){
 				map[x][y] = GroundType.SHIP_FLOOR;
+				PFG.s.vfx.add(new VisualEffect(0, 25, x, y, Color.rgb(128, 220, 255), '#'));
+				PFG.s.vfx.add(new VisualEffect(25, 25, x, y, Color.rgb(64, 110, 125), '#'));
 			}
 		}	
 		

@@ -30,7 +30,7 @@ public class Dialog {
 			return;
 		}
 		
-		PFG.s.setTextAt(3, 3, states.get(curState).get("P").text, Color.rgb(255, 255, 255));
+		PFG.s.setTextAt(3, 4, states.get(curState).get("P").text, Color.rgb(255, 255, 255));
 		
 		for(int i=1;i<=5;++i){
 			if(states.get(curState).containsKey("" + i)){

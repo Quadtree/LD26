@@ -13,7 +13,7 @@ public class PlanetLevel extends Level {
 	public static final int MAP_WIDTH = 384;
 	public static final int MAP_HEIGHT = 384*2;
 	
-	int pcLifepodX, pcLifepodY;
+	public int pcLifepodX, pcLifepodY;
 	
 	private static final byte[][] MAP_BIGTILES = {
 		{0,0,0,0,0,0,0},

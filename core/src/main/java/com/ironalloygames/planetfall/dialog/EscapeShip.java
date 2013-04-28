@@ -64,6 +64,10 @@ public class EscapeShip extends Dialog {
 			PFG.s.currentLevel = PFG.s.planetLevel;
 			PFG.s.currentLevel.actors.add(PFG.s.pc);
 			PFG.s.pc.curLevel = PFG.s.planetLevel;
+			
+			PFG.s.pc.x = PFG.s.planetLevel.pcLifepodX;
+			PFG.s.pc.y = PFG.s.planetLevel.pcLifepodY;
+			PFG.s.pc.temperature = PFG.s.planetLevel.ambientTemp;
 		}
 	}
 }
