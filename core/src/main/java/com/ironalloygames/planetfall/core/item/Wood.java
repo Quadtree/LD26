@@ -38,4 +38,9 @@ public class Wood extends Actor {
 		user.inventory.add(new Javelin(0,0,user.curLevel));
 		super.craft(user);
 	}
+
+	@Override
+	public String getItemDesc() {
+		return "Some wood. Good for burning, and can also be crafted into javelins.";
+	}
 }

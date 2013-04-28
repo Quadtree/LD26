@@ -5,6 +5,9 @@ import playn.core.Color;
 import com.ironalloygames.planetfall.core.item.RawMeat;
 
 public class Wolfoid extends Unit {
+	
+	int dx,dy;
+	
 	@Override
 	public void render() {
 		PFG.s.setCharAtReal(x, y, 'W', fixCol(Color.rgb(140, 140, 140)));
@@ -26,5 +29,49 @@ public class Wolfoid extends Unit {
 		this.x = x;
 		this.y = y;
 		this.curLevel = lvl;
+		
+		dx = x;
+		dy = y;
+	}
+
+	@Override
+	public void update() {
+		if(curLevel.hasLOS(x, y, PFG.s.pc.x, PFG.s.pc.y, true)){
+			dx = PFG.s.pc.x;
+			dy = PFG.s.pc.y;
+			
+			if(Math.abs(x - PFG.s.pc.x) + Math.abs(y - PFG.s.pc.y) <= 1){
+				dx = x;
+				dy = y;
+				
+				if(actionTimer <= 0){
+					PFG.s.pc.hp -= 0.07f;
+					actionTimer = 12;
+				}
+			}
+		}
+		
+		int ox = x, oy = y;
+		
+		if(actionTimer <= 0){
+			if(dx != x || dy != y){
+				if(dx < x) move(-1, 0);
+				if(dx > x) move(1, 0);
+				if(dy < y) move(0, -1);
+				if(dy > y) move(0, 1);
+			}
+		}
+		
+		if(ox == x && oy == y){
+			dx = PFG.s.r.nextInt(curLevel.map.length);
+			dy = PFG.s.r.nextInt(curLevel.map[0].length);
+		}
+		
+		super.update();
+	}
+
+	@Override
+	protected int moveSpeed() {
+		return 5;
 	}
 }

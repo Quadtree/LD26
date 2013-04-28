@@ -221,6 +221,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		this.setTextAt(left,10+top, "| +/  +--  |   v   v  | | |", Color.rgb(100, 100, 255));
 		this.setTextAt(left,11+top, "+-------------------------+", Color.rgb(100, 100, 255));
 		
+		this.setTextAt(left+1,20+top, "Press any key to continue", Color.rgb(100, 100, 255));
+		
 		this.setTextAt(9,screenTileHeight - 2, "Detour made by Quadtree for Ludum Dare 26", Color.rgb(100, 100, 255));
 	}
 	
@@ -255,7 +257,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 
 	@Override
 	public void update(int delta) {
-		if(titleScreenUp) return;
+		if(titleScreenUp || helpScreenUp) return;
 		camX = pc.x;
 		camY = pc.y;
 		
@@ -447,10 +449,48 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	int autoMoveTimer = 6;
 	
 	int equippedItem = 0;
+	
+	boolean helpScreenUp = false;
+	
+	private void showHelpScreen(){
+		for(int x=0;x<renderBuffer.length;++x){
+			for(int y=0;y<renderBuffer[0].length;++y){
+				renderBufferColor[x][y] = 0;
+			}
+		}
+		
+		int y = 5;
+		int x = 12;
+		
+		this.setTextAt(21, 3, "Detour Key Commands", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "F1...............View this screen", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "WASD.............Move/aim item use", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "1-5..............Choose dialog option", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "I................Get information on item", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "U................Use item", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "C................Craft item", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "O................Drop item", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "P................Pick up item on ground", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "R................Rest for two hours", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "Up/Down Arrows...Switch equipped item", Color.rgb(255, 255, 255));
+		
+		this.setTextAt(x + 6,y + 6, "Press any key to continue", Color.rgb(255, 255, 255));
+		
+		helpScreenUp = true;
+	}
 
 	@Override
 	public void onKeyDown(Event event) {
-		titleScreenUp = false;
+		if(titleScreenUp){
+			titleScreenUp = false;
+			showHelpScreen();
+			return;
+		}
+		
+		if(helpScreenUp){
+			helpScreenUp = false;
+			return;
+		}
 		
 		if(movX == 0 && movY == 0) autoMoveTimer = 6;
 		
@@ -480,41 +520,48 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if(event.key() == Key.K4 && curDialog != null) curDialog.pick(4);
 		if(event.key() == Key.K5 && curDialog != null) curDialog.pick(5);
 		
-		if(event.key() == Key.I && pc.inventory.size() > 0 && curDialog == null) curDialog = new InfoDialog(pc.inventory.get(equippedItem).getItemDesc());
+		if(event.key() == Key.ESCAPE) isUsingItemInDirection = false;
 		
-		if(event.key() == Key.R) pc.actionTimer = DAY_LENGTH / 12;
+		if(curDialog == null){
 		
-		if(event.key() == Key.C && pc.inventory.size() > 0) pc.inventory.get(equippedItem).craft(pc);
-		
-		if(event.key() == Key.O && pc.inventory.size() > 0){
-			Actor dropped = pc.inventory.remove(equippedItem);
-			dropped.x = pc.x;
-			dropped.y = pc.y;
-			currentLevel.actors.add(dropped);
-		}
-		
-		if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableInDirection()) isUsingItemInDirection = true;
-		if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableOnSelf()) pc.inventory.get(equippedItem).useOnSelf(pc);
-		
-		if(event.key() == Key.DOWN) equippedItem++;
-		if(event.key() == Key.UP) equippedItem--;
-		if(equippedItem < 0) equippedItem = pc.inventory.size() - 1;
-		
-		if(event.key() == Key.P){
+			if(event.key() == Key.I && pc.inventory.size() > 0 && curDialog == null) curDialog = new InfoDialog(pc.inventory.get(equippedItem).getItemDesc());
 			
-			Actor topActor = null;
+			if(event.key() == Key.R) pc.actionTimer = DAY_LENGTH / 12;
 			
-			for(Actor a : currentLevel.actors){
-				if(a != pc && a.isPickupable() && a.temperature < a.getIgnitionPoint() && a.x == pc.x && a.y == pc.y){
-					topActor = a;
+			if(event.key() == Key.C && pc.inventory.size() > 0) pc.inventory.get(equippedItem).craft(pc);
+			
+			if(event.key() == Key.O && pc.inventory.size() > 0){
+				Actor dropped = pc.inventory.remove(equippedItem);
+				dropped.x = pc.x;
+				dropped.y = pc.y;
+				currentLevel.actors.add(dropped);
+			}
+			
+			if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableInDirection()) isUsingItemInDirection = true;
+			if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableOnSelf()) pc.inventory.get(equippedItem).useOnSelf(pc);
+			
+			if(event.key() == Key.DOWN) equippedItem++;
+			if(event.key() == Key.UP) equippedItem--;
+			if(equippedItem < 0) equippedItem = pc.inventory.size() - 1;
+			
+			if(event.key() == Key.P){
+				
+				Actor topActor = null;
+				
+				for(Actor a : currentLevel.actors){
+					if(a != pc && a.isPickupable() && a.temperature < a.getIgnitionPoint() && a.x == pc.x && a.y == pc.y){
+						topActor = a;
+					}
+				}
+				
+				if(topActor != null){
+					pc.inventory.add(topActor);
+					currentLevel.actors.remove(topActor);
 				}
 			}
-			
-			if(topActor != null){
-				pc.inventory.add(topActor);
-				currentLevel.actors.remove(topActor);
-			}
 		}
+		
+		if(event.key() == Key.F1) showHelpScreen();
 		
 		//if(event.key() == Key.G) vfx.add(new VisualEffect(30, 30, pc.x - 1, pc.y, Color.rgb(0, 0, 255), 'Z'));
 	}

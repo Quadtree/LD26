@@ -102,12 +102,18 @@ public class Level {
 	}
 	
 	public boolean hasLOS(int sx, int sy, int ex, int ey){
+		return hasLOS(sx,sy,ex,ey,false);
+	}
+	
+	public boolean hasLOS(int sx, int sy, int ex, int ey, boolean darkvision){
 		float curX = sx, curY = sy;
 		float dist = (float)Math.sqrt(Math.pow(sx - ex, 2) + Math.pow(sy - ey, 2));
 		
-		if(PFG.s.getHour().equals("Night") && dist > 7) return false;
-		if(PFG.s.getHour().equals("Dusk") && dist > 15) return false;
-		if(PFG.s.getHour().equals("Dawn") && dist > 15) return false;
+		if(!darkvision){
+			if(PFG.s.getHour().equals("Night") && dist > 7) return false;
+			if(PFG.s.getHour().equals("Dusk") && dist > 15) return false;
+			if(PFG.s.getHour().equals("Dawn") && dist > 15) return false;
+		}
 		
 		float mx = (ex - sx) / dist / 4;
 		float my = (ey - sy) / dist / 4;
