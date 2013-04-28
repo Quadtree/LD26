@@ -54,4 +54,9 @@ public class StarshipFuelCan extends Actor {
 		curLevel.actors.add(sf);
 		super.destroyed();
 	}
+	
+	@Override
+	public String getName() {
+		return "Starship Fuel Can";
+	}
 }

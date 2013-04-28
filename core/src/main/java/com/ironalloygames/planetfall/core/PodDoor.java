@@ -36,4 +36,13 @@ public class PodDoor extends Actor {
 		return 1.f / 100.f;
 	}
 	
+	@Override
+	public String getName() {
+		return "Pod Door";
+	}
+
+	@Override
+	public boolean isPickupable() {
+		return false;
+	}
 }

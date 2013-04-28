@@ -43,4 +43,9 @@ public class Wood extends Actor {
 	public String getItemDesc() {
 		return "Some wood. Good for burning, and can also be crafted into javelins.";
 	}
+	
+	@Override
+	public String getName() {
+		return "Wood";
+	}
 }

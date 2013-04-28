@@ -40,4 +40,13 @@ public class StarshipFuel extends Actor {
 		return 1.f / 2000.f;
 	}
 	
+	@Override
+	public String getName() {
+		return "Starship Fuel";
+	}
+
+	@Override
+	public boolean isPickupable() {
+		return false;
+	}
 }

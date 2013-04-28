@@ -27,4 +27,9 @@ public class YellowBerry extends Berry {
 		if(!PFG.s.yellowBerriesPoisonous) user.sickness += 0.01f;
 		super.useOnSelf(user);
 	}
+	
+	@Override
+	public String getName() {
+		return "Yellow Berry";
+	}
 }

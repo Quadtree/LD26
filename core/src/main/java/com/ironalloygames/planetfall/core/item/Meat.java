@@ -36,4 +36,9 @@ public class Meat extends Actor {
 	public String getDesc() {
 		return "Delicious cooked meat. Press U to eat.";
 	}
+	
+	@Override
+	public String getName() {
+		return "Meat";
+	}
 }

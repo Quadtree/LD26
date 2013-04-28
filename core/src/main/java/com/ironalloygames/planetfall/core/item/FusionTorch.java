@@ -49,4 +49,9 @@ public class FusionTorch extends Actor {
 	public String getDesc() {
 		return "High-intensity fusion torch. Heats up whatever it is used on massively.";
 	}
+	
+	@Override
+	public String getName() {
+		return "Fusion Torch";
+	}
 }

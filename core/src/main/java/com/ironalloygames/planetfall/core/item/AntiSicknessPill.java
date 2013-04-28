@@ -39,4 +39,9 @@ public class AntiSicknessPill extends Actor {
 	public void useOnSelf(Unit user) {
 		user.sickness = 0;
 	}
+	
+	@Override
+	public String getName() {
+		return "Anti-Sickness Pill";
+	}
 }

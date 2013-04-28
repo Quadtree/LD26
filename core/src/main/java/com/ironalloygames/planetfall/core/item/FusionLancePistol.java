@@ -88,4 +88,9 @@ public class FusionLancePistol extends Actor {
 	public String getItemDesc() {
 		return "Miniature handheld version of the massive fusion lances used by starships. Still deals enough damage to vaporize most things. Requires one energy cell for each shot.";
 	}
+	
+	@Override
+	public String getName() {
+		return "Fusion Lance Pistol";
+	}
 }

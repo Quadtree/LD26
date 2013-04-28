@@ -28,4 +28,8 @@ public class Recruiter extends Unit {
 		return title + " " + pd.lastName + super.getDesc();
 	}
 	
+	@Override
+	public String getName() {
+		return "Recruiter";
+	}
 }

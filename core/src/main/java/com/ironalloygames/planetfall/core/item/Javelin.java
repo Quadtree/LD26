@@ -75,4 +75,9 @@ public class Javelin extends Actor {
 	public String getDesc() {
 		return "Long throwing spear. Not as deadly as a fusion lance, but suffices.";
 	}
+	
+	@Override
+	public String getName() {
+		return "Javelin";
+	}
 }

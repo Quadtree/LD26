@@ -1,6 +1,6 @@
 package com.ironalloygames.planetfall.core;
 
-public class Unit extends Actor {
+public abstract class Unit extends Actor {
 	public int actionTimer = 1;
 	
 	public void move(int dx, int dy){
@@ -51,5 +51,10 @@ public class Unit extends Actor {
 	@Override
 	public float fireDamageMultiplier() {
 		return 1.f / 20.f;
+	}
+
+	@Override
+	public boolean isPickupable() {
+		return false;
 	}
 }

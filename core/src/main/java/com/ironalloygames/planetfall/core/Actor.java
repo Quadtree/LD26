@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import playn.core.Color;
 import playn.core.PlayN;
 
-public class Actor implements Comparable<Actor>{
+public abstract class Actor implements Comparable<Actor>{
 	public int x, y;
 	
 	public Level curLevel;
@@ -63,9 +63,7 @@ public class Actor implements Comparable<Actor>{
 	
 	public ArrayList<Actor> inventory = new ArrayList<Actor>();
 	
-	public String getName(){
-		return this.getClass().getSimpleName().replaceAll("([a-z])([A-Z])", "$1 $2");
-	}
+	public abstract String getName();
 	
 	public boolean isCraftable(Unit user){
 		return false;

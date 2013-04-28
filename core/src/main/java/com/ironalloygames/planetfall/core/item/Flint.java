@@ -49,4 +49,9 @@ public class Flint extends Actor {
 	public String getDesc() {
 		return "Rock that is good for making fires. Use on bushes to get a fire going.";
 	}
+	
+	@Override
+	public String getName() {
+		return "Flint";
+	}
 }

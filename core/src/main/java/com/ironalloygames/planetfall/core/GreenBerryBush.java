@@ -26,4 +26,9 @@ public class GreenBerryBush extends BerryBush {
 	public String getDesc() {
 		return "A bush with some green colored berries lying around." + super.getDesc();
 	}
+
+	@Override
+	public String getName() {
+		return "Green Berry Bush";
+	}
 }

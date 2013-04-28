@@ -26,4 +26,14 @@ public class PodInsignia extends Actor {
 		PFG.s.setCharAtReal(x, y, '^', Color.rgb(128, 128, 192));
 		super.render();
 	}
+	
+	@Override
+	public String getName() {
+		return "Pod Insignia";
+	}
+
+	@Override
+	public boolean isPickupable() {
+		return false;
+	}
 }

@@ -39,4 +39,9 @@ public class Tree extends Actor {
 	public float fireDamageMultiplier() {
 		return 1.f / 1500.f;
 	}
+	
+	@Override
+	public String getName() {
+		return "Tree";
+	}
 }

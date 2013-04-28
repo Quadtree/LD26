@@ -77,4 +77,8 @@ public class FireExtinguisher extends Actor {
 		return "Fire extinguisher that sprays a wide beam of cold on use, hopefully putting out fires.";
 	}
 
+	@Override
+	public String getName() {
+		return "Fire Extinguisher";
+	}
 }

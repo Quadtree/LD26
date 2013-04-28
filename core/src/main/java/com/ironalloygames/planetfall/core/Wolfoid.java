@@ -76,4 +76,9 @@ public class Wolfoid extends Unit {
 	protected int moveSpeed() {
 		return 5;
 	}
+
+	@Override
+	public String getName() {
+		return "Wolfoid";
+	}
 }

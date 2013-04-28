@@ -23,4 +23,9 @@ public class PowerCell extends Actor {
 	public String getDesc() {
 		return "Energy cell used to power the fusion lance pistol.";
 	}
+	
+	@Override
+	public String getName() {
+		return "Power Cell";
+	}
 }

@@ -29,4 +29,9 @@ public class HexapedDeer extends Unit {
 		this.y = y;
 		this.curLevel = lvl;
 	}
+	
+	@Override
+	public String getName() {
+		return "Hexaped Deer";
+	}
 }

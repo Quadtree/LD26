@@ -28,4 +28,9 @@ public class YellowBerryBush extends BerryBush {
 	}
 	
 	public float heatGainModifier(){ return 1; }
+	
+	@Override
+	public String getName() {
+		return "Yellow Berry Bush";
+	}
 }

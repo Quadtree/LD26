@@ -38,4 +38,9 @@ public class PC extends Unit {
 		
 		super.update();
 	}
+	
+	@Override
+	public String getName() {
+		return "Mechanic Trainee " + pd.firstName + " " + pd.lastName;
+	}
 }
