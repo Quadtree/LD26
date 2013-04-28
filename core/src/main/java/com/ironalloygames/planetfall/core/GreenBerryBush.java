@@ -1,5 +1,8 @@
 package com.ironalloygames.planetfall.core;
 
+import com.ironalloygames.planetfall.core.item.Berry;
+import com.ironalloygames.planetfall.core.item.GreenBerry;
+
 import playn.core.Color;
 
 public class GreenBerryBush extends BerryBush {

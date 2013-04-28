@@ -1,7 +1,7 @@
 package com.ironalloygames.planetfall.core;
 
 public class Unit extends Actor {
-	int actionTimer = 1;
+	public int actionTimer = 1;
 	
 	public void move(int dx, int dy){
 		if(curLevel.isPassable(x + dx, y + dy)){

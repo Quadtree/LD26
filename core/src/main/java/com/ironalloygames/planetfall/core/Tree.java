@@ -1,5 +1,7 @@
 package com.ironalloygames.planetfall.core;
 
+import com.ironalloygames.planetfall.core.item.Wood;
+
 import playn.core.Color;
 import playn.core.PlayN;
 

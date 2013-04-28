@@ -1,5 +1,7 @@
 package com.ironalloygames.planetfall.core;
 
+import com.ironalloygames.planetfall.core.item.Berry;
+
 public abstract class BerryBush extends Actor {
 	public abstract int getColor();
 	public abstract Berry getBerry(int x, int y);

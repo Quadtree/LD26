@@ -1,4 +1,7 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.item;
+
+import com.ironalloygames.planetfall.core.Actor;
+import com.ironalloygames.planetfall.core.PFG;
 
 public abstract class Berry extends Actor {
 	public abstract int getColor();

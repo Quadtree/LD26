@@ -3,6 +3,7 @@ package com.ironalloygames.planetfall.core;
 import java.lang.reflect.InvocationTargetException;
 
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.item.FusionTorch;
 
 import playn.core.PlayN;
 

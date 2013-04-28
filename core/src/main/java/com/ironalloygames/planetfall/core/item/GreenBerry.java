@@ -1,4 +1,6 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.item;
+
+import com.ironalloygames.planetfall.core.Level;
 
 import playn.core.Color;
 

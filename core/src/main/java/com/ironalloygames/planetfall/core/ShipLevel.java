@@ -1,6 +1,9 @@
 package com.ironalloygames.planetfall.core;
 
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.item.FireExtinguisher;
+import com.ironalloygames.planetfall.core.item.FusionTorch;
+import com.ironalloygames.planetfall.core.item.StarshipFuel;
 
 public class ShipLevel extends Level {
 	public ShipLevel(){

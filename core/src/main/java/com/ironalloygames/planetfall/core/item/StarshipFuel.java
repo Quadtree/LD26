@@ -1,4 +1,7 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.item;
+
+import com.ironalloygames.planetfall.core.Actor;
+import com.ironalloygames.planetfall.core.PFG;
 
 import playn.core.Color;
 
