@@ -30,7 +30,7 @@ public class FireExtinguisher extends Actor {
 	int color;
 
 	@Override
-	public void useInDirection(float dir, Actor user) {
+	public void useInDirection(float dir, Unit user) {
 		this.user = user;
 		color = Color.rgb(190, 190, 255);
 		
@@ -47,6 +47,8 @@ public class FireExtinguisher extends Actor {
 		addVfx(4, -1, 3);
 		addVfx(4, 0, 3);
 		addVfx(4, 1, 3);
+		
+		user.actionTimer = 10;
 		
 		super.useInDirection(dir, user);
 	}

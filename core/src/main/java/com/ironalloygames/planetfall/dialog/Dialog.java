@@ -12,7 +12,7 @@ public class Dialog {
 	
 	protected HashMap<String, HashMap<String, StateTransition>> states = new HashMap<String, HashMap<String, StateTransition>>();
 	
-	protected String curState = "Start";
+	public String curState = "Start";
 	
 	public class StateTransition {
 		public String text;

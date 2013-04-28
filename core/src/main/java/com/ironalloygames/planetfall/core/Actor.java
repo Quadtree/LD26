@@ -25,7 +25,7 @@ public class Actor {
 			for(Actor a : curLevel.actors){
 				int dist = Math.abs(a.x - x) + Math.abs(a.y - y);
 				if(dist < 8){
-					a.temperature += Math.max(0, (temperature - a.temperature) / 80 / (dist+1) * a.getHeatGainMultiplier());
+					a.temperature += Math.max(0, (temperature - a.temperature) / 150 / (dist+1) * a.getHeatGainMultiplier());
 				}
 			}
 		}
@@ -34,8 +34,9 @@ public class Actor {
 	}
 	public void render(){}
 	public String getDesc() {
-		return " " + (int)(temperature - 273) + (char)0xB0 + "C" + (temperature > getIgnitionPoint() ? " ON FIRE!" : "");
+		return "";
 	}
+	public String getLongDesc(){ return getDesc() + " " + (int)(temperature - 273) + (char)0xB0 + "C" + (temperature > getIgnitionPoint() ? " ON FIRE!" : ""); }
 	public float getIgnitionPoint(){ return 1000000; }
 	public float getBurnTemperature(){ return 0; }
 	
@@ -76,6 +77,6 @@ public class Actor {
 		NORTH
 	}
 	
-	public void useInDirection(float dir, Actor user){
+	public void useInDirection(float dir, Unit user){
 	}
 }

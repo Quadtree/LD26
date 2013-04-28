@@ -116,7 +116,7 @@ public class Level {
 		}
 		
 		if(topActor != null){
-			return topActor.getDesc();
+			return topActor.getLongDesc();
 		} else {
 			if(map[x][y] == GroundType.WALL)
 				return "A high dirt cliff. Weird terrain on this planet";

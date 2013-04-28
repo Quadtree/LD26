@@ -76,4 +76,11 @@ public class Person {
 		else
 			return "she";
 	}
+	
+	public String getManWoman(){
+		if(gender == NameGender.MALE)
+			return "man";
+		else
+			return "woman";
+	}
 }

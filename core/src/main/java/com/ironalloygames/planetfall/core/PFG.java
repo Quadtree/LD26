@@ -12,6 +12,7 @@ import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.info.Person.NameGender;
 import com.ironalloygames.planetfall.core.info.Ship;
 import com.ironalloygames.planetfall.dialog.Dialog;
+import com.ironalloygames.planetfall.dialog.EscapeShip;
 import com.ironalloygames.planetfall.dialog.StartCinematic;
 
 import playn.core.CanvasImage;
@@ -182,14 +183,30 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		}
 		
 		curDialog = new StartCinematic();
+		
+		int left = 18;
+		int top = 0;
+		
+		this.setTextAt(left, 5+top, "+-------------------------+", Color.rgb(100, 100, 255));
+		this.setTextAt(left, 6+top, "| +\\  +-- -+-  ^  | | +\\  |", Color.rgb(100, 100, 255));
+		this.setTextAt(left, 7+top, "| | | |    |  / \\ | | | | |", Color.rgb(100, 100, 255));
+		this.setTextAt(left, 8+top, "| | | +-   |  | | | | |(  |", Color.rgb(100, 100, 255));
+		this.setTextAt(left, 9+top, "| | | |    |  \\ / | | | | |", Color.rgb(100, 100, 255));
+		this.setTextAt(left,10+top, "| +/  +--  |   v   v  | | |", Color.rgb(100, 100, 255));
+		this.setTextAt(left,11+top, "+-------------------------+", Color.rgb(100, 100, 255));
+		
+		this.setTextAt(9,screenTileHeight - 2, "Detour made by Quadtree for Ludum Dare 26", Color.rgb(100, 100, 255));
 	}
 	
 	int lastSecond = 0;
 	int framesThisSecond = 0;
 	int fps = 0;
+	
+	boolean titleScreenUp = true;
 
 	@Override
 	public void update(int delta) {
+		if(titleScreenUp) return;
 		camX = pc.x;
 		camY = pc.y;
 		
@@ -250,6 +267,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			else
 				vfx.remove(i--);
 		}
+		
+		if(pc.temperature > 345 && currentLevel == shipLevel && curDialog == null){
+			this.curDialog = new EscapeShip();
+			this.curDialog.curState = "StartAlt";
+		}
 	}
 	
 	public int getTempColor(float temp){
@@ -257,10 +279,10 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			return Color.rgb(0, 0, 255);
 		if(temp < 280)
 			return Color.rgb(128, 128, 255);
-		if(temp > 320)
-			return Color.rgb(255, 255, 0);
 		if(temp > 345)
 			return Color.rgb(255, 0, 0);
+		if(temp > 320)
+			return Color.rgb(255, 255, 0);
 		
 		return Color.rgb(255, 255, 255);
 	}
@@ -330,6 +352,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 
 	@Override
 	public void onKeyDown(Event event) {
+		titleScreenUp = false;
+		
 		if(movX == 0 && movY == 0) autoMoveTimer = 6;
 		
 		if(!isUsingItemInDirection){
