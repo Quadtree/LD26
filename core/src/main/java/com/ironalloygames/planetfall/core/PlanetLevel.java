@@ -152,7 +152,7 @@ public class PlanetLevel extends Level {
 			}
 		}
 		
-		for(int i=0;i<60;++i){
+		for(int i=0;i<25;++i){
 			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
 			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
 			

@@ -65,4 +65,9 @@ public class Javelin extends Actor {
 		
 		super.useInDirection(dir, user);
 	}
+
+	@Override
+	public String getDesc() {
+		return "Long throwing spear. Not as deadly as a fusion lance, but suffices.";
+	}
 }

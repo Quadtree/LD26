@@ -31,4 +31,9 @@ public class Meat extends Actor {
 		user.inventory.remove(this);
 		super.useOnSelf(user);
 	}
+
+	@Override
+	public String getDesc() {
+		return "Delicious cooked meat. Press U to eat.";
+	}
 }

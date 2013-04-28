@@ -50,4 +50,9 @@ public class RawMeat extends Actor {
 		user.sickness += 0.01f;
 		super.useOnSelf(user);
 	}
+
+	@Override
+	public String getDesc() {
+		return "Raw meat. Eating this will work in a pinch, but it will probably make you sick. Bring it near a fire and press C to cook it.";
+	}
 }

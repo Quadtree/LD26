@@ -18,4 +18,9 @@ public class AntiSicknessPill extends Actor {
 		PFG.s.setCharAtReal(x, y, 'o', fixCol(Color.rgb(255, 255, 255)));
 		super.render();
 	}
+
+	@Override
+	public String getItemDesc() {
+		return "This seemingly miraculous pills can cure any minor illness. Use them if you get sick.";
+	}
 }

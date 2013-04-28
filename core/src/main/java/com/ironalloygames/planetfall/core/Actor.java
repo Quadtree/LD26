@@ -108,4 +108,6 @@ public class Actor implements Comparable<Actor>{
 	
 	public void useOnSelf(Unit user){
 	}
+	
+	public String getItemDesc(){ return getDesc(); }
 }

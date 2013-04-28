@@ -19,6 +19,7 @@ import com.ironalloygames.planetfall.dialog.EnemyDoctorAboutCommDialog;
 import com.ironalloygames.planetfall.dialog.EnemyDoctorDialog;
 import com.ironalloygames.planetfall.dialog.EscapeShip;
 import com.ironalloygames.planetfall.dialog.FirstNight;
+import com.ironalloygames.planetfall.dialog.InfoDialog;
 import com.ironalloygames.planetfall.dialog.MediumEnding;
 import com.ironalloygames.planetfall.dialog.StartCinematic;
 
@@ -476,6 +477,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if(event.key() == Key.K3 && curDialog != null) curDialog.pick(3);
 		if(event.key() == Key.K4 && curDialog != null) curDialog.pick(4);
 		if(event.key() == Key.K5 && curDialog != null) curDialog.pick(5);
+		
+		if(event.key() == Key.I && pc.inventory.size() > 0 && curDialog == null) curDialog = new InfoDialog(pc.inventory.get(equippedItem).getItemDesc());
 		
 		if(event.key() == Key.R) pc.actionTimer = DAY_LENGTH / 12;
 		

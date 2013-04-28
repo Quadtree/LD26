@@ -38,10 +38,15 @@ public class Flint extends Actor {
 		for(Actor a : PFG.s.currentLevel.actors)
 		{
 			if(a.x == tx && a.y == ty){
-				a.temperature += 3 * a.getHeatGainMultiplier();
+				a.temperature += 9 * a.getHeatGainMultiplier();
 			}
 		}
 		
-		user.actionTimer = 10;
+		user.actionTimer = 30;
+	}
+
+	@Override
+	public String getDesc() {
+		return "Rock that is good for making fires. Use on bushes to get a fire going.";
 	}
 }

@@ -72,4 +72,9 @@ public class FireExtinguisher extends Actor {
 		}
 	}
 
+	@Override
+	public String getDesc() {
+		return "Fire extinguisher that sprays a wide beam of cold on use, hopefully putting out fires.";
+	}
+
 }

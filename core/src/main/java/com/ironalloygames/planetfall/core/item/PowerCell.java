@@ -18,4 +18,9 @@ public class PowerCell extends Actor {
 		PFG.s.setCharAtReal(x, y, 'p', fixCol(Color.rgb(0, 0, 255)));
 		super.render();
 	}
+
+	@Override
+	public String getDesc() {
+		return "Energy cell used to power the fusion lance pistol.";
+	}
 }

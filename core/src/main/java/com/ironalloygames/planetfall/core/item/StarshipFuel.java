@@ -20,7 +20,7 @@ public class StarshipFuel extends Actor {
 
 	@Override
 	public String getDesc() {
-		return "Pool of extremely flammable starship fuel. " + super.getDesc();
+		return "Pool of extremely flammable starship fuel.";
 	}
 
 	@Override
