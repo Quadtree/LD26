@@ -47,6 +47,8 @@ public class Wolfoid extends Unit {
 				if(actionTimer <= 0){
 					PFG.s.pc.hp -= 0.07f;
 					actionTimer = 12;
+					
+					if(PFG.s.pc.actionTimer > 15) PFG.s.pc.actionTimer = 15;
 				}
 			}
 		}
