@@ -2,9 +2,11 @@ package com.ironalloygames.planetfall.core;
 
 import static playn.core.PlayN.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.ironalloygames.planetfall.core.Actor.UseDirection;
 import com.ironalloygames.planetfall.core.info.Empire;
 import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.info.Person.NameGender;
@@ -81,6 +83,43 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	}
 	
 	public Recruiter rec;
+	
+	public static class VisualEffect {
+		int timeToStart;
+		int duration;
+		int x;
+		int y;
+		int color;
+		char character;
+		
+		public VisualEffect(int timeToStart, int duration, int x, int y,
+				int color, char character) {
+			super();
+			this.timeToStart = timeToStart;
+			this.duration = duration;
+			this.x = x;
+			this.y = y;
+			this.color = color;
+			this.character = character;
+		}
+		
+		public void render(){
+			if(timeToStart > 0){
+				timeToStart--;
+				return;
+			}
+			
+			duration--;
+			
+			PFG.s.setCharAtReal(x, y, character, color);
+		}
+		
+		public boolean keep(){
+			return duration > 0;
+		}
+	}
+	
+	public ArrayList<VisualEffect> vfx = new ArrayList<VisualEffect>();
 
 	@Override
 	public void init() {
@@ -184,11 +223,31 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		setTextAt(8,0, currentLevel.getDesc(mouseRealTileX, mouseRealTileY), Color.rgb(255, 255, 255));
 		
+		if(pc.inventory.size() > 0){
+			if(!isUsingItemInDirection){
+				if(equippedItem >= pc.inventory.size()) equippedItem = 0;
+				setTextAt(0,3, (equippedItem+1) + " - " + pc.inventory.get(equippedItem).getName() + 
+						(pc.inventory.get(equippedItem).isUsableInDirection() || pc.inventory.get(equippedItem).isUsableOnSelf() ? ", U=Use" : ""), 
+				Color.rgb(255, 255, 255));
+			} else {
+				setTextAt(0,3, "Use the WASD keys to determine direction of use", Color.rgb(255, 255, 255));
+			}
+		}
+		
 		if(curDialog != null){
 			curDialog.render();
 			if(!curDialog.active) curDialog = null;
 		}
+		
+		for(int i=0;i<vfx.size();++i){
+			if(vfx.get(i).keep())
+				vfx.get(i).render();
+			else
+				vfx.remove(i--);
+		}
 	}
+	
+	boolean isUsingItemInDirection = false;
 	
 	public void setCharAtReal(int x, int y, char text, int color){
 		
@@ -248,15 +307,25 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	
 	int movX, movY;
 	int autoMoveTimer = 6;
+	
+	int equippedItem = 0;
 
 	@Override
 	public void onKeyDown(Event event) {
 		if(movX == 0 && movY == 0) autoMoveTimer = 6;
 		
-		if(event.key() == Key.A) movX = -1;
-		if(event.key() == Key.D) movX = 1;
-		if(event.key() == Key.W) movY = -1;
-		if(event.key() == Key.S) movY = 1;
+		if(!isUsingItemInDirection){
+			if(event.key() == Key.A) movX = -1;
+			if(event.key() == Key.D) movX = 1;
+			if(event.key() == Key.W) movY = -1;
+			if(event.key() == Key.S) movY = 1;
+		} else {
+			if(event.key() == Key.A) pc.inventory.get(equippedItem).useInDirection(UseDirection.WEST, pc);
+			if(event.key() == Key.D) pc.inventory.get(equippedItem).useInDirection(UseDirection.EAST, pc);
+			if(event.key() == Key.W) pc.inventory.get(equippedItem).useInDirection(UseDirection.NORTH, pc);
+			if(event.key() == Key.S) pc.inventory.get(equippedItem).useInDirection(UseDirection.SOUTH, pc);
+			isUsingItemInDirection = false;
+		}
 		
 		if(movX != 0 || movY != 0) pc.move(movX, movY);
 		
@@ -266,6 +335,30 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if(event.key() == Key.K3 && curDialog != null) curDialog.pick(3);
 		if(event.key() == Key.K4 && curDialog != null) curDialog.pick(4);
 		if(event.key() == Key.K5 && curDialog != null) curDialog.pick(5);
+		
+		if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableInDirection()) isUsingItemInDirection = true;
+		
+		if(event.key() == Key.DOWN) equippedItem++;
+		if(event.key() == Key.UP) equippedItem--;
+		if(equippedItem < 0) equippedItem = pc.inventory.size() - 1;
+		
+		if(event.key() == Key.P){
+			
+			Actor topActor = null;
+			
+			for(Actor a : currentLevel.actors){
+				if(a != pc && a.isPickupable() && a.x == pc.x && a.y == pc.y){
+					topActor = a;
+				}
+			}
+			
+			if(topActor != null){
+				pc.inventory.add(topActor);
+				currentLevel.actors.remove(topActor);
+			}
+		}
+		
+		//if(event.key() == Key.G) vfx.add(new VisualEffect(30, 30, pc.x - 1, pc.y, Color.rgb(0, 0, 255), 'Z'));
 	}
 
 	@Override

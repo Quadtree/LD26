@@ -18,4 +18,9 @@ public abstract class BerryBush extends Actor {
 		PFG.s.setCharAtReal(x, y, '%', getColor());
 		super.render();
 	}
+	
+	@Override
+	public boolean isPickupable() {
+		return false;
+	}
 }

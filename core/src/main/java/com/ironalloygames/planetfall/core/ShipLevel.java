@@ -26,12 +26,15 @@ public class ShipLevel extends Level {
 				} else if (x < 23){
 					if(y > 10 && y < 40){
 						if(y != 20 && y != 30){
-							map[x][y] = GroundType.SHIP_FLOOR;
+							if(x < 21 || y % 2 == 0)
+								map[x][y] = GroundType.SHIP_FLOOR;
+							else
+								map[x][y] = GroundType.SHIP_WALL;
 						} else {
 							if(x != 17){
 								map[x][y] = GroundType.SHIP_WALL;
 							} else {
-								map[x][y] = GroundType.SHIP_FLOOR;
+								map[x][y] = GroundType.SHIP_DOOR;
 							}
 						}
 					}
@@ -41,14 +44,17 @@ public class ShipLevel extends Level {
 			}
 		}
 		
-		System.out.println(map);
+		actors.add(new FireExtinguisher(14, 25, this));
+		actors.add(new FusionTorch(14, 26, this));
 	}
 	
 	public void cataclysm(){
-		map[22][20] = GroundType.SHIP_FLOOR;
-		map[22][30] = GroundType.SHIP_FLOOR;
-		map[21][20] = GroundType.SHIP_FLOOR;
-		map[21][30] = GroundType.SHIP_FLOOR;	
+		
+		for(int x=21;x<23;++x){
+			for(int y=10;y<=40;++y){
+				map[x][y] = GroundType.SHIP_FLOOR;
+			}
+		}	
 		
 		for(int i=0;i<18;++i){
 			int x = PFG.s.r.nextInt(4) + 19;

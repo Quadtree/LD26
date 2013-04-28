@@ -27,4 +27,9 @@ public class Tree extends Actor {
 	public String getDesc() {
 		return "A large tree. Probably too heavy to carry" + super.getDesc();
 	}
+
+	@Override
+	public boolean isPickupable() {
+		return false;
+	}
 }
