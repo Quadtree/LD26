@@ -11,9 +11,9 @@ import playn.core.PlayN;
 
 public class PlanetLevel extends Level {
 	private static final int GROVE_SIZE = 9;
-	private static final int PADDING = 20;
-	public static final int MAP_WIDTH = 384;
-	public static final int MAP_HEIGHT = 384*2;
+	private static final int PADDING = 10;
+	public static final int MAP_WIDTH = 160;
+	public static final int MAP_HEIGHT = 160*2;
 	
 	public int pcLifepodX, pcLifepodY;
 	
@@ -147,7 +147,7 @@ public class PlanetLevel extends Level {
 			}
 		}
 		
-		for(int i=0;i<90;++i){
+		for(int i=0;i<60;++i){
 			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
 			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
 			
@@ -189,7 +189,7 @@ public class PlanetLevel extends Level {
 			}
 		}
 		
-		for(int i=0;i<90;++i){
+		for(int i=0;i<50;++i){
 			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
 			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
 			
@@ -225,13 +225,13 @@ public class PlanetLevel extends Level {
 		
 		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.alliedShip, PFG.s.alliedEmpire));
 		
-		placeLifepod(pcLifepodX,pcLifepodY,0,30);
+		placeLifepod(pcLifepodX,pcLifepodY,0,5000);
 		
 		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.alliedShip, PFG.s.alliedEmpire));
 		actors.add(new PodDoor(lastLifepodX, lastLifepodY + 3, this));
 		actors.add(new CommOfficer(lastLifepodX, lastLifepodY, this));
 		
-		placeLifepod(pcLifepodX,pcLifepodY,0,30);
+		placeLifepod(pcLifepodX,pcLifepodY,0,5000);
 		
 		actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.enemyShip, PFG.s.enemyEmpire));
 		actors.add(new PodDoor(lastLifepodX, lastLifepodY + 3, this));
@@ -275,8 +275,8 @@ public class PlanetLevel extends Level {
 			
 			boolean passable = true;
 			
-			for(int tx=lastLifepodX - 8;tx <= lastLifepodX + 8;++tx){
-				for(int ty=lastLifepodY - 8;ty <= lastLifepodY + 8;++ty){
+			for(int tx=lastLifepodX - 5;tx <= lastLifepodX + 5;++tx){
+				for(int ty=lastLifepodY - 5;ty <= lastLifepodY + 5;++ty){
 					passable = passable && isPassable(tx,ty);
 				}
 			}

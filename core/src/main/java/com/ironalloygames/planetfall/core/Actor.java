@@ -100,4 +100,7 @@ public class Actor implements Comparable<Actor>{
 	}
 	
 	public float fireDamageMultiplier(){ return 1.f / 500.f; }
+	
+	public void craft(Unit user){
+	}
 }

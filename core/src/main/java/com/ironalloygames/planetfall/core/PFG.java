@@ -17,6 +17,7 @@ import com.ironalloygames.planetfall.dialog.Dialog;
 import com.ironalloygames.planetfall.dialog.EnemyDoctorAboutCommDialog;
 import com.ironalloygames.planetfall.dialog.EnemyDoctorDialog;
 import com.ironalloygames.planetfall.dialog.EscapeShip;
+import com.ironalloygames.planetfall.dialog.FirstNight;
 import com.ironalloygames.planetfall.dialog.StartCinematic;
 
 import playn.core.CanvasImage;
@@ -43,7 +44,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	private static final int CHAR_WIDTH = 13;
 	private static final int CHAR_HEIGHT = 21;
 	
-	public static final int DAY_LENGTH = 2100;
+	public static final int DAY_LENGTH = 3200;
 	
 	CanvasImage img;
 	ImageLayer imgLayer;
@@ -242,6 +243,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		return hour;
 	}
+	
+	boolean firstNightDialogShown = false;
 
 	@Override
 	public void update(int delta) {
@@ -279,8 +282,12 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if(getHour().equals("Dawn")) planetLevel.ambientTemp = 260;
 		if(getHour().equals("Day")) planetLevel.ambientTemp = 292;
 		
-		setTextAt(0,0, "Day " + ((tick / DAY_LENGTH)+1), Color.rgb(255, 255, 255));
-		setTextAt(0,1, getHour(), Color.rgb(255, 255, 255));
+		if(getHour().equals("Dusk") && !firstNightDialogShown){
+			firstNightDialogShown = true;
+			curDialog = new FirstNight();
+		}
+		
+		setTextAt(45,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour(), Color.rgb(255, 255, 255));
 		
 		setCharAtReal(mouseRealTileX, mouseRealTileY, '\0', Color.rgb(255, 255, 255));
 		
@@ -296,7 +303,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			if(!isUsingItemInDirection){
 				if(equippedItem >= pc.inventory.size()) equippedItem = 0;
 				setTextAt(0,3, (equippedItem+1) + " - " + pc.inventory.get(equippedItem).getName() + 
-						(pc.inventory.get(equippedItem).isUsableInDirection() || pc.inventory.get(equippedItem).isUsableOnSelf() ? ", U=Use" : ""), 
+						(pc.inventory.get(equippedItem).isUsableInDirection() || pc.inventory.get(equippedItem).isUsableOnSelf() ? ", U=Use" : "") + ", I=Info, O=Drop" + 
+						(pc.inventory.get(equippedItem).isCraftable() ? ", C=Craft" : ""), 
 				Color.rgb(255, 255, 255));
 			} else {
 				setTextAt(0,3, "Use the WASD keys to determine direction of use", Color.rgb(255, 255, 255));
@@ -443,6 +451,15 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if(event.key() == Key.K5 && curDialog != null) curDialog.pick(5);
 		
 		if(event.key() == Key.R) pc.actionTimer = DAY_LENGTH / 12;
+		
+		if(event.key() == Key.C && pc.inventory.size() > 0) pc.inventory.get(equippedItem).craft(pc);
+		
+		if(event.key() == Key.O && pc.inventory.size() > 0){
+			Actor dropped = pc.inventory.remove(equippedItem);
+			dropped.x = pc.x;
+			dropped.y = pc.y;
+			currentLevel.actors.add(dropped);
+		}
 		
 		if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableInDirection()) isUsingItemInDirection = true;
 		

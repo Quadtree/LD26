@@ -3,6 +3,8 @@ package com.ironalloygames.planetfall.core;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.ironalloygames.planetfall.dialog.DeadEnding;
+
 import playn.core.Color;
 
 public class Level {
@@ -66,6 +68,8 @@ public class Level {
 			}
 		}
 		
+		Collections.sort(actors);
+		
 		for(Actor a : actors){
 			a.render();
 		}
@@ -78,6 +82,9 @@ public class Level {
 			if(actors.get(i).hp > 0)
 				actors.get(i).update();
 			else{
+				if(actors.get(i) instanceof PC){
+					PFG.s.curDialog = new DeadEnding();
+				}
 				actors.get(i).destroyed();
 				actors.remove(i--);
 			}

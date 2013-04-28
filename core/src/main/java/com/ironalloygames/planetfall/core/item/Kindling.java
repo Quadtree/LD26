@@ -3,12 +3,11 @@ package com.ironalloygames.planetfall.core.item;
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
-import com.ironalloygames.planetfall.core.Unit;
 
 import playn.core.Color;
 
-public class Wood extends Actor {
-	public Wood(int x, int y, Level lvl){
+public class Kindling extends Actor {
+	public Kindling(int x, int y, Level lvl){
 		this.x = x;
 		this.y = y;
 		this.curLevel = lvl;
@@ -17,25 +16,23 @@ public class Wood extends Actor {
 	
 	@Override
 	public void render() {
-		PFG.s.setCharAtReal(x, y, 'w', Color.rgb(255, 128, 0));
+		PFG.s.setCharAtReal(x, y, 'k', Color.rgb(255, 128, 0));
 		
 		super.render();
 	}
 	
 	@Override
 	public String getDesc() {
-		return "Some wood. Good for fires!" + super.getDesc();
+		return "Some kindling. Good for starting fires with flint!" + super.getDesc();
 	}
 
 	@Override
-	public boolean isCraftable() {
-		return true;
+	public float getHeatGainMultiplier() {
+		return 5;
 	}
 
 	@Override
-	public void craft(Unit user) {
-		user.inventory.remove(this);
-		user.inventory.add(new Javelin(0,0,user.curLevel));
-		super.craft(user);
+	public float fireDamageMultiplier() {
+		return 1.f / 200.f;
 	}
 }
