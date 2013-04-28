@@ -1,15 +1,17 @@
 package com.ironalloygames.planetfall.core.item;
 
 import com.ironalloygames.planetfall.core.Actor;
+import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
 
 import playn.core.Color;
 
 public class StarshipFuel extends Actor {
 	
-	public StarshipFuel(int x, int y){
+	public StarshipFuel(int x, int y, Level curLevel){
 		this.x = x;
 		this.y = y;
+		this.curLevel = curLevel;
 	}
 
 	@Override

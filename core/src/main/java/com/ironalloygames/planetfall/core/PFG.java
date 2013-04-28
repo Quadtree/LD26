@@ -188,13 +188,13 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			pc.y = r.nextInt(PlanetLevel.MAP_WIDTH);
 		}
 		
-		//curDialog = new StartCinematic();
-		//currentLevel = podLevel;
+		curDialog = new StartCinematic();
+		currentLevel = podLevel;
 				
-		currentLevel = planetLevel;
+		/*currentLevel = planetLevel;
 		pc.x = planetLevel.pcLifepodX;
 		pc.y = planetLevel.pcLifepodY;
-		PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;
+		PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;*/
 		
 		pc.curLevel = currentLevel;
 		
@@ -294,7 +294,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			curDialog = new FirstNight();
 		}
 		
-		setTextAt(45,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour(), Color.rgb(255, 255, 255));
+		setTextAt(42,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour() + " (" + tick + ")", Color.rgb(255, 255, 255));
 		
 		if(pc.foodNeed > 1.5f){
 			setTextAt(0,screenTileHeight - 1, "Starving", Color.rgb(255, 150, 0));
@@ -346,7 +346,9 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		if((pc.temperature > 345  || tick > 340) && currentLevel == shipLevel && curDialog == null){
 			this.curDialog = new EscapeShip();
-			this.curDialog.curState = "StartAlt";
+			
+			if(pc.temperature > 345)
+				this.curDialog.curState = "StartAlt";
 		}
 		
 		if(curDialog == null && currentLevel == planetLevel){
@@ -503,7 +505,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			Actor topActor = null;
 			
 			for(Actor a : currentLevel.actors){
-				if(a != pc && a.isPickupable() && a.x == pc.x && a.y == pc.y){
+				if(a != pc && a.isPickupable() && a.temperature < a.getIgnitionPoint() && a.x == pc.x && a.y == pc.y){
 					topActor = a;
 				}
 			}

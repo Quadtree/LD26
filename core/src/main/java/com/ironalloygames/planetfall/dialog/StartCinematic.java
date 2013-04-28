@@ -2,6 +2,8 @@ package com.ironalloygames.planetfall.dialog;
 
 import java.util.HashMap;
 
+import playn.core.PlayN;
+
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.ShipLevel;
 
@@ -10,7 +12,11 @@ public class StartCinematic extends Dialog {
 		states.put("Start", new HashMap<String, StateTransition>());
 		states.get("Start").put("P", new StateTransition("You feel a sudden lurch as the pod springs to life. Well, at least you're away... (Press 1 to continue)", ""));
 		states.get("Start").put("1", new StateTransition("Continue", "Start2"));
-		states.get("Start").put("2", new StateTransition("Skip Opening Cinematic", "Skip"));
+		
+		if(PlayN.storage().getItem("playedBefore") != null)
+			states.get("Start").put("2", new StateTransition("Skip Opening Cinematic", "Skip"));
+		else
+			PlayN.storage().setItem("playedBefore", "yes");
 		
 		states.put("Start2", new HashMap<String, StateTransition>());
 		states.get("Start2").put("P", new StateTransition("Apruptly, an alarm begins to blare. Its too far away for you to read it exactly. Could be enemy fire, or an air leak or...", ""));

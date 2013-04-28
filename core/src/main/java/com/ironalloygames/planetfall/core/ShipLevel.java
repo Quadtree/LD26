@@ -70,9 +70,8 @@ public class ShipLevel extends Level {
 			int x = PFG.s.r.nextInt(4) + 19;
 			int y = PFG.s.r.nextInt(10) + 20;
 			
-			StarshipFuel sf = new StarshipFuel(x,y);
+			StarshipFuel sf = new StarshipFuel(x,y, this);
 			sf.temperature = 300 + PFG.s.r.nextInt(350);
-			sf.curLevel = this;
 			
 			actors.add(sf);
 		}

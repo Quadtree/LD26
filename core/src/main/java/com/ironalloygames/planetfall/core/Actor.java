@@ -23,7 +23,7 @@ public class Actor implements Comparable<Actor>{
 			}
 		}
 		
-		float[] heatTransferRate = {100, 20, 8, 5, 3, 2, 2, 2, 1, 1, 1, 1};
+		float[] heatTransferRate = {100, 20, 4, 2, 2, 2, 2, 1, 1, 1, 1, 1};
 		
 		if(temperature > 350){
 			for(Actor a : curLevel.actors){

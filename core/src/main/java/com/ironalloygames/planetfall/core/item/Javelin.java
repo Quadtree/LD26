@@ -6,6 +6,7 @@ import playn.core.PlayN;
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
+import com.ironalloygames.planetfall.core.PodDoor;
 import com.ironalloygames.planetfall.core.Unit;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
 
@@ -53,7 +54,11 @@ public class Javelin extends Actor {
 			
 			for(Actor a : user.curLevel.actors){
 				if(a.x == cx && a.y == cy){
-					a.hp -= 0.5;
+					if(a instanceof PodDoor)
+						a.hp -= 0.07f;
+					else
+						a.hp -= 0.5f;
+					
 					return;
 				}
 			}

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.PlanetLevel;
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.item.AntiSicknessPill;
+import com.ironalloygames.planetfall.core.item.PowerCell;
 import com.ironalloygames.planetfall.dialog.Dialog.StateTransition;
 
 public class EscapeShip extends Dialog {
@@ -39,7 +41,7 @@ public class EscapeShip extends Dialog {
 		states.put("OutsideDoors", new HashMap<String, StateTransition>());
 		states.get("OutsideDoors").put("P", new StateTransition("The outside door opens. You are relieved not to be overwhelmed by toxins.", ""));
 		states.get("OutsideDoors").put("1", new StateTransition("Check the alarm", "CheckAlarm"));
-		states.get("OutsideDoors").put("2", new StateTransition("Venture forth into the unknown!", "End"));
+		states.get("OutsideDoors").put("2", new StateTransition("Venture forth into the unknown!", "VentureForth"));
 		
 		states.put("CheckAlarm", new HashMap<String, StateTransition>());
 		states.get("CheckAlarm").put("P", new StateTransition("You finally manage to take a look at the poorly placed alarm. It indicates that the distress beacon is non-functional due to missing components.", ""));
@@ -49,13 +51,17 @@ public class EscapeShip extends Dialog {
 		states.get("BeaconCheck").put("P", new StateTransition("You examine the beacon. Several components are indeed missing. There is a note on it: \"Removed components pending replacement due to potential overheating\" -- " + PFG.s.pc.pd.firstName.substring(0, 1) + PFG.s.pc.pd.lastName.substring(0, 1), ""));
 		states.get("BeaconCheck").put("1", new StateTransition("Check the atmospheric sensors", "Atmo"));
 		states.get("BeaconCheck").put("2", new StateTransition("Open the outside doors", "OutsideDoors"));
+		
+		states.put("VentureForth", new HashMap<String, StateTransition>());
+		states.get("VentureForth").put("P", new StateTransition("You search the various lockers on the pod for any useful items.", ""));
+		states.get("VentureForth").put("1", new StateTransition("Continue", "End"));
 	}
 	
 	@Override
 	public void newState(String stateName){
 		if(stateName.equals("OutsideDoors")){
-			states.get("Atmo").put("1", new StateTransition("Venture forth into the unknown!", "End"));
-			states.get("BeaconCheck").put("2", new StateTransition("Venture forth into the unknown!", "End"));
+			states.get("Atmo").put("1", new StateTransition("Venture forth into the unknown!", "VentureForth"));
+			states.get("BeaconCheck").put("2", new StateTransition("Venture forth into the unknown!", "VentureForth"));
 			
 			PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;
 		}
@@ -68,6 +74,13 @@ public class EscapeShip extends Dialog {
 			PFG.s.pc.x = PFG.s.planetLevel.pcLifepodX;
 			PFG.s.pc.y = PFG.s.planetLevel.pcLifepodY;
 			PFG.s.pc.temperature = PFG.s.planetLevel.ambientTemp;
+		}
+		if(stateName.equals("VentureForth")){
+			PFG.s.planetLevel.actors.add(new PowerCell(PFG.s.planetLevel.pcLifepodX, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
+			PFG.s.planetLevel.actors.add(new PowerCell(PFG.s.planetLevel.pcLifepodX, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
+			PFG.s.planetLevel.actors.add(new AntiSicknessPill(PFG.s.planetLevel.pcLifepodX+1, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
+			PFG.s.planetLevel.actors.add(new AntiSicknessPill(PFG.s.planetLevel.pcLifepodX+1, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
+			PFG.s.planetLevel.actors.add(new PowerCell(PFG.s.planetLevel.pcLifepodX, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
 		}
 	}
 }

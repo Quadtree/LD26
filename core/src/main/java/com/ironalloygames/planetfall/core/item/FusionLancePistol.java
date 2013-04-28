@@ -7,6 +7,7 @@ import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
+import com.ironalloygames.planetfall.core.PodDoor;
 import com.ironalloygames.planetfall.core.Unit;
 
 public class FusionLancePistol extends Actor {
@@ -50,6 +51,8 @@ public class FusionLancePistol extends Actor {
 		
 		if(Math.abs(Math.sin(dir)) > 0.2) c = '|';
 		
+		user.actionTimer = 15;
+		
 		while(true){
 			cx += Math.round(Math.cos(dir));
 			cy += Math.round(Math.sin(dir));
@@ -61,6 +64,8 @@ public class FusionLancePistol extends Actor {
 			for(Actor a : user.curLevel.actors){
 				if(a.x == cx && a.y == cy){
 					a.hp -= 10;
+					
+					if(a instanceof PodDoor) return;
 				}
 			}
 			
@@ -68,8 +73,6 @@ public class FusionLancePistol extends Actor {
 			
 			count++;
 		}
-		
-		user.actionTimer = 15;
 		
 		super.useInDirection(dir, user);
 	}

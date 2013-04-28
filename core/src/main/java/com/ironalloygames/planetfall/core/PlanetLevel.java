@@ -245,8 +245,6 @@ public class PlanetLevel extends Level {
 		
 		actors.add(new FusionTorch(pcLifepodX, pcLifepodY, this));
 		actors.add(new FusionLancePistol(pcLifepodX, pcLifepodY+1, this));
-		actors.add(new PowerCell(pcLifepodX, pcLifepodY+1, this));
-		actors.add(new PowerCell(pcLifepodX, pcLifepodY+1, this));
 		
 		PlayN.log().debug("World generation complete");
 	}
