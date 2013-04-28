@@ -8,6 +8,7 @@ import com.ironalloygames.planetfall.core.Level.GroundType;
 import com.ironalloygames.planetfall.core.dialog.Dialog.StateTransition;
 import com.ironalloygames.planetfall.core.item.AntiSicknessPill;
 import com.ironalloygames.planetfall.core.item.PowerCell;
+import com.ironalloygames.planetfall.core.item.StarshipFuelCan;
 
 public class EscapeShip extends Dialog {
 	public EscapeShip(){
@@ -81,6 +82,7 @@ public class EscapeShip extends Dialog {
 			PFG.s.planetLevel.actors.add(new AntiSicknessPill(PFG.s.planetLevel.pcLifepodX+1, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
 			PFG.s.planetLevel.actors.add(new AntiSicknessPill(PFG.s.planetLevel.pcLifepodX+1, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
 			PFG.s.planetLevel.actors.add(new PowerCell(PFG.s.planetLevel.pcLifepodX, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
+			PFG.s.planetLevel.actors.add(new StarshipFuelCan(PFG.s.planetLevel.pcLifepodX - 1, PFG.s.planetLevel.pcLifepodY+1, PFG.s.planetLevel));
 		}
 	}
 }

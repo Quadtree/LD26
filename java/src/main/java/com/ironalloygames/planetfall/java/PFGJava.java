@@ -12,7 +12,7 @@ public class PFGJava {
     // use config to customize the Java platform, if needed
     JavaPlatform platform = JavaPlatform.register(config);
     
-    platform.graphics().registerFont("Mono", "DroidSansMono.ttf");
+    platform.graphics().registerFont("Droid Sans Mono", "DroidSansMono.ttf");
     
     platform.graphics().setSize(800, 600);
     

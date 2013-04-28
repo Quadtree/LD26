@@ -13,6 +13,7 @@ public class PFGHtml extends HtmlGame {
     HtmlPlatform.Config config = new HtmlPlatform.Config();
     // use config to customize the HTML platform, if needed
     HtmlPlatform platform = HtmlPlatform.register(config);
+    platform.graphics().setSize(800, 600);
     platform.assets().setPathPrefix("planetfall/");
     PlayN.run(new PFG());
   }

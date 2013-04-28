@@ -161,7 +161,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		graphics().rootLayer().add(graphics().createImmediateLayer(this));
 		
-		font = graphics().createFont("Mono", Style.BOLD, 20);
+		font = graphics().createFont("Droid Sans Mono", Style.BOLD, 20);
 		
 		planetLevel = new PlanetLevel();
 		podLevel = new PodLevel();

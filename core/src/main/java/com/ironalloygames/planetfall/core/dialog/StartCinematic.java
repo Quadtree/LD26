@@ -50,15 +50,15 @@ public class StartCinematic extends Dialog {
 		states.get("DoReflect").put("1", new StateTransition("Continue", "DoReflect2"));
 		
 		states.put("DoReflect2", new HashMap<String, StateTransition>());
-		states.get("DoReflect2").put("P", new StateTransition("After the outbreak of the war with the " + PFG.s.enemyEmpire.name + ", you visited " + PFG.s.rec.getDesc() + "'s office to join up", ""));
+		states.get("DoReflect2").put("P", new StateTransition("After the outbreak of the war with the " + PFG.s.enemyEmpire.name + ", you visited " + PFG.s.rec.getDesc() + "'s office to join up.", ""));
 		states.get("DoReflect2").put("1", new StateTransition("Continue", "DoReflect3"));
 		
 		states.put("DoReflect3", new HashMap<String, StateTransition>());
 		states.get("DoReflect3").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"Let's start with the basics. What is your name?\"", ""));
 		states.get("DoReflect3").put("1", new StateTransition(PFG.s.pc.pd.firstName + " " + PFG.s.pc.pd.lastName, "DoReflect4"));
 		
-		states.put("DoReflect4", new HashMap<String, StateTransition>());
-		states.get("DoReflect4").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"Alright " + PFG.s.pc.pd.firstName + " you seem like a bright young " + PFG.s.pc.pd.getManWoman() + ". What skills do you have that would be useful to the space forces?\"", ""));
+		states.put("DoReflect4", new HashMap<String, StateTransition>()); 
+		states.get("DoReflect4").put("P", new StateTransition(PFG.s.rec.getDesc() + ": \"All right " + PFG.s.pc.pd.firstName + ", you seem like a bright young " + PFG.s.pc.pd.getManWoman() + ". What skills do you have that would be useful to the space forces?\"", ""));
 		states.get("DoReflect4").put("1", new StateTransition("\"I'm an ace fighter pilot!\"", "AceFighterPilot"));
 		states.get("DoReflect4").put("2", new StateTransition("\"I'm a good mechanic.\"", "Mechanic1"));
 		states.get("DoReflect4").put("3", new StateTransition("\"I've gotten 120,000 points playing Space Buster!\"", "SpaceBuster"));
