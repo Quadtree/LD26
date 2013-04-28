@@ -10,16 +10,20 @@ public class Empire {
 	public String name;
 	
 	public Empire(){
-		name = "";
-		
-		while(PFG.s.r.nextBoolean()){
-			name += adj[PFG.s.r.nextInt(adj.length)] + " ";
-		}
-		
-		name += empireTypes[PFG.s.r.nextInt(empireTypes.length)];
-		
-		if(PFG.s.r.nextBoolean() || name.length() < 10){
-			name += " of " + ofs[PFG.s.r.nextInt(ofs.length)];
+		while(true){
+			name = "";
+			
+			while(PFG.s.r.nextBoolean()){
+				name += adj[PFG.s.r.nextInt(adj.length)] + " ";
+			}
+			
+			name += empireTypes[PFG.s.r.nextInt(empireTypes.length)];
+			
+			if(PFG.s.r.nextBoolean() || name.length() < 10){
+				name += " of " + ofs[PFG.s.r.nextInt(ofs.length)];
+			}
+			
+			if(name.length() <= 30) break;
 		}
 	}
 }
