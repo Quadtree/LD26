@@ -22,7 +22,14 @@ public abstract class BerryBush extends Actor {
 	}
 	
 	@Override
-	public boolean isPickupable() {
-		return false;
+	public float getHeatGainMultiplier() {
+		return 6;
 	}
+	
+	@Override
+	public float fireDamageMultiplier() {
+		return 1.f / 160.f;
+	}
+	
+	
 }

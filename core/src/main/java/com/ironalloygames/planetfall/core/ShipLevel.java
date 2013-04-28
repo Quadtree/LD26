@@ -50,8 +50,9 @@ public class ShipLevel extends Level {
 			}
 		}
 		
-		actors.add(new FireExtinguisher(14, 25, this));
-		actors.add(new FusionTorch(14, 26, this));
+		actors.add(new FireExtinguisher(13, 25, this));
+		actors.add(new FusionTorch(14, 15, this));
+		actors.add(new FusionLancePistol(14, 35, this));
 	}
 	
 	public void cataclysm(){

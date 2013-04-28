@@ -23,11 +23,13 @@ public class Actor implements Comparable<Actor>{
 			}
 		}
 		
+		float[] heatTransferRate = {100, 20, 8, 5, 3, 2, 2, 2, 1, 1, 1, 1};
+		
 		if(temperature > 350){
 			for(Actor a : curLevel.actors){
 				int dist = Math.abs(a.x - x) + Math.abs(a.y - y);
 				if(dist < 8){
-					a.temperature += Math.max(0, (temperature - a.temperature) / 150 / (dist+1) * a.getHeatGainMultiplier());
+					a.temperature += Math.max(0, (temperature - a.temperature) / 3000 * heatTransferRate[dist] * a.getHeatGainMultiplier());
 				}
 			}
 		}
