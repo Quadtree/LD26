@@ -31,4 +31,9 @@ public class Unit extends Actor {
 	public int getRenderPriority() {
 		return super.getRenderPriority()+1;
 	}
+
+	@Override
+	public float getHeatDamagePoint() {
+		return 345;
+	}
 }

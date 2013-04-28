@@ -3,6 +3,7 @@ package com.ironalloygames.planetfall.core;
 import java.lang.reflect.InvocationTargetException;
 
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 
 import playn.core.PlayN;
@@ -187,6 +188,31 @@ public class PlanetLevel extends Level {
 			}
 		}
 		
+		for(int i=0;i<90;++i){
+			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
+			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
+			
+			while(!isPassable(groveX, groveY)){
+				groveX = PFG.s.r.nextInt(MAP_WIDTH);
+				groveY = PFG.s.r.nextInt(MAP_HEIGHT);
+			}
+			
+			actors.add(new HexapedDeer(groveX, groveY, this));
+			
+		}
+		
+		for(int i=0;i<10;++i){
+			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
+			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
+			
+			while(!isPassable(groveX, groveY)){
+				groveX = PFG.s.r.nextInt(MAP_WIDTH);
+				groveY = PFG.s.r.nextInt(MAP_HEIGHT);
+			}
+			
+			actors.add(new Wolfoid(groveX, groveY, this));
+		}
+		
 		PlayN.log().debug(actors.toString());
 		
 		PlayN.log().debug("Placing lifepods");
@@ -211,6 +237,7 @@ public class PlanetLevel extends Level {
 		actors.add(new EnemyDoctor(lastLifepodX, lastLifepodY, this));
 		
 		actors.add(new FusionTorch(pcLifepodX, pcLifepodY, this));
+		actors.add(new FusionLancePistol(pcLifepodX, pcLifepodY+1, this));
 		
 		PlayN.log().debug("World generation complete");
 	}

@@ -83,4 +83,11 @@ public class Person {
 		else
 			return "woman";
 	}
+	
+	public String genderSpecific(String male, String female){
+		if(gender == NameGender.MALE)
+			return male;
+		else
+			return female;
+	}
 }
