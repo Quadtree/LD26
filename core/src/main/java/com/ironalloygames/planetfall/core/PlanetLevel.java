@@ -163,15 +163,15 @@ public class PlanetLevel extends Level {
 			
 			PlayN.log().debug("Grove placed at " + groveX + " " + groveY);
 			
-			Class<? extends Actor> treeType;
+			byte typeToSpawn = -1;
 			
 			if(PFG.s.r.nextBoolean()){
-				treeType = Tree.class;
+				typeToSpawn = 1;
 			} else {
 				if(PFG.s.r.nextBoolean()){
-					treeType = GreenBerryBush.class;
+					typeToSpawn = 2;
 				} else {
-					treeType = YellowBerryBush.class;
+					typeToSpawn = 3;
 				}
 			}
 			
@@ -186,11 +186,12 @@ public class PlanetLevel extends Level {
 					treeY = (int)(groveY + PFG.s.r.nextGaussian() * GROVE_SIZE);
 				}
 				
-				try {
-					actors.add(treeType.getConstructor(int.class, int.class, Level.class).newInstance(treeX, treeY, this));
-				} catch (Exception e){
-					PlayN.log().error("Tree creation error", e);
+				switch(typeToSpawn){
+					case 1: actors.add(new Tree(treeX, treeY, this)); break;
+					case 2: actors.add(new GreenBerryBush(treeX, treeY, this)); break;
+					case 3: actors.add(new YellowBerryBush(treeX, treeY, this)); break;
 				}
+				
 			}
 		}
 		
