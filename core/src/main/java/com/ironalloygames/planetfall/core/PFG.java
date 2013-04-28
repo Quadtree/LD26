@@ -54,8 +54,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	
 	Font font;
 	
-	int screenTileWidth;
-	int screenTileHeight;
+	public int screenTileWidth;
+	public int screenTileHeight;
 	
 	char[][] renderBuffer;
 	int[][] renderBufferColor;
@@ -237,6 +237,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	public boolean talkedToEnemyDoctorAboutCommOfficer = false;
 	public boolean talkedToCommOfficerAboutEscaping = false;
 	
+	public boolean pdaScannerUp = false;
+	
 	public String getHour(){
 		float time = ((tick + (DAY_LENGTH * 0.17f)) % DAY_LENGTH) / (float)DAY_LENGTH;
 		String hour = "";
@@ -257,7 +259,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 
 	@Override
 	public void update(int delta) {
-		if(titleScreenUp || helpScreenUp) return;
+		if(titleScreenUp || helpScreenUp || pdaScannerUp) return;
 		camX = pc.x;
 		camY = pc.y;
 		
@@ -510,6 +512,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		if(helpScreenUp){
 			helpScreenUp = false;
+			return;
+		}
+		
+		if(pdaScannerUp){
+			pdaScannerUp = false;
 			return;
 		}
 		

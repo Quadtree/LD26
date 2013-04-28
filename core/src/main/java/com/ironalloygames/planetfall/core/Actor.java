@@ -44,7 +44,7 @@ public abstract class Actor implements Comparable<Actor>{
 	public String getDesc() {
 		return "";
 	}
-	public String getLongDesc(){ return getDesc() + " " + (int)(temperature - 273) + (char)0xB0 + "C" + (temperature > getIgnitionPoint() ? " ON FIRE!" : "") + " " + (int)(hp*100) + "%"; }
+	public String getLongDesc(){ return getDesc() + " " + (int)(temperature - 273) + (char)0xB0 + "C" + (temperature > getIgnitionPoint() ? " ON FIRE!" : "") + " " + (int)(Math.min(hp, 1)*100) + "%"; }
 	public float getIgnitionPoint(){ return 450; }
 	public float getBurnTemperature(){ return 550; }
 	public float getHeatDamagePoint(){ return 345; }

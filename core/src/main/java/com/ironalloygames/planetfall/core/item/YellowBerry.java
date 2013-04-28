@@ -24,7 +24,7 @@ public class YellowBerry extends Berry {
 	
 	@Override
 	public void useOnSelf(Unit user) {
-		if(!PFG.s.yellowBerriesPoisonous) user.sickness += 0.01f;
+		if(PFG.s.yellowBerriesPoisonous) user.sickness += 0.01f;
 		super.useOnSelf(user);
 	}
 	

@@ -60,8 +60,8 @@ public class FireExtinguisher extends Actor {
 	private void addVfx(int x, int y, int stage){
 		Vector3 pos = new Vector3(x,y,1);
 		rotMat.transformLocal(pos);
-		int px = (int)(user.x + pos.x);
-		int py = (int)(user.y + pos.y);
+		int px = Math.round(user.x + pos.x);
+		int py = Math.round(user.y + pos.y);
 		PFG.s.vfx.add(new VisualEffect(stage*4, 6, px, py, color, '*'));
 		
 		for(Actor a : PFG.s.currentLevel.actors)
