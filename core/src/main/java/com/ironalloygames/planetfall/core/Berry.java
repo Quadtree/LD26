@@ -10,7 +10,7 @@ public abstract class Berry extends Actor {
 	
 	@Override
 	public void render() {
-		PFG.s.setCharAtReal(x, y, '+', getColor());
+		PFG.s.setCharAtReal(x, y, '+', fixCol(getColor()));
 		super.render();
 	}
 }

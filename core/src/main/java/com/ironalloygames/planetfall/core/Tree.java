@@ -17,8 +17,8 @@ public class Tree extends Actor {
 
 	@Override
 	public void render() {
-		PFG.s.setCharAtReal(x, y, 'Y', Color.rgb(0, 128, 0));
-		PFG.s.setCharAtReal(x, y - 1, '@', Color.rgb(0, 128, 0));
+		PFG.s.setCharAtReal(x, y, 'Y', fixCol(Color.rgb(0, 128, 0)));
+		PFG.s.setCharAtReal(x, y - 1, '@', fixCol(Color.rgb(0, 128, 0)));
 		
 		super.render();
 	}

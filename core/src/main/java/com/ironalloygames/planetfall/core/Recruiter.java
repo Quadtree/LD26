@@ -19,7 +19,7 @@ public class Recruiter extends Unit {
 
 	@Override
 	public void render() {
-		PFG.s.setCharAtReal(x, y, 'R', Color.rgb(0, 190, 0));
+		PFG.s.setCharAtReal(x, y, 'R', fixCol(Color.rgb(0, 190, 0)));
 		super.render();
 	}
 

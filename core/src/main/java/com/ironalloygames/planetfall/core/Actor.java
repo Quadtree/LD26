@@ -10,6 +10,8 @@ public class Actor {
 	
 	public Level curLevel;
 	
+	public float hp = 1;
+	
 	public float temperature = 292;
 	
 	public void update(){
@@ -30,15 +32,20 @@ public class Actor {
 			}
 		}
 		
-		temperature = ((temperature - curLevel.ambientTemp) * 0.98f) + curLevel.ambientTemp;
+		temperature = ((temperature - curLevel.ambientTemp) * 0.995f) + curLevel.ambientTemp;
+		
+		if(temperature > getHeatDamagePoint()){
+			hp -= (temperature - getHeatDamagePoint()) / 200;
+		}
 	}
 	public void render(){}
 	public String getDesc() {
 		return "";
 	}
 	public String getLongDesc(){ return getDesc() + " " + (int)(temperature - 273) + (char)0xB0 + "C" + (temperature > getIgnitionPoint() ? " ON FIRE!" : ""); }
-	public float getIgnitionPoint(){ return 1000000; }
-	public float getBurnTemperature(){ return 0; }
+	public float getIgnitionPoint(){ return 450; }
+	public float getBurnTemperature(){ return 600; }
+	public float getHeatDamagePoint(){ return 345; }
 	
 	protected int fixCol(int col){
 		if(temperature > getIgnitionPoint()){

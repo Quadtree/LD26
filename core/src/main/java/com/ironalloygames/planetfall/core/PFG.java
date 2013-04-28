@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.ironalloygames.planetfall.core.Actor.UseDirection;
+import com.ironalloygames.planetfall.core.Level.GroundType;
 import com.ironalloygames.planetfall.core.info.Empire;
 import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.info.Person.NameGender;
@@ -151,8 +152,6 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		rec.y = 3;
 		officeLevel.actors.add(rec);
 		
-		currentLevel = podLevel;
-		
 		alliedEmpire = new Empire();
 		enemyEmpire = new Empire();
 		
@@ -168,6 +167,14 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			pc.y = r.nextInt(PlanetLevel.MAP_WIDTH);
 		}
 		
+		//curDialog = new StartCinematic();
+		//currentLevel = podLevel;
+				
+		currentLevel = planetLevel;
+		pc.x = planetLevel.pcLifepodX;
+		pc.y = planetLevel.pcLifepodY;
+		PFG.s.currentLevel.map[PFG.s.pc.x][PFG.s.pc.y + 3] = GroundType.SHIP_FLOOR;
+		
 		pc.curLevel = currentLevel;
 		
 		currentLevel.actors.add(pc);
@@ -181,8 +188,6 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			Person p = new Person();
 			log().debug("The " + s.className + " " + s.name + " of the " + e.name + " under " + p.firstName + " " + p.lastName);
 		}
-		
-		curDialog = new StartCinematic();
 		
 		int left = 18;
 		int top = 0;
@@ -241,9 +246,9 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		setTextAt(8,0, currentLevel.getDesc(mouseRealTileX, mouseRealTileY), Color.rgb(255, 255, 255));
 		
-		setTextAt(0,1, "Body: " + (int)(pc.temperature - 273) + (char)0xB0 + "C", getTempColor(pc.temperature));
+		setTextAt(0,2, "Body: " + (int)(pc.temperature - 273) + (char)0xB0 + "C", getTempColor(pc.temperature));
 		
-		setTextAt(12,1, "Ambient: " + (int)(currentLevel.ambientTemp - 273) + (char)0xB0 + "C", getTempColor(currentLevel.ambientTemp));
+		setTextAt(12,2, "Ambient: " + (int)(currentLevel.ambientTemp - 273) + (char)0xB0 + "C", getTempColor(currentLevel.ambientTemp));
 		
 		if(pc.inventory.size() > 0){
 			if(!isUsingItemInDirection){

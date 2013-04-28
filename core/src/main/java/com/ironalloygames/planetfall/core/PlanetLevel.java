@@ -195,6 +195,12 @@ public class PlanetLevel extends Level {
 		pcLifepodX = lastLifepodX;
 		pcLifepodY = lastLifepodY;
 		
+		placeLifepod(pcLifepodX,pcLifepodX,0,30);
+		
+		placeLifepod(pcLifepodX,pcLifepodX,0,30);
+		
+		actors.add(new FusionTorch(pcLifepodX, pcLifepodY, this));
+		
 		PlayN.log().debug("World generation complete");
 	}
 	
@@ -228,8 +234,8 @@ public class PlanetLevel extends Level {
 			
 			boolean passable = true;
 			
-			for(int tx=lastLifepodX - 6;tx <= lastLifepodX + 6;++tx){
-				for(int ty=lastLifepodY - 6;ty <= lastLifepodY + 6;++ty){
+			for(int tx=lastLifepodX - 8;tx <= lastLifepodX + 8;++tx){
+				for(int ty=lastLifepodY - 8;ty <= lastLifepodY + 8;++ty){
 					passable = passable && isPassable(tx,ty);
 				}
 			}
@@ -247,13 +253,25 @@ public class PlanetLevel extends Level {
 							} else {
 								map[tx][ty] = GroundType.SHIP_WALL;
 							}
+							destroyAllAt(tx,ty);
 						} else if(dist < 3){
 							map[tx][ty] = GroundType.SHIP_FLOOR;
+							destroyAllAt(tx,ty);
 						}
 					}
 				}
 				
 				break;
+			}
+		}
+		
+		PlayN.log().debug("Lifepod placed at " + lastLifepodX + " " + lastLifepodY);
+	}
+	
+	public void destroyAllAt(int x, int y){
+		for(int i=0;i<actors.size();++i){
+			if(actors.get(i).x == x && actors.get(i).y == y){
+				actors.remove(i--);
 			}
 		}
 	}

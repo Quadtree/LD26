@@ -10,7 +10,7 @@ public class PC extends Unit {
 
 	@Override
 	public void render() {
-		PFG.s.setCharAtReal(x, y, '@', Color.rgb(255, 255, 255));
+		PFG.s.setCharAtReal(x, y, '@', fixCol(Color.rgb(255, 255, 255)));
 		
 		super.render();
 	}

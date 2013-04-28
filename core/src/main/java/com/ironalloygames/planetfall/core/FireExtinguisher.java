@@ -16,7 +16,7 @@ public class FireExtinguisher extends Actor {
 	
 	@Override
 	public void render() {
-		PFG.s.setCharAtReal(x, y, 'F', Color.rgb(255, 0, 0));
+		PFG.s.setCharAtReal(x, y, 'F', fixCol(Color.rgb(255, 0, 0)));
 		super.render();
 	}
 
