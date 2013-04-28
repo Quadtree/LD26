@@ -5,6 +5,7 @@ import playn.core.Color;
 import com.ironalloygames.planetfall.core.Level.GroundType;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
 import com.ironalloygames.planetfall.core.item.FireExtinguisher;
+import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.StarshipFuel;
 
