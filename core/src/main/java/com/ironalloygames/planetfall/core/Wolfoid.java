@@ -2,6 +2,7 @@ package com.ironalloygames.planetfall.core;
 
 import playn.core.Color;
 
+import com.ironalloygames.planetfall.core.PFG.VisualEffect;
 import com.ironalloygames.planetfall.core.item.RawMeat;
 
 public class Wolfoid extends Unit {
@@ -45,10 +46,15 @@ public class Wolfoid extends Unit {
 				dy = y;
 				
 				if(actionTimer <= 0){
+					PFG.s.vfx.add(new VisualEffect(0, 12, PFG.s.pc.x, PFG.s.pc.y, Color.rgb(255, 0, 0), '*'));
+					
 					PFG.s.pc.hp -= 0.07f;
 					actionTimer = 12;
 					
-					if(PFG.s.pc.actionTimer > 15) PFG.s.pc.actionTimer = 15;
+					if(PFG.s.pc.actionTimer > 15){
+						PFG.s.pc.actionTimer = 15;
+						PFG.s.pc.hp -= 0.03f;
+					}
 				}
 			}
 		}

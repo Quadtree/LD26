@@ -245,8 +245,15 @@ public class PlanetLevel extends Level {
 		actors.add(new PodDoor(lastLifepodX, lastLifepodY + 3, this));
 		actors.add(new EnemyDoctor(lastLifepodX, lastLifepodY, this));
 		
-		for(int i=0;i<6;++i)
+		for(int i=0;i<6;++i){
 			placeLifepod(pcLifepodX,pcLifepodY,0,5000,true);
+			
+			if(PFG.s.r.nextBoolean()){
+				actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.alliedShip, PFG.s.alliedEmpire));
+			} else {
+				actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.enemyShip, PFG.s.enemyEmpire));
+			}
+		}
 		
 		PlayN.log().debug("World generation complete");
 	}

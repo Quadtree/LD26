@@ -54,10 +54,13 @@ public class Javelin extends Actor {
 			
 			for(Actor a : user.curLevel.actors){
 				if(a.x == cx && a.y == cy){
-					if(a instanceof PodDoor)
+					if(a instanceof PodDoor){
 						a.hp -= 0.07f;
-					else
+						PFG.s.vfx.add(new VisualEffect(0, 12, cx, cy, Color.rgb(192, 192, 192), '*'));
+					} else {
 						a.hp -= PFG.s.r.nextFloat() * 1.3f;
+						PFG.s.vfx.add(new VisualEffect(0, 12, cx, cy, Color.rgb(255, 0, 0), '*'));
+					}
 					
 					return;
 				}

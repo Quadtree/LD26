@@ -314,7 +314,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		setCharAtReal(mouseRealTileX, mouseRealTileY, '\0', Color.rgb(255, 255, 255));
 		
-		setTextAt(8,0, currentLevel.getDesc(mouseRealTileX, mouseRealTileY), Color.rgb(255, 255, 255));
+		setTextAt(0,0, currentLevel.getDesc(mouseRealTileX, mouseRealTileY), Color.rgb(255, 255, 255));
 		
 		setTextAt(0,2, "Body: " + (int)(pc.temperature - 273) + (char)0xB0 + "C", getTempColor(pc.temperature));
 		
@@ -489,7 +489,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		this.setTextAt(x, y++, "C................Craft item", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "O................Drop item", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "P................Pick up item on ground", Color.rgb(255, 255, 255));
-		this.setTextAt(x, y++, "R................Rest for two hours", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "R................Rest for two hours, restoring 3% HP", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "Up/Down Arrows...Switch equipped item", Color.rgb(255, 255, 255));
 		
 		this.setTextAt(x + 6,y + 6, "Press any key to continue", Color.rgb(255, 255, 255));
@@ -544,7 +544,10 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 			if(event.key() == Key.I && pc.inventory.size() > 0 && curDialog == null) curDialog = new InfoDialog(pc.inventory.get(equippedItem).getItemDesc());
 			
-			if(event.key() == Key.R) pc.actionTimer = DAY_LENGTH / 12;
+			if(event.key() == Key.R){
+				pc.actionTimer = DAY_LENGTH / 12;
+				pc.hp = Math.min(pc.hp + 0.03f, 1);
+			}
 			
 			if(event.key() == Key.C && pc.inventory.size() > 0) pc.inventory.get(equippedItem).craft(pc);
 			
