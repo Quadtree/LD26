@@ -23,7 +23,7 @@ public class RawMeat extends Actor {
 	@Override
 	public boolean isCraftable(Unit user) {
 		for(Actor a : curLevel.actors){
-			if(a.temperature > 400 && Math.abs(x - a.x) < 5 && Math.abs(y - a.y) < 5){
+			if(a.temperature > 400 && Math.abs(user.x - a.x) < 5 && Math.abs(user.y - a.y) < 5){
 				return true;
 			}
 		}

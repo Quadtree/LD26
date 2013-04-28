@@ -161,7 +161,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		graphics().rootLayer().add(graphics().createImmediateLayer(this));
 		
-		font = graphics().createFont("Droid Sans Mono", Style.BOLD, 20);
+		font = graphics().createFont("Droid Sans Mono", Style.PLAIN, 20);
 		
 		planetLevel = new PlanetLevel();
 		podLevel = new PodLevel();
@@ -299,9 +299,9 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		setTextAt(42,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour() + " (" + tick + ")", Color.rgb(255, 255, 255));
 		
 		if(pc.foodNeed > 1.5f){
-			setTextAt(0,screenTileHeight - 1, "Starving", Color.rgb(255, 150, 0));
+			setTextAt(10,screenTileHeight - 1, "Starving", Color.rgb(255, 230, 230));
 		} else if(pc.foodNeed > 0.5f){
-			setTextAt(0,screenTileHeight - 1, "Hungry", Color.rgb(0, 0, 255));
+			setTextAt(10,screenTileHeight - 1, "Hungry", Color.rgb(220, 192, 192));
 			pc.hp -= 1.f / DAY_LENGTH / 3;
 		}
 		
@@ -480,7 +480,10 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		int y = 5;
 		int x = 12;
 		
-		this.setTextAt(21, 3, "Detour Key Commands", Color.rgb(255, 255, 255));
+		this.setTextAt(21, 3, "Detour Commands", Color.rgb(255, 255, 255));
+		
+		this.setTextAt(x, y++, "Mouseover: Get info on square", Color.rgb(255, 255, 255));
+		y++;
 		this.setTextAt(x, y++, "F1...............View this screen", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "WASD.............Move/aim item use", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "1-5..............Choose dialog option", Color.rgb(255, 255, 255));
@@ -489,7 +492,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		this.setTextAt(x, y++, "C................Craft item", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "O................Drop item", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "P................Pick up item on ground", Color.rgb(255, 255, 255));
-		this.setTextAt(x, y++, "R................Rest for two hours, restoring 3% HP", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "R................Rest for two hours, +3% HP", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "Up/Down Arrows...Switch equipped item", Color.rgb(255, 255, 255));
 		
 		this.setTextAt(x + 6,y + 6, "Press any key to continue", Color.rgb(255, 255, 255));
@@ -549,7 +552,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				pc.hp = Math.min(pc.hp + 0.03f, 1);
 			}
 			
-			if(event.key() == Key.C && pc.inventory.size() > 0) pc.inventory.get(equippedItem).craft(pc);
+			if(event.key() == Key.C && pc.inventory.size() > 0 && pc.inventory.get(equippedItem).isCraftable(pc)) pc.inventory.get(equippedItem).craft(pc);
 			
 			if(event.key() == Key.O && pc.inventory.size() > 0){
 				Actor dropped = pc.inventory.remove(equippedItem);

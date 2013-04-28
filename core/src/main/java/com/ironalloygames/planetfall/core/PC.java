@@ -15,6 +15,14 @@ public class PC extends Unit {
 	public void render() {
 		PFG.s.setCharAtReal(x, y, '@', fixCol(Color.rgb(255, 255, 255)));
 		
+		Collections.sort(inventory, new Comparator<Actor>(){
+
+			@Override
+			public int compare(Actor o1, Actor o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		
 		super.render();
 	}
 
@@ -32,20 +40,12 @@ public class PC extends Unit {
 	public void update() {
 		
 		if(temperature < 278){
-			hp -= (278 - temperature) / 20 / 1800;
+			hp -= (278 - temperature) / 20 / 3500;
 		}
 		
 		foodNeed += 1.f / PFG.DAY_LENGTH;
 		
 		if(sickness > 0) sickness += 1.f / PFG.DAY_LENGTH;
-		
-		Collections.sort(inventory, new Comparator<Actor>(){
-
-			@Override
-			public int compare(Actor o1, Actor o2) {
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
 		
 		super.update();
 	}

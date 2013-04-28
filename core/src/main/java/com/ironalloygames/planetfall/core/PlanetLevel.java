@@ -197,7 +197,7 @@ public class PlanetLevel extends Level {
 			}
 		}
 		
-		for(int i=0;i<50;++i){
+		for(int i=0;i<18;++i){
 			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
 			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
 			
@@ -210,7 +210,7 @@ public class PlanetLevel extends Level {
 			
 		}
 		
-		for(int i=0;i<10;++i){
+		for(int i=0;i<5;++i){
 			int groveX = PFG.s.r.nextInt(MAP_WIDTH);
 			int groveY = PFG.s.r.nextInt(MAP_HEIGHT);
 			
@@ -253,6 +253,8 @@ public class PlanetLevel extends Level {
 			} else {
 				actors.add(new PodInsignia(lastLifepodX, lastLifepodY - 3, this, PFG.s.enemyShip, PFG.s.enemyEmpire));
 			}
+			
+			map[lastLifepodX][lastLifepodY + 3] = GroundType.SHIP_FLOOR;
 		}
 		
 		PlayN.log().debug("World generation complete");
