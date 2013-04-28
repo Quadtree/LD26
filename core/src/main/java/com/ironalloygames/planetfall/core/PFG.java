@@ -324,8 +324,26 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		if(pc.inventory.size() > 0){
 			if(!isUsingItemInDirection){
+				
 				if(equippedItem >= pc.inventory.size()) equippedItem = 0;
-				setTextAt(0,3, (equippedItem+1) + " - " + pc.inventory.get(equippedItem).getName() + 
+				
+				int itemCount = 0;
+				
+				for(Actor a : pc.inventory){
+					if(a.getName().equals(pc.inventory.get(equippedItem).getName())) itemCount++;
+				}
+				
+				int inventorySpot = 1;
+				String lastItemName = pc.inventory.get(0).getName();
+				
+				for(int i=0;i<=equippedItem;++i){
+					if(!pc.inventory.get(i).getName().equals(lastItemName)){
+						lastItemName = pc.inventory.get(i).getName();
+						inventorySpot++;
+					}
+				}
+				
+				setTextAt(0,3, inventorySpot + " - " + pc.inventory.get(equippedItem).getName() + " (" + itemCount + ")" + 
 						(pc.inventory.get(equippedItem).isUsableInDirection() || pc.inventory.get(equippedItem).isUsableOnSelf() ? ", U=Use" : "") + ", I=Info, O=Drop" + 
 						(pc.inventory.get(equippedItem).isCraftable(pc) ? ", C=Craft" : ""), 
 				Color.rgb(255, 255, 255));
@@ -540,9 +558,28 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableInDirection()) isUsingItemInDirection = true;
 			if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableOnSelf()) pc.inventory.get(equippedItem).useOnSelf(pc);
 			
-			if(event.key() == Key.DOWN) equippedItem++;
-			if(event.key() == Key.UP) equippedItem--;
-			if(equippedItem < 0) equippedItem = pc.inventory.size() - 1;
+			if(event.key() == Key.DOWN){
+				String oldItemName = pc.inventory.get(equippedItem).getName();
+				
+				while(pc.inventory.get(equippedItem).getName().equals(oldItemName)){
+					equippedItem++;
+					if(equippedItem >= pc.inventory.size()){
+						equippedItem = 0;
+						break;
+					}
+				}
+			}
+			if(event.key() == Key.UP){
+				String oldItemName = pc.inventory.get(equippedItem).getName();
+				
+				while(pc.inventory.get(equippedItem).getName().equals(oldItemName)){
+					equippedItem--;
+					if(equippedItem < 0){
+						equippedItem = pc.inventory.size() - 1;
+						break;
+					}
+				}
+			}
 			
 			if(event.key() == Key.P){
 				

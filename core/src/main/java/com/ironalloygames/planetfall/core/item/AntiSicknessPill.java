@@ -38,6 +38,7 @@ public class AntiSicknessPill extends Actor {
 	@Override
 	public void useOnSelf(Unit user) {
 		user.sickness = 0;
+		user.inventory.remove(this);
 	}
 	
 	@Override

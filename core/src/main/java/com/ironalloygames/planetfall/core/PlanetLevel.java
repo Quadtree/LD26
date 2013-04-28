@@ -310,12 +310,14 @@ public class PlanetLevel extends Level {
 				
 				PlayN.log().debug("DIST1 " + dist1);
 				
-				switch(PFG.s.r.nextInt(5)){
-					case 0: actors.add(new FusionTorch(lastLifepodX+1, lastLifepodY, this)); break;
-					case 1: actors.add(new FusionLancePistol(lastLifepodX+1, lastLifepodY, this)); break;
-					case 2: actors.add(new PowerCell(lastLifepodX+1, lastLifepodY, this)); actors.add(new PowerCell(lastLifepodX+1, lastLifepodY, this)); break;
-					case 3: actors.add(new StarshipFuelCan(lastLifepodX+1, lastLifepodY, this)); break;
-					case 4: actors.add(new AntiSicknessPill(lastLifepodX+1, lastLifepodY, this)); break;
+				if(placeExtraGear){
+					switch(PFG.s.r.nextInt(5)){
+						case 0: actors.add(new FusionTorch(lastLifepodX+1, lastLifepodY, this)); break;
+						case 1: actors.add(new FusionLancePistol(lastLifepodX+1, lastLifepodY, this)); break;
+						case 2: actors.add(new PowerCell(lastLifepodX+1, lastLifepodY, this)); actors.add(new PowerCell(lastLifepodX+1, lastLifepodY, this)); break;
+						case 3: actors.add(new StarshipFuelCan(lastLifepodX+1, lastLifepodY, this)); break;
+						case 4: actors.add(new AntiSicknessPill(lastLifepodX+1, lastLifepodY, this)); break;
+					}
 				}
 				
 				break;

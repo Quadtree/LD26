@@ -1,5 +1,8 @@
 package com.ironalloygames.planetfall.core;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import com.ironalloygames.planetfall.core.info.Person;
 
 import playn.core.Color;
@@ -35,6 +38,14 @@ public class PC extends Unit {
 		foodNeed += 1.f / PFG.DAY_LENGTH;
 		
 		if(sickness > 0) sickness += 1.f / PFG.DAY_LENGTH;
+		
+		Collections.sort(inventory, new Comparator<Actor>(){
+
+			@Override
+			public int compare(Actor o1, Actor o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 		
 		super.update();
 	}
