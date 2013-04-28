@@ -37,7 +37,6 @@ public class Unit extends Actor {
 		return 345;
 	}
 	
-	public float waterNeed = 0;
 	public float foodNeed = 0;
 	public float sickness = 0;
 

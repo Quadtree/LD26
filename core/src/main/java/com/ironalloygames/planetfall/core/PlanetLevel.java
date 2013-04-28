@@ -3,7 +3,6 @@ package com.ironalloygames.planetfall.core;
 import java.lang.reflect.InvocationTargetException;
 
 import com.ironalloygames.planetfall.core.Level.GroundType;
-import com.ironalloygames.planetfall.core.item.Canteen;
 import com.ironalloygames.planetfall.core.item.Flint;
 import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
@@ -247,7 +246,6 @@ public class PlanetLevel extends Level {
 		actors.add(new FusionLancePistol(pcLifepodX, pcLifepodY+1, this));
 		actors.add(new PowerCell(pcLifepodX, pcLifepodY+1, this));
 		actors.add(new PowerCell(pcLifepodX, pcLifepodY+1, this));
-		actors.add(new Canteen(pcLifepodX, pcLifepodY+2, this));
 		
 		PlayN.log().debug("World generation complete");
 	}
