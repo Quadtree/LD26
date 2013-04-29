@@ -426,6 +426,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		int cx = x;
 		int cy = y;
 		
+		if(x >= screenTileWidth) return;
+		if(y >= screenTileHeight) return;
+		if(x < 0) return;
+		if(y < 0) return;
+		
 		for(int i=0;i<text.length();++i){
 			renderBuffer[cx][cy] = text.charAt(i);
 			renderBufferColor[cx][cy] = color;
@@ -527,11 +532,13 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				if(event.key() == Key.W) movY = -1;
 				if(event.key() == Key.S) movY = 1;
 			} else {
+				pc.saveActiveItem();
 				if(event.key() == Key.A) pc.inventory.get(equippedItem).useInDirection((float)Math.PI, pc);
 				if(event.key() == Key.D) pc.inventory.get(equippedItem).useInDirection(0, pc);
 				if(event.key() == Key.W) pc.inventory.get(equippedItem).useInDirection(MathUtil.TWO_PI - MathUtil.HALF_PI, pc);
 				if(event.key() == Key.S) pc.inventory.get(equippedItem).useInDirection(MathUtil.HALF_PI, pc);
 				isUsingItemInDirection = false;
+				pc.restoreActiveItem();
 			}
 		}
 		
@@ -554,10 +561,13 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			
 			if(event.key() == Key.R){
 				pc.actionTimer = DAY_LENGTH / 12;
-				pc.hp = Math.min(pc.hp + 0.03f, 1);
 			}
 			
-			if(event.key() == Key.C && pc.inventory.size() > 0 && pc.inventory.get(equippedItem).isCraftable(pc)) pc.inventory.get(equippedItem).craft(pc);
+			if(event.key() == Key.C && pc.inventory.size() > 0 && pc.inventory.get(equippedItem).isCraftable(pc)){
+				pc.saveActiveItem();
+				pc.inventory.get(equippedItem).craft(pc);
+				pc.restoreActiveItem();
+			}
 			
 			if(event.key() == Key.O && pc.inventory.size() > 0){
 				Actor dropped = pc.inventory.remove(equippedItem);
@@ -567,9 +577,15 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			}
 			
 			if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableInDirection()) isUsingItemInDirection = true;
-			if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableOnSelf()) pc.inventory.get(equippedItem).useOnSelf(pc);
+			if(event.key() == Key.U && pc.inventory.get(equippedItem).isUsableOnSelf()){
+				pc.saveActiveItem();
+				pc.inventory.get(equippedItem).useOnSelf(pc);
+				pc.restoreActiveItem();
+			}
 			
 			if(event.key() == Key.DOWN){
+				isUsingItemInDirection = false;
+				
 				String oldItemName = pc.inventory.get(equippedItem).getName();
 				
 				while(pc.inventory.get(equippedItem).getName().equals(oldItemName)){
@@ -581,6 +597,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				}
 			}
 			if(event.key() == Key.UP){
+				isUsingItemInDirection = false;
+				
 				String oldItemName = pc.inventory.get(equippedItem).getName();
 				
 				while(pc.inventory.get(equippedItem).getName().equals(oldItemName)){
