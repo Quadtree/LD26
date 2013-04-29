@@ -276,6 +276,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		currentLevel.render();
 		
+		if(curDialog != null){
+			movX = 0;
+			movY = 0;
+		}
+		
 		if((movX != 0 || movY != 0) && autoMoveTimer-- <= 0) pc.move(movX, movY);
 		
 		//setTextAt(0,0, "FPS " + fps, Color.rgb(255, 255, 255));
