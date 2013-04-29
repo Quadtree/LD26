@@ -300,18 +300,16 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		setTextAt(42,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour() + " (" + tick + ")", Color.rgb(255, 255, 255));
 		
-		if(pc.foodNeed > 1.5f){
+		if(pc.foodNeed > 1.f){
 			setTextAt(10,screenTileHeight - 1, "Starving", Color.rgb(255, 230, 230));
 		} else if(pc.foodNeed > 0.5f){
 			setTextAt(10,screenTileHeight - 1, "Hungry", Color.rgb(220, 192, 192));
-			pc.hp -= 1.f / DAY_LENGTH / 3;
 		}
 		
 		if(pc.sickness > 1){
 			setTextAt(0,screenTileHeight - 1, "Very Sick", Color.rgb(0, 255, 0));
 		} else if(pc.sickness > 0){
 			setTextAt(0,screenTileHeight - 1, "Sick", Color.rgb(90, 255, 0));
-			pc.hp -= 1.f / DAY_LENGTH;
 		}
 		
 		setCharAtReal(mouseRealTileX, mouseRealTileY, '\0', Color.rgb(255, 255, 255));

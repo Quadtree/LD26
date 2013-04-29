@@ -51,12 +51,16 @@ public class PC extends Unit {
 	public void update() {
 		
 		if(temperature < 278){
-			hp -= (278 - temperature) / 20 / 3500;
+			hp -= (278 - temperature) / 20 / 2800;
 		}
 		
 		foodNeed += 1.f / PFG.DAY_LENGTH;
 		
 		if(sickness > 0) sickness += 1.f / PFG.DAY_LENGTH;
+		
+		if(sickness > 1) hp -= 1.f / PFG.DAY_LENGTH;
+		
+		if(foodNeed > 1) hp -= 1.f / PFG.DAY_LENGTH / 3;
 		
 		super.update();
 	}

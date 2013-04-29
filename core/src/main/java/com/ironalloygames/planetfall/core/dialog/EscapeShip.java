@@ -19,7 +19,7 @@ public class EscapeShip extends Dialog {
 		states.get("StartAlt").put("1", new StateTransition("Continue", "Start"));
 		
 		states.put("Start", new HashMap<String, StateTransition>());
-		states.get("Start").put("P", new StateTransition("You hear a voice over the PA", ""));
+		states.get("Start").put("P", new StateTransition("You hear a voice over the PA system.", ""));
 		states.get("Start").put("1", new StateTransition("Continue", "Start2"));
 		
 		states.put("Start2", new HashMap<String, StateTransition>());
