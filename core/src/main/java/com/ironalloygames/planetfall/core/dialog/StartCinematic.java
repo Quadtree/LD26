@@ -26,13 +26,13 @@ public class StartCinematic extends Dialog {
 		states.get("Start2").put("4", new StateTransition("Take this moment to consider the meaning of life", "MeaningOfLife"));
 		
 		states.put("Examine1", new HashMap<String, StateTransition>());
-		states.get("Examine1").put("P", new StateTransition("You're pulling way too many Gs to get out of your seat. Whatever genius designed this should have put the panel closer", ""));
+		states.get("Examine1").put("P", new StateTransition("You're pulling way too many Gs to get out of your seat. Whatever genius designed this should have put the panel closer.", ""));
 		states.get("Examine1").put("1", states.get("Start2").get("2"));
 		states.get("Examine1").put("2", states.get("Start2").get("3"));
 		states.get("Examine1").put("3", states.get("Start2").get("4"));
 		
 		states.put("MeaningOfLife", new HashMap<String, StateTransition>());
-		states.get("MeaningOfLife").put("P", new StateTransition("You take a moment to quietly meditate on the meaning of life. Unfortunately, you do not find enlightenment, and the alarm is still going off", ""));
+		states.get("MeaningOfLife").put("P", new StateTransition("You take a moment to quietly meditate on the meaning of life. Unfortunately, you do not find enlightenment, and the alarm is still going off.", ""));
 		states.get("MeaningOfLife").put("1", states.get("Start2").get("1"));
 		states.get("MeaningOfLife").put("2", states.get("Start2").get("2"));
 		states.get("MeaningOfLife").put("3", states.get("Start2").get("3"));
@@ -95,7 +95,7 @@ public class StartCinematic extends Dialog {
 		states.get("Mechanic5").put("1", new StateTransition("Continue", "Mechanic6"));
 		
 		states.put("Mechanic6", new HashMap<String, StateTransition>());
-		states.get("Mechanic6").put("P", new StateTransition("An enemy fusion lance cuts through the wall! EVERYTHING IS ON FIRE! Bulkheads slam to keep the air in, but the fires still rage. (Walk to the red F, press P to pick up the fire extinguisher, walk back to the fire and press U to use it)", ""));
+		states.get("Mechanic6").put("P", new StateTransition("An enemy fusion lance cuts through the wall! EVERYTHING IS ON FIRE! Bulkheads slam to keep the air in, but the fires still rage. (Walk to the red F, press P to pick up the fire extinguisher, press U to use it)", ""));
 		states.get("Mechanic6").put("1", new StateTransition("Continue", "Mechanic7"));
 	}
 	
