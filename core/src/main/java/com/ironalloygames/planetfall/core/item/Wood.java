@@ -48,4 +48,9 @@ public class Wood extends Actor {
 	public String getName() {
 		return "Wood";
 	}
+	
+	@Override
+	public float fireDamageMultiplier() {
+		return 1.f / 1500.f;
+	}
 }
