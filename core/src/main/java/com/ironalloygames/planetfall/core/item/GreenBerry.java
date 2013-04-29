@@ -14,7 +14,7 @@ public class GreenBerry extends Berry {
 
 	@Override
 	public int getColor() {
-		return Color.rgb(255, 255, 0);
+		return Color.rgb(0, 255, 0);
 	}
 	
 	@Override
