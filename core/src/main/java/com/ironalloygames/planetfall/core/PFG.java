@@ -426,12 +426,12 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		int cx = x;
 		int cy = y;
 		
-		if(x >= screenTileWidth) return;
-		if(y >= screenTileHeight) return;
-		if(x < 0) return;
-		if(y < 0) return;
-		
 		for(int i=0;i<text.length();++i){
+			if(cx >= screenTileWidth) return;
+			if(cy >= screenTileHeight) return;
+			if(cx < 0) return;
+			if(cy < 0) return;
+			
 			renderBuffer[cx][cy] = text.charAt(i);
 			renderBufferColor[cx][cy] = color;
 			
