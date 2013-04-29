@@ -51,7 +51,6 @@ public class PC extends Unit {
 
 	@Override
 	public void update() {
-		
 		if(temperature < 278){
 			hp -= (278 - temperature) / 20 / 2800;
 		}
@@ -90,11 +89,13 @@ public class PC extends Unit {
 	
 	public void saveActiveItem(){
 		activeItem = inventory.get(PFG.s.equippedItem).getName();
+		PlayN.log().debug("Set to " + activeItem);
 	}
 	
 	public void restoreActiveItem(){
+		this.sortItems();
 		for(int i=0;i<inventory.size();++i){
-			if(inventory.get(i).getName().equals(activeItem)) PFG.s.equippedItem = i;
+			if(inventory.get(i).getName().equals(activeItem)){ PFG.s.equippedItem = i; PlayN.log().debug("Restored " + activeItem + " " + i); return; }
 		}
 	}
 }

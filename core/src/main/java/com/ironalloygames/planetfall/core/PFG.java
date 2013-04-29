@@ -389,7 +389,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			}
 		}
 		
-		if(tick / DAY_LENGTH == 5){
+		if(tick / DAY_LENGTH == 5 && curDialog == null){
 			if(talkedToEnemyDoctor)
 				curDialog = new MediumEnding();
 			else
