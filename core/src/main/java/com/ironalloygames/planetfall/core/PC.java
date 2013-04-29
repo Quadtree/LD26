@@ -3,9 +3,11 @@ package com.ironalloygames.planetfall.core;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.ironalloygames.planetfall.core.dialog.InfoDialog;
 import com.ironalloygames.planetfall.core.info.Person;
 
 import playn.core.Color;
+import playn.core.PlayN;
 
 public class PC extends Unit {
 	
@@ -15,6 +17,17 @@ public class PC extends Unit {
 	public void render() {
 		PFG.s.setCharAtReal(x, y, '@', fixCol(Color.rgb(255, 255, 255)));
 		
+		sortItems();
+		
+		if(inventory.size() > 1 && PlayN.storage().getItem("itemTutorial") == null && PFG.s.curDialog == null){
+			PFG.s.curDialog = new InfoDialog("You now have more than one item. Use the up and down arrow keys to switch between them.");
+			PlayN.storage().setItem("itemTutorial", "yes");
+		}
+		
+		super.render();
+	}
+	
+	public void sortItems(){
 		Collections.sort(inventory, new Comparator<Actor>(){
 
 			@Override
@@ -22,8 +35,6 @@ public class PC extends Unit {
 				return o1.getName().compareTo(o2.getName());
 			}
 		});
-		
-		super.render();
 	}
 
 	@Override

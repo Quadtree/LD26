@@ -35,7 +35,7 @@ public class EnemyDoctorDialog extends Dialog {
 		states.get("Freeze").put("P", new StateTransition(PFG.s.enemyDoctor.pd.genderSpecific("He", "She") + " is quicker on the draw than you'd expect, and brings " + PFG.s.enemyDoctor.pd.getHisHer() +
 				" gun up before you can level yours. It leads to a standoff.", ""));
 		
-		if(PFG.s.talkedToCommOfficer)
+		if(PFG.s.talkedToCommOfficer && PFG.s.commOfficer.hp > 0)
 			states.get("Freeze").put("1", new StateTransition("\"Look, I'm just looking for medicines for my friend.\"", "Medicines"));
 		else
 			states.get("Freeze").put("1", new StateTransition("\"I think we're all alone on this planet. We need to work together to survive.\"", "Alliance"));

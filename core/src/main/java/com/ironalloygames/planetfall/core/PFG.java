@@ -381,12 +381,12 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				curDialog = new CommOfficerComa();
 				talkedToCommOfficer = true;
 			}
-			else if(!talkedToEnemyDoctorAboutCommOfficer && talkedToCommOfficer && enemyDoctor.hp > 0 && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y) && Math.abs(pc.x - enemyDoctor.x) < 3 && Math.abs(pc.y - enemyDoctor.y) < 3){
+			else if(!talkedToEnemyDoctorAboutCommOfficer && talkedToCommOfficer && commOfficer.hp > 0 && enemyDoctor.hp > 0 && currentLevel.hasLOS(pc.x, pc.y, enemyDoctor.x, enemyDoctor.y) && Math.abs(pc.x - enemyDoctor.x) < 3 && Math.abs(pc.y - enemyDoctor.y) < 3){
 				curDialog = new EnemyDoctorAboutCommDialog();
 			}
 		}
 		
-		if(tick / DAY_LENGTH == 8){
+		if(tick / DAY_LENGTH == 5){
 			if(talkedToEnemyDoctor)
 				curDialog = new MediumEnding();
 			else
@@ -607,6 +607,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 				if(topActor != null){
 					pc.inventory.add(topActor);
 					currentLevel.actors.remove(topActor);
+					pc.sortItems();
+					
+					for(int i=0;i<pc.inventory.size();++i){
+						if(pc.inventory.get(i) == topActor) equippedItem = i;
+					}
 				}
 			}
 		}

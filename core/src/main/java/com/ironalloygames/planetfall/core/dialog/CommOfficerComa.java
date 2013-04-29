@@ -9,7 +9,7 @@ public class CommOfficerComa extends Dialog {
 	public CommOfficerComa(){
 		states.put("Start", new HashMap<String, StateTransition>());
 		states.get("Start").put("P", new StateTransition("You open the pod, and notice someone lying on the floor in the middle. Judging by their uniform, they are also a member of the " +
-				PFG.s.alliedEmpire.name + " space forces. They don't move to acknowledge your entry.", ""));
+				PFG.s.alliedEmpire.name + " space forces. " + PFG.s.commOfficer.pd.genderSpecific("He", "She") + " does not move to acknowledge your entry.", ""));
 		states.get("Start").put("1", new StateTransition("Examine " + PFG.s.commOfficer.pd.getHimHer(), "Start2"));
 		
 		states.put("Start2", new HashMap<String, StateTransition>());
