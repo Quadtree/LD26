@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class InfoDialog extends Dialog {
 	public InfoDialog(String text){
-		states.put("Start", new HashMap<String, StateTransition>());
-		states.get("Start").put("P", new StateTransition(text, ""));
-		states.get("Start").put("1", new StateTransition("Close", "End"));
+		states.put("Start", new State("", text).add("End"));
+		
+		states.put("Close", new State("Close", "").add(new State.End()));
 	}
 }

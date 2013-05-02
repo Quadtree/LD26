@@ -13,7 +13,6 @@ import com.ironalloygames.planetfall.core.dialog.Dialog;
 import com.ironalloygames.planetfall.core.dialog.EnemyDoctorAboutCommDialog;
 import com.ironalloygames.planetfall.core.dialog.EnemyDoctorDialog;
 import com.ironalloygames.planetfall.core.dialog.EscapeShip;
-import com.ironalloygames.planetfall.core.dialog.FirstNight;
 import com.ironalloygames.planetfall.core.dialog.InfoDialog;
 import com.ironalloygames.planetfall.core.dialog.MediumEnding;
 import com.ironalloygames.planetfall.core.dialog.StartCinematic;
@@ -309,7 +308,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		
 		if(getHour().equals("Dusk") && !firstNightDialogShown){
 			firstNightDialogShown = true;
-			curDialog = new FirstNight();
+			curDialog = new InfoDialog("Night is falling. To your suprise, it starts getting extremely cold. You'll need to find a fire if you don't want to die of hypothermia. (Press R to rest for 2 hours)");
 		}
 		
 		setTextAt(41,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour() + " (" + tick + ")", Color.rgb(255, 255, 255));
@@ -488,6 +487,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	public int equippedItem = 0;
 	
 	boolean helpScreenUp = false;
+	
+	public boolean podDoorsOpen = false;
 	
 	private void showHelpScreen(){
 		for(int x=0;x<renderBuffer.length;++x){
