@@ -53,7 +53,7 @@ public class State {
 	
 	protected String prompt;
 	
-	protected ArrayList<Transition> options;
+	protected ArrayList<Transition> options = new ArrayList<Transition>();
 	
 	protected boolean visited;
 	

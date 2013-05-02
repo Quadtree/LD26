@@ -563,11 +563,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		if(movX != 0 || movY != 0) pc.move(movX, movY);
 		
 		
-		if(event.key() == Key.K1 && curDialog != null) curDialog.pick(1);
-		if(event.key() == Key.K2 && curDialog != null) curDialog.pick(2);
-		if(event.key() == Key.K3 && curDialog != null) curDialog.pick(3);
-		if(event.key() == Key.K4 && curDialog != null) curDialog.pick(4);
-		if(event.key() == Key.K5 && curDialog != null) curDialog.pick(5);
+		if(event.key() == Key.K1 && curDialog != null) curDialog.pick(0);
+		if(event.key() == Key.K2 && curDialog != null) curDialog.pick(1);
+		if(event.key() == Key.K3 && curDialog != null) curDialog.pick(2);
+		if(event.key() == Key.K4 && curDialog != null) curDialog.pick(3);
+		if(event.key() == Key.K5 && curDialog != null) curDialog.pick(4);
 		
 		if(event.key() == Key.ESCAPE) isUsingItemInDirection = false;
 		
