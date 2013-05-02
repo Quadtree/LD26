@@ -303,7 +303,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			curDialog = new FirstNight();
 		}
 		
-		setTextAt(42,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour() + " (" + tick + ")", Color.rgb(255, 255, 255));
+		setTextAt(41,screenTileHeight - 1, "Day " + ((tick / DAY_LENGTH)+1) + ", " + getHour() + " (" + tick + ")", Color.rgb(255, 255, 255));
 		
 		if(pc.foodNeed > 1.f){
 			setTextAt(10,screenTileHeight - 1, "Starving", Color.rgb(255, 230, 230));
@@ -503,6 +503,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		this.setTextAt(x, y++, "O................Drop item", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "P................Pick up item on ground", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "R................Rest for two hours, +3% HP", Color.rgb(255, 255, 255));
+		this.setTextAt(x, y++, "Period...........Wait for a moment", Color.rgb(255, 255, 255));
 		this.setTextAt(x, y++, "Up/Down Arrows...Switch equipped item", Color.rgb(255, 255, 255));
 		
 		this.setTextAt(x + 6,y + 6, "Press any key to continue", Color.rgb(255, 255, 255));
