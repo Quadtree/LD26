@@ -3,10 +3,10 @@ package com.ironalloygames.planetfall.core.interactable;
 import playn.core.Color;
 
 import com.ironalloygames.planetfall.core.Actor;
-import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.info.Empire;
 import com.ironalloygames.planetfall.core.info.Ship;
+import com.ironalloygames.planetfall.core.level.Level;
 
 public class PodInsignia extends Actor {
 	public Ship originShip;

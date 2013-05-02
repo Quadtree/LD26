@@ -1,6 +1,6 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.level;
 
-import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.level.Level.GroundType;
 
 public class RecruitingOfficeLevel extends Level {
 	public RecruitingOfficeLevel(){

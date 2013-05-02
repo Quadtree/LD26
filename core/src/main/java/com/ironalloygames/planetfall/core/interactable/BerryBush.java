@@ -1,9 +1,9 @@
 package com.ironalloygames.planetfall.core.interactable;
 
 import com.ironalloygames.planetfall.core.Actor;
-import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.item.Berry;
+import com.ironalloygames.planetfall.core.level.Level;
 
 public abstract class BerryBush extends Actor {
 	public abstract int getColor();

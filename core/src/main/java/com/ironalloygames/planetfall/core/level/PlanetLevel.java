@@ -1,9 +1,10 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.level;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.interactable.CommGear;
+import com.ironalloygames.planetfall.core.interactable.GreenBerryBush;
 import com.ironalloygames.planetfall.core.interactable.PodDoor;
 import com.ironalloygames.planetfall.core.interactable.PodInsignia;
 import com.ironalloygames.planetfall.core.interactable.Tree;
@@ -14,6 +15,7 @@ import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.PowerCell;
 import com.ironalloygames.planetfall.core.item.StarshipFuelCan;
+import com.ironalloygames.planetfall.core.level.Level.GroundType;
 import com.ironalloygames.planetfall.core.unit.CommOfficer;
 import com.ironalloygames.planetfall.core.unit.EnemyDoctor;
 import com.ironalloygames.planetfall.core.unit.HexapedDeer;

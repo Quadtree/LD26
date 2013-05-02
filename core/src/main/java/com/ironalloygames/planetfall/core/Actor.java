@@ -2,6 +2,7 @@ package com.ironalloygames.planetfall.core;
 
 import java.util.ArrayList;
 
+import com.ironalloygames.planetfall.core.level.Level;
 import com.ironalloygames.planetfall.core.unit.Unit;
 
 import playn.core.Color;

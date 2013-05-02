@@ -1,8 +1,10 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.level;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.ironalloygames.planetfall.core.Actor;
+import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.dialog.DeadEnding;
 import com.ironalloygames.planetfall.core.unit.PC;
 

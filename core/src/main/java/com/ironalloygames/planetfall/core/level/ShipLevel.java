@@ -1,13 +1,14 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.level;
 
 import playn.core.Color;
 
-import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
 import com.ironalloygames.planetfall.core.item.FireExtinguisher;
 import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.StarshipFuel;
+import com.ironalloygames.planetfall.core.level.Level.GroundType;
 
 public class ShipLevel extends Level {
 	public ShipLevel(){

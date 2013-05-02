@@ -5,7 +5,7 @@ import java.util.HashMap;
 import playn.core.PlayN;
 
 import com.ironalloygames.planetfall.core.PFG;
-import com.ironalloygames.planetfall.core.ShipLevel;
+import com.ironalloygames.planetfall.core.level.ShipLevel;
 
 public class StartCinematic extends Dialog {
 	public StartCinematic(){

@@ -1,8 +1,8 @@
 package com.ironalloygames.planetfall.core.interactable;
 
-import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.item.Berry;
 import com.ironalloygames.planetfall.core.item.YellowBerry;
+import com.ironalloygames.planetfall.core.level.Level;
 
 import playn.core.Color;
 

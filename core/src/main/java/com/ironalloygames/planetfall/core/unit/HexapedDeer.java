@@ -2,9 +2,9 @@ package com.ironalloygames.planetfall.core.unit;
 
 import playn.core.Color;
 
-import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.item.RawMeat;
+import com.ironalloygames.planetfall.core.level.Level;
 
 public class HexapedDeer extends Unit {
 
