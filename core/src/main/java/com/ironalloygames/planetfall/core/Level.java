@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.ironalloygames.planetfall.core.dialog.DeadEnding;
+import com.ironalloygames.planetfall.core.unit.PC;
 
 import playn.core.Color;
 

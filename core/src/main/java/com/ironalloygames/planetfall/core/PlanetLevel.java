@@ -3,12 +3,21 @@ package com.ironalloygames.planetfall.core;
 import java.lang.reflect.InvocationTargetException;
 
 import com.ironalloygames.planetfall.core.Level.GroundType;
+import com.ironalloygames.planetfall.core.interactable.CommGear;
+import com.ironalloygames.planetfall.core.interactable.PodDoor;
+import com.ironalloygames.planetfall.core.interactable.PodInsignia;
+import com.ironalloygames.planetfall.core.interactable.Tree;
+import com.ironalloygames.planetfall.core.interactable.YellowBerryBush;
 import com.ironalloygames.planetfall.core.item.AntiSicknessPill;
 import com.ironalloygames.planetfall.core.item.Flint;
 import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.PowerCell;
 import com.ironalloygames.planetfall.core.item.StarshipFuelCan;
+import com.ironalloygames.planetfall.core.unit.CommOfficer;
+import com.ironalloygames.planetfall.core.unit.EnemyDoctor;
+import com.ironalloygames.planetfall.core.unit.HexapedDeer;
+import com.ironalloygames.planetfall.core.unit.Wolfoid;
 
 import playn.core.PlayN;
 

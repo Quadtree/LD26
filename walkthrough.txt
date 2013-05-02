@@ -1,0 +1,17 @@
+This game has a large amount of randomness, so this walkthrough will only describe the steps in broad strokes.
+
+After the opening cinematic, you are in Fuel Pump Room 2 and everything is on fire. Grab the fire extinguisher and put out the fire. The best strategy here is to start at one end and clear the fire from there. Either way, you have 400 ticks before the captain orders you to bail out. Once the fire is out, go into the room above you and grab the Fusion Torch.
+
+After you land on the planet, collect all the items in the pod. One of them will be a Lifeform Detector. When you use this there should be a display with a blue dot (you), and two white dots (objectives). You need to make your way towards these objectives (their exact placement is random, so I can't describe exactly how).
+
+Make sure you collect as much wood as you can as quickly as possible, and make some javelins in case you are attacked by Wolfoids. If you come across any other pods, be sure to go inside and collect whatever there is.
+
+At night it will get very cold. The fusion torch can be used to light things on fire to keep you warm (trees and wood are good for this).
+
+You will also need food. There are two kinds of berries: Yellow and Green. In each game, one is randomly toxic. Just try them both and use an Anti-Sickness Pill if you get poisoned. If you collect meat from an animal, be sure to cook it on a fire by pressing C when near a fire.
+
+Eventually you will get to the objectives, which both look like pods with their doors closed. Make sure you have a javelin in your inventory, and use your fusion torch to cut open their doors, and then go inside.
+
+One of the two pods will have a enemy doctor in it. When talking to them, say "Freeze" and then follow those options to befriend them.
+
+The other pod will have a severely injured comm officer in it. Once you've seen them, talk to the doctor and they will heal them, allowing you to summon help and win the game.

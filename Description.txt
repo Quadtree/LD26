@@ -1,0 +1,18 @@
+Important Note: This game is supposed to use a fixed width font. If the font looks very disjointed, try refreshing the page. The game is implemented in HTML5, but the only browser that I've found that is able to run it is Google Chrome, so this is highly recommended.
+
+My take on minimalism: An adventure/survival game with only ASCII graphics, and no sound. The visual style is inspired by oldschool roguelikes like Nethack.
+
+I sort of ran out of time on this one, so I strongly suspect that there are some unresolved bugs. Hopefully it isn't anything too serious.
+
+In this game you have to take a "Detour" to a (mostly) uninhabited planet, and try to survive and ultimately escape. Enemies are not the only threat, but also cold, hunger, and sickness. You must explore this uncharted world and find some means of escape.
+
+Tips:
+- Nights are dark, cold, and dangerous. Try to be in a sheltered area, with a lot of firewood and an ignition source at night.
+- Wood can be crafted into javelins, and it is always a good idea to have at least a few at all times.
+- This game is basically about exploring, so be sure to check everywhere.
+- The Lifeform Detector is invaluable if you're wondering where to go.
+- The game is not real-time, so you can take your time when deciding what to do.
+
+Press F1 at any time to view the key commands.
+
+A comprehensive guide that might help if you get stuck is available at: http://dyn.ironalloygames.com/detour/walkthrough.txt

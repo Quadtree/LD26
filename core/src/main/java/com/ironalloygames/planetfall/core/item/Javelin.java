@@ -6,9 +6,9 @@ import playn.core.PlayN;
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
-import com.ironalloygames.planetfall.core.PodDoor;
-import com.ironalloygames.planetfall.core.Unit;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
+import com.ironalloygames.planetfall.core.interactable.PodDoor;
+import com.ironalloygames.planetfall.core.unit.Unit;
 
 public class Javelin extends Actor {
 	public Javelin(int x, int y, Level lvl){

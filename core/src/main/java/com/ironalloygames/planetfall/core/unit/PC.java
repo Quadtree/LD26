@@ -1,8 +1,10 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.unit;
 
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.ironalloygames.planetfall.core.Actor;
+import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.dialog.InfoDialog;
 import com.ironalloygames.planetfall.core.info.Person;
 

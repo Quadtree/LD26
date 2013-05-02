@@ -3,7 +3,7 @@ package com.ironalloygames.planetfall.core.item;
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
-import com.ironalloygames.planetfall.core.Unit;
+import com.ironalloygames.planetfall.core.unit.Unit;
 
 import playn.core.Color;
 

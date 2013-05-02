@@ -3,12 +3,12 @@ package com.ironalloygames.planetfall.core.item;
 import playn.core.Color;
 
 import com.ironalloygames.planetfall.core.Actor;
-import com.ironalloygames.planetfall.core.CommOfficer;
-import com.ironalloygames.planetfall.core.EnemyDoctor;
 import com.ironalloygames.planetfall.core.Level;
-import com.ironalloygames.planetfall.core.PC;
 import com.ironalloygames.planetfall.core.PFG;
-import com.ironalloygames.planetfall.core.Unit;
+import com.ironalloygames.planetfall.core.unit.CommOfficer;
+import com.ironalloygames.planetfall.core.unit.EnemyDoctor;
+import com.ironalloygames.planetfall.core.unit.PC;
+import com.ironalloygames.planetfall.core.unit.Unit;
 
 public class LifeformDetector extends Actor {
 	public LifeformDetector(int x, int y, Level curLevel){

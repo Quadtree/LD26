@@ -1,5 +1,6 @@
 package com.ironalloygames.planetfall.core;
 
+import com.ironalloygames.planetfall.core.interactable.BerryBush;
 import com.ironalloygames.planetfall.core.item.Berry;
 import com.ironalloygames.planetfall.core.item.GreenBerry;
 

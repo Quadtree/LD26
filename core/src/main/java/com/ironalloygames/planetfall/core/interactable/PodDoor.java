@@ -1,5 +1,7 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.interactable;
 
+import com.ironalloygames.planetfall.core.Actor;
+import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.Level.GroundType;
 
 public class PodDoor extends Actor {

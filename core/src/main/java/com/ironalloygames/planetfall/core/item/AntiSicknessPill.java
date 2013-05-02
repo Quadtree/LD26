@@ -5,7 +5,7 @@ import playn.core.Color;
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
-import com.ironalloygames.planetfall.core.Unit;
+import com.ironalloygames.planetfall.core.unit.Unit;
 
 public class AntiSicknessPill extends Actor {
 	public AntiSicknessPill(int x, int y, Level lvl){

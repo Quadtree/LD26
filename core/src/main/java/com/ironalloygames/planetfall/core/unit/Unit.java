@@ -1,4 +1,6 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.unit;
+
+import com.ironalloygames.planetfall.core.Actor;
 
 public abstract class Unit extends Actor {
 	public int actionTimer = 1;

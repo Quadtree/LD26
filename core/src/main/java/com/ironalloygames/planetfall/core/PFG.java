@@ -22,6 +22,10 @@ import com.ironalloygames.planetfall.core.info.Empire;
 import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.info.Person.NameGender;
 import com.ironalloygames.planetfall.core.info.Ship;
+import com.ironalloygames.planetfall.core.unit.CommOfficer;
+import com.ironalloygames.planetfall.core.unit.EnemyDoctor;
+import com.ironalloygames.planetfall.core.unit.PC;
+import com.ironalloygames.planetfall.core.unit.Recruiter;
 
 import playn.core.CanvasImage;
 import playn.core.Color;
@@ -476,7 +480,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	int movX, movY;
 	int autoMoveTimer = 6;
 	
-	int equippedItem = 0;
+	public int equippedItem = 0;
 	
 	boolean helpScreenUp = false;
 	

@@ -1,5 +1,6 @@
-package com.ironalloygames.planetfall.core;
+package com.ironalloygames.planetfall.core.unit;
 
+import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.info.Person;
 
 import playn.core.Color;

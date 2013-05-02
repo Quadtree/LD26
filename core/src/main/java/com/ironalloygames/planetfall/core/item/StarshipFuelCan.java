@@ -5,8 +5,8 @@ import playn.core.Color;
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.Level;
 import com.ironalloygames.planetfall.core.PFG;
-import com.ironalloygames.planetfall.core.Unit;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
+import com.ironalloygames.planetfall.core.unit.Unit;
 
 public class StarshipFuelCan extends Actor {
 	public StarshipFuelCan(int x, int y, Level lvl){
