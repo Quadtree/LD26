@@ -25,8 +25,10 @@ public class Corporation {
 	}
 	
 	protected Corporation(){
-		String noun[] = {"Systems", "Weaponry", "Solutions", "Construction", "Force", "Intelligence", "Destruction", "Devastation", "Decimation", "Projection"};
-		String adj[] = {"Allied", "Intelligent", "Forward", "United", "Advanced", "Express", "Vorpal"};
+		String noun[] = {"Systems", "Weaponry", "Solutions", "Construction", "Force", "Intelligence", "Destruction", "Devastation",
+				"Decimation", "Projection", "Alliance", "Cell", "Planet", "Extraction", "Mining", "Foundry", "Security", "Defense", "Mercenaries"};
+		String adj[] = {"Allied", "Intelligent", "Forward", "United", "Advanced", "Express", "Vorpal", "Awesome", "Economical", "Rapid", 
+				"Scalar", "Vector", "Quaternion", "Mathematical", "Star", "Moon", "Sun", "Solar", "Planetary", "Futuristic", "Golden", "Silver", "Platinum", "Stellar"};
 		String app[] = {"ltd.", "pty.", "inc.", "gmbh.", "corp."};
 		
 		while(true){
@@ -39,7 +41,7 @@ public class Corporation {
 			
 			if(PFG.s.r.nextInt(4) != 0){
 				while(PFG.s.r.nextBoolean()){
-					name += mutateWord(adj[PFG.s.r.nextInt(adj.length)]) + " ";
+					name += portmanteau(adj) + " ";
 				}
 			} else {
 				do {
@@ -48,7 +50,7 @@ public class Corporation {
 				name += " ";
 			}
 			
-			name += mutateWord(noun[PFG.s.r.nextInt(noun.length)]);
+			name += portmanteau(noun);
 			
 			do {
 				name += " " + app[PFG.s.r.nextInt(app.length)];
@@ -59,6 +61,7 @@ public class Corporation {
 			boolean dup = false;
 			
 			for(String s : name.split(" ")){
+				if(s.length() <= 3) dup = true;
 				if(words.contains(s))
 					dup = true;
 				else
@@ -69,8 +72,22 @@ public class Corporation {
 		}
 	}
 	
-	protected String mutateWord(String word){
+	protected String portmanteau(String[] poss){
 		if(PFG.s.r.nextBoolean()){
+			return mutateWord(poss[PFG.s.r.nextInt(poss.length)]);
+		} else {
+			String word1 = poss[PFG.s.r.nextInt(poss.length)];
+			String word2 = poss[PFG.s.r.nextInt(poss.length)];
+			
+			word1 = word1.substring(0, PFG.s.r.nextInt(word1.length() - 1) + 1);
+			word2 = word2.substring(PFG.s.r.nextInt(word2.length() - 1), word2.length());
+			
+			return word1 + word2.toLowerCase();
+		}
+	}
+	
+	protected String mutateWord(String word){
+		if(PFG.s.r.nextInt(4) == 0){
 			int cutPoint = 0;
 			boolean foundVowel = false;
 			
