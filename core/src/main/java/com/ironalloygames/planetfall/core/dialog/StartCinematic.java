@@ -79,16 +79,30 @@ public class StartCinematic extends Dialog {
 			.add("SpaceBuster")
 		);
 		
-		states.put("SpaceBuster", new State("\"I've gotten 120,000 points playing Space Buster!\"", PFG.s.rec.getDesc() + ": \"How nice. Any *useful* skills?\"")
-			.add("AceFighterPilot")
+		states.put("SpaceBuster", new State("\"I've gotten 120,000 points playing Space Buster!\"",
+				PFG.s.rec.getDesc() + ": \"A weapons " + PFG.s.pc.pd.genderSpecific("guy", "girl") + " eh? Well, the space forces could use someone like you.\"")
+			.add("Gunner2")
+			.add("GunnerConsider")
+		);
+		
+		states.put("Gunner2", new State("\"Sounds good!\"",
+			"After some basic training, you are assigned to the " + PFG.s.alliedShip.className + " " + PFG.s.alliedShip.name + ", as a torpedo loader in Torpedo Room " + PFG.s.r.nextInt(4) + ".")
+		);
+		
+		states.put("GunnerConsider", new State("\"Ooh, will I be a chief gunner?\"", PFG.s.rec.getDesc() + ": \"Not... Exactly\"")
+			.add("GunnerConsider2")
+			.add("Gunner2")
+		);
+		
+		states.put("GunnerConsider2", new State("\"... I've changed my mind\"", PFG.s.rec.getDesc() + ": \"Okay then. What other skills do you have?\"")
 			.add("Mechanic1")
-			.add("SpaceBuster")
+			.add("AceFighterPilot")
 		);
 		
 		states.put("Mechanic1", new State("\"I'm a good mechanic.\"", PFG.s.rec.getDesc() + ": \"That'll do. Welcome to the space forces, mechanic trainee " + PFG.s.pc.pd.lastName + ".\"").add("Mechanic2"));
 		
 		states.put("Mechanic2", new State("Continue", "After some brief basic training, you are assigned to the " + PFG.s.alliedShip.className + " " + PFG.s.alliedShip.name + 
-				". Your fleet is assigned to the battlefront, and you are assigned to repair Fuel Pump Room 2.").add("Mechanic3").add(new Mechanic2()));
+				". Your fleet is assigned to the battlefront, and you are assigned to repair Fuel Pump Room " + PFG.s.r.nextInt(4) + ".").add("Mechanic3").add(new Mechanic2()));
 		
 		states.put("Mechanic3", new State("Continue", "One day, while you are fixing a small pressure imbalance in the system, you hear a voice come over the shipwide PA system.").add("Mechanic4"));
 		
@@ -99,6 +113,8 @@ public class StartCinematic extends Dialog {
 		
 		states.put("Mechanic6", new State("Continue", "An enemy fusion lance cuts through the wall! EVERYTHING IS ON FIRE! Bulkheads slam to keep the air in, "+
 			"but the fires still rage. (Walk to the red F, press P to pick up the fire extinguisher, press U to use it)").add("Mechanic7").add(new Mechanic6()));
+		
+		states.put("Mechanic7", new State("Continue", "").add(new State.End()));
 		
 		states.put("Skip", new State("Skip Opening Cinematic", "").add(new Mechanic2()).add(new Mechanic6()).add(new State.ChangeConditional() {
 			
