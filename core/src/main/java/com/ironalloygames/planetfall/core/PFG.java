@@ -16,6 +16,7 @@ import com.ironalloygames.planetfall.core.dialog.EscapeShip;
 import com.ironalloygames.planetfall.core.dialog.InfoDialog;
 import com.ironalloygames.planetfall.core.dialog.MediumEnding;
 import com.ironalloygames.planetfall.core.dialog.StartCinematic;
+import com.ironalloygames.planetfall.core.info.Corporation;
 import com.ironalloygames.planetfall.core.info.Empire;
 import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.info.Person.NameGender;
@@ -232,6 +233,8 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		this.setTextAt(left+1,20+top, "Press any key to continue", Color.rgb(100, 100, 255));
 		
 		this.setTextAt(9,screenTileHeight - 2, "Detour made by Quadtree for Ludum Dare 26", Color.rgb(100, 100, 255));
+		
+		Corporation.get();
 	}
 	
 	int lastSecond = 0;
