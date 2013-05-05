@@ -10,6 +10,7 @@ import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.StarshipFuel;
 import com.ironalloygames.planetfall.core.level.Level.GroundType;
+import com.ironalloygames.planetfall.core.unit.Unit;
 
 public class TorpedoRoom extends Level {
 	
@@ -77,18 +78,23 @@ public class TorpedoRoom extends Level {
 	
 	private void equalize(int x1, int y1, int x2, int y2){
 		if(isPassable(x2,y2)){
-			float avg = (pressure[x1][y1] + pressure[x2][y2]) / 2;
-			
-			float transferred = pressure[x1][y1] - avg;
-			
-			pressure[x1][y1] = avg;
-			pressure[x2][y2] = avg;
-			
-			if(PFG.s.r.nextFloat() < transferred*25){
-				for(Actor a : actors){
-					if(a.x == x1 && a.y == y1){
-						a.x = x2;
-						a.y = y2;
+			if(pressure[x1][y1] > pressure[x2][y2]){
+				float transfer = (pressure[x1][y1] - pressure[x2][y2]) / 2;
+				
+				pressure[x1][y1] -= transfer;
+				pressure[x2][y2] += transfer;
+				
+				if(PFG.s.r.nextFloat() < transfer*5){
+					for(Actor a : actors){
+						
+						if(a instanceof Unit && !isPassable(x1 - 1,y2) && !isPassable(x1 + 1,y2) && !isPassable(x1,y2 - 1) && !isPassable(x1,y2 + 1) && PFG.s.r.nextInt(6) != 0){
+							continue;
+						}
+						
+						if(a.x == x1 && a.y == y1){
+							a.x = x2;
+							a.y = y2;
+						}
 					}
 				}
 			}
