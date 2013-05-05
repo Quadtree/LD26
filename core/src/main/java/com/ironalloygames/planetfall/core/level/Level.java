@@ -110,7 +110,7 @@ public class Level {
 	
 	public boolean isLOSable(int x, int y){
 		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return false;
-		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.WATER || map[x][y] == GroundType.DRY_POOL || map[x][y] == GroundType.SHIP_FLOOR || map[x][y] == GroundType.DESK || map[x][y] == GroundType.VOID;
+		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.WATER || map[x][y] == GroundType.DRY_POOL || map[x][y] == GroundType.SHIP_FLOOR || map[x][y] == GroundType.DESK || map[x][y] == GroundType.VOID || map[x][y] == GroundType.MACHINERY;
 	}
 	
 	public boolean hasLOS(int sx, int sy, int ex, int ey){
