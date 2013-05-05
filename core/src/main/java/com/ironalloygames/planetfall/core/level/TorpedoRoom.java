@@ -2,6 +2,7 @@ package com.ironalloygames.planetfall.core.level;
 
 import playn.core.Color;
 
+import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
 import com.ironalloygames.planetfall.core.item.FireExtinguisher;
@@ -53,5 +54,44 @@ public class TorpedoRoom extends Level {
 		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return "???";
 		
 		return super.getDesc(x, y) + " Pressure: " + (int)(pressure[x][y] * 100) + "%";
+	}
+
+	@Override
+	public void update() {
+		
+		for(int x=0;x<pressure.length;++x){
+			for(int y=0;y<pressure[0].length;++y){
+				updatePressure(x,y);
+			}
+		}
+		
+		super.update();
+	}
+	
+	private void updatePressure(int x, int y){
+		equalize(x,y, x - 1, y);
+		equalize(x,y, x + 1, y);
+		equalize(x,y, x, y - 1);
+		equalize(x,y, x, y + 1);
+	}
+	
+	private void equalize(int x1, int y1, int x2, int y2){
+		if(isPassable(x2,y2)){
+			float avg = (pressure[x1][y1] + pressure[x2][y2]) / 2;
+			
+			float transferred = pressure[x1][y1] - avg;
+			
+			pressure[x1][y1] = avg;
+			pressure[x2][y2] = avg;
+			
+			if(PFG.s.r.nextFloat() < transferred*25){
+				for(Actor a : actors){
+					if(a.x == x1 && a.y == y1){
+						a.x = x2;
+						a.y = y2;
+					}
+				}
+			}
+		}
 	}
 }
