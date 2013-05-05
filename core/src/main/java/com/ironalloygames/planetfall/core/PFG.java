@@ -21,6 +21,7 @@ import com.ironalloygames.planetfall.core.info.Empire;
 import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.info.Person.NameGender;
 import com.ironalloygames.planetfall.core.info.Ship;
+import com.ironalloygames.planetfall.core.info.Weapon;
 import com.ironalloygames.planetfall.core.level.Level;
 import com.ironalloygames.planetfall.core.level.PlanetLevel;
 import com.ironalloygames.planetfall.core.level.PodLevel;
@@ -235,6 +236,11 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		this.setTextAt(9,screenTileHeight - 2, "Detour made by Quadtree for Ludum Dare 26", Color.rgb(100, 100, 255));
 		
 		Corporation.get();
+		
+		for(int i=0;i<6;++i){
+			Weapon wpn = new Weapon();
+			PlayN.log().debug(wpn.toString());
+		}
 	}
 	
 	int lastSecond = 0;
