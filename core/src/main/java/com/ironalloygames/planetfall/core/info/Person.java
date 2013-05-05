@@ -13,7 +13,14 @@ public class Person {
 	
 	public String firstName;
 	public String lastName;
+	protected Planet homePlanet;
 	public NameGender gender;
+	
+	public Planet getHomePlanet(){
+		if(homePlanet == null) homePlanet = new Planet();
+		
+		return homePlanet;
+	}
 	
 	public Person(){
 		if(PFG.s.r.nextBoolean()){

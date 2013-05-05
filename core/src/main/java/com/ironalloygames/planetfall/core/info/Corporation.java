@@ -10,6 +10,8 @@ public class Corporation {
 	protected static Corporation[] corps;
 	
 	public String name;
+	public Person ceo = new Person();
+	public Planet homeworld = new Planet();
 	
 	public static Corporation get(){
 		if(corps == null){
@@ -17,7 +19,8 @@ public class Corporation {
 			
 			for(int i=0;i<corps.length;++i){
 				corps[i] = new Corporation();
-				PlayN.log().debug(corps[i].name);
+				Planet p = new Planet();
+				PlayN.log().debug(corps[i].name + "        HQ on " + corps[i].homeworld);
 			}
 		}
 		

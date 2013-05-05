@@ -58,7 +58,7 @@ public class StartCinematic extends Dialog {
 			})
 		);
 		
-		states.put("DoReflect2", new State("Continue", "After the outbreak of the war with the " + PFG.s.enemyEmpire.name + ", you visited " + PFG.s.rec.getDesc() + "'s office to join up.")
+		states.put("DoReflect2", new State("Continue", "After the outbreak of the war with the " + PFG.s.enemyEmpire.name + ", you visited " + PFG.s.rec.getDesc() + "'s office on your homeworld of " + PFG.s.pc.pd.getHomePlanet() + " to join up.")
 			.add("DoReflect3")
 		);
 		
