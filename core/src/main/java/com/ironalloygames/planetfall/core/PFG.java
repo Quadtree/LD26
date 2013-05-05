@@ -28,6 +28,7 @@ import com.ironalloygames.planetfall.core.level.PodLevel;
 import com.ironalloygames.planetfall.core.level.RecruitingOfficeLevel;
 import com.ironalloygames.planetfall.core.level.ShipLevel;
 import com.ironalloygames.planetfall.core.level.Level.GroundType;
+import com.ironalloygames.planetfall.core.level.TorpedoRoom;
 import com.ironalloygames.planetfall.core.unit.CommOfficer;
 import com.ironalloygames.planetfall.core.unit.EnemyDoctor;
 import com.ironalloygames.planetfall.core.unit.PC;
@@ -80,6 +81,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	public PodLevel podLevel;
 	public RecruitingOfficeLevel officeLevel;
 	public ShipLevel shipLevel;
+	public TorpedoRoom torpedoRoomLevel;
 	
 	public Person captain;
 	public Person dco;
@@ -177,6 +179,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 		podLevel = new PodLevel();
 		officeLevel = new RecruitingOfficeLevel();
 		shipLevel = new ShipLevel();
+		torpedoRoomLevel = new TorpedoRoom();
 		
 		captain = new Person();
 		dco = new Person();

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import playn.core.PlayN;
+
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.item.FusionLancePistol;
@@ -48,6 +50,7 @@ public class State {
 		@Override
 		public void stateChanged(State s) {
 			PFG.s.curDialog = null;
+			PlayN.log().info("DONE");
 		}
 	}
 	

@@ -27,7 +27,10 @@ public class Level {
 		SHIP_WALL,
 		SHIP_FLOOR,
 		SHIP_DOOR,
-		DESK
+		DESK,
+		BREECH,
+		MACHINERY,
+		VOID
 	}
 	
 	public GroundType[][] map;
@@ -38,7 +41,7 @@ public class Level {
 	
 	public void render(){
 		
-		String chars = ".,'`:;*#@@X-==";
+		String chars = ".,'`:;*#@@X-==+&:";
 		
 		for(int x=0;x<map.length;x++){
 			if(Math.abs(PFG.s.pc.x - x) > 30) continue;
@@ -63,6 +66,12 @@ public class Level {
 					color = Color.rgb(100, 100, 140);
 				else if(map[x][y] == GroundType.SHIP_DOOR)
 					color = Color.rgb(90, 90, 120);
+				else if(map[x][y] == GroundType.BREECH)
+					color = Color.rgb(230, 230, 230);
+				else if(map[x][y] == GroundType.MACHINERY)
+					color = Color.rgb(150, 150, 150);
+				else if(map[x][y] == GroundType.VOID)
+					color = Color.rgb(50, 50, 50);
 				else
 					color = Color.rgb(0, 255, 0);
 				
@@ -96,12 +105,12 @@ public class Level {
 	
 	public boolean isPassable(int x, int y){
 		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return false;
-		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.SHIP_FLOOR;
+		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.SHIP_FLOOR || map[x][y] == GroundType.VOID;
 	}
 	
 	public boolean isLOSable(int x, int y){
 		if(x < 0 || y < 0 || x >= map.length || y >= map[0].length) return false;
-		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.WATER || map[x][y] == GroundType.DRY_POOL || map[x][y] == GroundType.SHIP_FLOOR || map[x][y] == GroundType.DESK;
+		return map[x][y].ordinal() <= GroundType.GRASS6.ordinal() || map[x][y] == GroundType.WATER || map[x][y] == GroundType.DRY_POOL || map[x][y] == GroundType.SHIP_FLOOR || map[x][y] == GroundType.DESK || map[x][y] == GroundType.VOID;
 	}
 	
 	public boolean hasLOS(int sx, int sy, int ex, int ey){
@@ -160,6 +169,12 @@ public class Level {
 				return "Heavy starship door, currently closed";
 			else if(map[x][y] == GroundType.DESK)
 				return "Elegant mahogany desk";
+			else if(map[x][y] == GroundType.BREECH)
+				return "Torpedo launch tube breech";
+			else if(map[x][y] == GroundType.MACHINERY)
+				return "Miscellanous machinery";
+			else if(map[x][y] == GroundType.VOID)
+				return "Deep space. Looks dangerous";
 			else
 				return "Grassy meadow";
 		}

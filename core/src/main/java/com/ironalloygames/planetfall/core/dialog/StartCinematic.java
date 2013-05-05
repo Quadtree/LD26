@@ -5,13 +5,16 @@ import java.util.HashMap;
 import playn.core.PlayN;
 
 import com.ironalloygames.planetfall.core.PFG;
+import com.ironalloygames.planetfall.core.info.Weapon;
 import com.ironalloygames.planetfall.core.level.ShipLevel;
+import com.ironalloygames.planetfall.core.level.TorpedoRoom;
 
 public class StartCinematic extends Dialog {
 	public StartCinematic(){
 		states.put("Start", new State("", "You feel a sudden lurch as the pod springs to life. Well, at least you're away... (Press 1 to continue)")
 			.add("Start2")
-			.add("Skip")
+			.add("SkipMechanic")
+			.add("SkipGunner")
 		);
 		
 		states.put("Start2", new State("Continue", "Apruptly, an alarm begins to blare. Its too far away for you to read it exactly. Could be enemy fire, or an air leak or...")
@@ -87,6 +90,7 @@ public class StartCinematic extends Dialog {
 		
 		states.put("Gunner2", new State("\"Sounds good!\"",
 			"After some basic training, you are assigned to the " + PFG.s.alliedShip.className + " " + PFG.s.alliedShip.name + ", as a torpedo loader in Torpedo Room " + PFG.s.r.nextInt(4) + ".")
+			.add("Gunner3")
 		);
 		
 		states.put("GunnerConsider", new State("\"Ooh, will I be a chief gunner?\"", PFG.s.rec.getDesc() + ": \"Not... Exactly\"")
@@ -116,7 +120,65 @@ public class StartCinematic extends Dialog {
 		
 		states.put("Mechanic7", new State("Continue", "").add(new State.End()));
 		
-		states.put("Skip", new State("Skip Opening Cinematic", "").add(new Mechanic2()).add(new Mechanic6()).add(new State.ChangeConditional() {
+		Weapon torp1 = new Weapon();
+		Weapon torp2 = new Weapon();
+		
+		states.put("Gunner3", new State("Continue",
+			"One day, while you are admiring the sleek, deadly new " + torp2.name + " torpedoes, a voice comes over the shipwide PA system.")
+			.add("Gunner4")
+		);
+		
+		states.put("Gunner4", new State("Continue",
+			"Captain " + PFG.s.captain.lastName + ": \"We're seeing multiple unidentified jump-in signatures on scan. "+
+			"Command assumes that they are hostile. Estimated contact in four minutes, all crew to combat alert red.\"")
+			.add("Gunner5")
+		);
+		
+		states.put("Gunner5", new State("Continue",
+			"You're pretty sure this is your combat station, so you wait for orders. You don't need to wait long, as the intercom blares within moments.")
+			.add("Gunner6")
+		);
+		
+		states.put("Gunner6", new State("Continue",
+			"Fire Control Officer " + PFG.s.fco.lastName + ": \"Load command guided " + torp1.name + "!\"")
+			.add("Gunner7")
+		);
+		
+		states.put("Gunner7", new State("\"Yes sir!\", begin loading the " + torp1.name,
+			"You and the other crew use the cranes to push the torpedo into the tube, and slam the breech. Seconds later, a siren blares and there is a roar as the torpedo is launched.")
+			.add("Gunner8")
+		);
+		
+		states.put("Gunner8", new State("Continue",
+			"The next few minutes are uneventful. Finally the intercom blares again.")
+			.add("Gunner9")
+		);
+		
+		states.put("Gunner9", new State("Continue",
+			"Fire Control Officer " + PFG.s.fco.lastName + ": \"Load " + torp2.name + "!\"")
+			.add("Gunner10")
+		);
+		
+		states.put("Gunner10", new State("\"Aye sir!\", begin loading the " + torp2.name,
+			"You and the other crew quickly push the " + torp2.name + " into the tube, and the siren blares again.")
+			.add("Gunner11")
+		);
+		
+		states.put("Gunner11", new State("Continue",
+			"There is a deafening noise. For a moment you think its just the torpedo launching, but the wall shatters in a huge explosion. For a moment, you think the warhead has gone off in the tube, but if the " +
+			torp2.name + "'s atomic warhead had, you would be dead. It must be the fuel. Either way, decompression alarms wail as air rushes out of the gash.")
+			.add("Mechanic7")
+		);
+		
+		states.put("SkipMechanic", new State("Skip Opening Cinematic - Choose Mechanic", "").add(new Mechanic2()).add(new Mechanic6()).add(new State.End()).add(new State.ChangeConditional() {
+			
+			@Override
+			public boolean allowChange(State s) {
+				return PlayN.storage().getItem("playedBefore") != null;
+			}
+		}));
+		
+		states.put("SkipGunner", new State("Skip Opening Cinematic - Choose Torpedo Loader", "").add(new GunnerMoveToRoom()).add(new GunnerExplosion()).add(new State.End()).add(new State.ChangeConditional() {
 			
 			@Override
 			public boolean allowChange(State s) {
@@ -144,6 +206,28 @@ public class StartCinematic extends Dialog {
 		@Override
 		public void stateChanged(State s) {
 			((ShipLevel) PFG.s.currentLevel).cataclysm();
+		}
+	}
+	
+	class GunnerMoveToRoom implements State.ChangeListener {
+
+		@Override
+		public void stateChanged(State s) {
+			PFG.s.currentLevel.actors.remove(PFG.s.pc);
+			PFG.s.currentLevel = PFG.s.torpedoRoomLevel;
+			PFG.s.currentLevel.actors.add(PFG.s.pc);
+			PFG.s.pc.curLevel = PFG.s.currentLevel;
+			PFG.s.pc.x = 15+15;
+			PFG.s.pc.y = 34;
+			PlayN.storage().setItem("playedBefore", "yes");
+		}
+	}
+	
+	class GunnerExplosion implements State.ChangeListener {
+
+		@Override
+		public void stateChanged(State s) {
+			((TorpedoRoom) PFG.s.currentLevel).cataclysm();
 		}
 	}
 }

@@ -9,19 +9,29 @@ public class Weapon {
 		while(true){
 			name = "";
 			
-			do {
+			int c = (int)Math.ceil(Math.abs(PFG.s.r.nextGaussian() * 2));
+			
+			for(int i=0;i<c;++i){
 				name += (char)((int)'A' + PFG.s.r.nextInt(26));
-			} while(PFG.s.r.nextBoolean());
+			}
 			
 			name += "-";
 			
 			int modelNumber = 0;
 			
-			do {
-				modelNumber += PFG.s.r.nextInt(10) * Math.pow(10, PFG.s.r.nextInt(5));
-			} while(PFG.s.r.nextBoolean());
+			c = (int)Math.ceil(Math.abs(PFG.s.r.nextGaussian()));
+			
+			for(int i=0;i<c;++i){
+				modelNumber += (PFG.s.r.nextInt(9)+1) * Math.pow(10, Math.abs(PFG.s.r.nextGaussian()) * 2);
+			}
 			
 			name += modelNumber;
+			
+			c = (int)Math.ceil(Math.abs(PFG.s.r.nextGaussian())) - 1;
+			
+			for(int i=0;i<c;++i){
+				name += (char)((int)'A' + (int)Math.abs(PFG.s.r.nextGaussian() * 2));
+			}
 			
 			break;
 		}
