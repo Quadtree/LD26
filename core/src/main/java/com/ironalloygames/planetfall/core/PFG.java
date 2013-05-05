@@ -2,6 +2,7 @@ package com.ironalloygames.planetfall.core;
 
 import static playn.core.PlayN.*;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -95,7 +96,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 	
 	public PC pc;
 	
-	int tick = 0;
+	public int tick = 0;
 	
 	public Dialog curDialog;
 	
@@ -220,7 +221,7 @@ public class PFG extends Game.Default implements Renderer, Listener, playn.core.
 			Ship s = new Ship();
 			Empire e = new Empire();
 			Person p = new Person();
-			log().debug("The " + s.className + " " + s.name + " of the " + e.name + " under " + p.firstName + " " + p.lastName);
+			log().debug("The " + NumberFormat.getIntegerInstance().format(s.mass) + " ton " + s.className + " " + s.name + " of the " + e.name + " under " + p.firstName + " " + p.lastName + " costing " + NumberFormat.getIntegerInstance().format(s.getCost()) + " credits, and a crew of " + NumberFormat.getIntegerInstance().format(s.getCrew()));
 		}
 		
 		int left = 18;

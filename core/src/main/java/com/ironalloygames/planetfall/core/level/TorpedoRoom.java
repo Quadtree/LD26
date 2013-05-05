@@ -5,11 +5,14 @@ import playn.core.Color;
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
+import com.ironalloygames.planetfall.core.interactable.Debris;
 import com.ironalloygames.planetfall.core.item.FireExtinguisher;
 import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
 import com.ironalloygames.planetfall.core.item.StarshipFuel;
 import com.ironalloygames.planetfall.core.level.Level.GroundType;
+import com.ironalloygames.planetfall.core.unit.PC;
+import com.ironalloygames.planetfall.core.unit.RedShirt;
 import com.ironalloygames.planetfall.core.unit.Unit;
 
 public class TorpedoRoom extends Level {
@@ -41,6 +44,13 @@ public class TorpedoRoom extends Level {
 			map[sx][sy] = GroundType.MACHINERY;
 			map[sx+1][sy] = GroundType.MACHINERY;
 		}
+		
+		for(int i=0;i<6;++i){
+			RedShirt rs = new RedShirt(20,20,this);
+			actors.add(rs);
+		}
+		
+		randomizePositions();
 	}
 	
 	public void cataclysm(){
@@ -60,9 +70,14 @@ public class TorpedoRoom extends Level {
 	@Override
 	public void update() {
 		
-		for(int x=0;x<pressure.length;++x){
-			for(int y=0;y<pressure[0].length;++y){
+		for(int x=1;x<pressure.length - 1;++x){
+			for(int y=1;y<pressure[0].length - 1;++y){
 				updatePressure(x,y);
+				
+				if(map[x][y] == GroundType.MACHINERY && PFG.s.r.nextInt(200) == 0){
+					map[x][y] = GroundType.SHIP_FLOOR;
+					actors.add(new Debris(x,y,this));
+				}
 			}
 		}
 		
@@ -84,12 +99,14 @@ public class TorpedoRoom extends Level {
 				pressure[x1][y1] -= transfer;
 				pressure[x2][y2] += transfer;
 				
-				if(PFG.s.r.nextFloat() < transfer*5){
+				if(PFG.s.r.nextFloat() < transfer*60){
 					for(Actor a : actors){
 						
-						if(a instanceof Unit && !isPassable(x1 - 1,y2) && !isPassable(x1 + 1,y2) && !isPassable(x1,y2 - 1) && !isPassable(x1,y2 + 1) && PFG.s.r.nextInt(6) != 0){
+						if(a instanceof Unit && map[x1 - 1][y1] == GroundType.MACHINERY && map[x1 + 1][y1] == GroundType.MACHINERY && map[x1][y1 - 1] == GroundType.MACHINERY && map[x1][y1 + 1] == GroundType.MACHINERY && PFG.s.r.nextInt(10) != 0){
 							continue;
 						}
+						
+						if(a instanceof Unit && PFG.s.r.nextInt(4) != 0) continue;
 						
 						if(a.x == x1 && a.y == y1){
 							a.x = x2;
@@ -97,6 +114,17 @@ public class TorpedoRoom extends Level {
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	public void randomizePositions(){
+		for(Actor a : actors){
+			if(a instanceof Unit){
+				do {
+					a.x = PFG.s.r.nextInt(96);
+					a.y = PFG.s.r.nextInt(48);
+				} while(map[a.x][a.y] != GroundType.SHIP_FLOOR || (a instanceof PC && a.y < 16));
 			}
 		}
 	}

@@ -13,6 +13,16 @@ public class Ship {
 	static String[] classNames = {"Gunboat", "Sloop", "Corvette", "Cruiser", "Destroyer", "Battlecruiser", "Battleship", "Dreadnought"};
 	static String[] classAdj = {"Super", "Heavy", "Light", "Mega", "Mini", "Advanced", "Obsolete"};
 	
+	public int mass;
+	
+	public int getCrew(){
+		return (int)(Math.pow(mass, 0.55));
+	}
+	
+	public long getCost(){
+		return (long)(Math.pow(mass, 0.9) * 80000);
+	}
+	
 	public Ship(){
 		name = "";
 		boolean adjIn = false;
@@ -23,7 +33,24 @@ public class Ship {
 		
 		className = "";
 		
-		if(PFG.s.r.nextInt(2) == 0) className += classAdj[PFG.s.r.nextInt(classAdj.length)] + " ";
-		className += classNames[PFG.s.r.nextInt(classNames.length)];
+		int classAdjId = -1;
+		int classNameId = 0;
+		
+		if(PFG.s.r.nextInt(2) == 0){
+			classAdjId = PFG.s.r.nextInt(classAdj.length);
+			className += classAdj[classAdjId] + " ";
+		}
+		
+		classNameId = PFG.s.r.nextInt(classNames.length);
+		
+		className += classNames[classNameId];
+		
+		
+		int baseMass[] = {8000, 5000, 3000, 45000, 12000, 100000, 280000, 400000};
+		double massModifier[] = {2, 1.6, 0.7, 2.5, 0.4, 0.95, 1.1};
+		
+		mass = baseMass[classNameId];
+		
+		if(classAdjId != -1) mass *= massModifier[classAdjId];
 	}
 }

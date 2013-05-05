@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import playn.core.Analytics.Category;
 import playn.core.Color;
 import playn.core.PlayN;
 
@@ -17,6 +18,8 @@ public class Dialog {
 	protected HashMap<String, State> states = new HashMap<String, State>();
 	
 	public String curState = "Start";
+	
+	public static Category dialogCategory = new Category(1, "Dialog Category");
 	
 	public void render(){
 		if(!states.containsKey(curState)){

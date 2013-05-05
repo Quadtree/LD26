@@ -1,5 +1,6 @@
 package com.ironalloygames.planetfall.core.dialog;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 
 import playn.core.PlayN;
@@ -89,8 +90,10 @@ public class StartCinematic extends Dialog {
 		);
 		
 		states.put("Gunner2", new State("\"Sounds good!\"",
-			"After some basic training, you are assigned to the " + PFG.s.alliedShip.className + " " + PFG.s.alliedShip.name + ", as a torpedo loader in Torpedo Room " + PFG.s.r.nextInt(4) + ".")
+			"After some basic training, you are assigned to the " + NumberFormat.getIntegerInstance().format(PFG.s.alliedShip.mass) + " ton " + PFG.s.alliedShip.className + " " + PFG.s.alliedShip.name + ", as a torpedo loader in Torpedo Room " + PFG.s.r.nextInt(4) + ".")
 			.add("Gunner3")
+			.add(new GunnerMoveToRoom())
+			.add(new RandomizeGunnerPositions())
 		);
 		
 		states.put("GunnerConsider", new State("\"Ooh, will I be a chief gunner?\"", PFG.s.rec.getDesc() + ": \"Not... Exactly\"")
@@ -116,7 +119,7 @@ public class StartCinematic extends Dialog {
 		states.put("Mechanic5", new State("Continue", "This *is* your battle station. How lucky! Now all you need to do is wait for something to break. Things are mostly boring, just a few tremors, until...").add("Mechanic6"));
 		
 		states.put("Mechanic6", new State("Continue", "An enemy fusion lance cuts through the wall! EVERYTHING IS ON FIRE! Bulkheads slam to keep the air in, "+
-			"but the fires still rage. (Walk to the red F, press P to pick up the fire extinguisher, press U to use it)").add("Mechanic7").add(new Mechanic6()));
+			"but the fires still rage. (Walk to the red F, press P to pick up the fire extinguisher, press U to use it)").add("Mechanic7").add(new Mechanic6()).add(new State.Event("No Skip - Mechanic")));
 		
 		states.put("Mechanic7", new State("Continue", "").add(new State.End()));
 		
@@ -147,6 +150,7 @@ public class StartCinematic extends Dialog {
 		states.put("Gunner7", new State("\"Yes sir!\", begin loading the " + torp1.name,
 			"You and the other crew use the cranes to push the torpedo into the tube, and slam the breech. Seconds later, a siren blares and there is a roar as the torpedo is launched.")
 			.add("Gunner8")
+			.add(new RandomizeGunnerPositions())
 		);
 		
 		states.put("Gunner8", new State("Continue",
@@ -162,15 +166,18 @@ public class StartCinematic extends Dialog {
 		states.put("Gunner10", new State("\"Aye sir!\", begin loading the " + torp2.name,
 			"You and the other crew quickly push the " + torp2.name + " into the tube, and the siren blares again.")
 			.add("Gunner11")
+			.add(new RandomizeGunnerPositions())
 		);
 		
 		states.put("Gunner11", new State("Continue",
 			"There is a deafening noise. For a moment you think its just the torpedo launching, but the wall shatters in a huge explosion. For a moment, you think the warhead has gone off in the tube, but if the " +
 			torp2.name + "'s atomic warhead had, you would be dead. It must be the fuel. Either way, decompression alarms wail as air rushes out of the gash.")
 			.add("Mechanic7")
+			.add(new GunnerExplosion())
+			.add(new State.Event("No Skip - Gunner"))
 		);
 		
-		states.put("SkipMechanic", new State("Skip Opening Cinematic - Choose Mechanic", "").add(new Mechanic2()).add(new Mechanic6()).add(new State.End()).add(new State.ChangeConditional() {
+		states.put("SkipMechanic", new State("Skip Opening Cinematic - Choose Mechanic", "").add(new Mechanic2()).add(new Mechanic6()).add(new State.End()).add(new State.Event("Skip - Mechanic")).add(new State.ChangeConditional() {
 			
 			@Override
 			public boolean allowChange(State s) {
@@ -178,7 +185,7 @@ public class StartCinematic extends Dialog {
 			}
 		}));
 		
-		states.put("SkipGunner", new State("Skip Opening Cinematic - Choose Torpedo Loader", "").add(new GunnerMoveToRoom()).add(new GunnerExplosion()).add(new State.End()).add(new State.ChangeConditional() {
+		states.put("SkipGunner", new State("Skip Opening Cinematic - Choose Torpedo Loader", "").add(new GunnerMoveToRoom()).add(new GunnerExplosion()).add(new State.End()).add(new State.Event("Skip - Gunner")).add(new State.ChangeConditional() {
 			
 			@Override
 			public boolean allowChange(State s) {
@@ -228,6 +235,14 @@ public class StartCinematic extends Dialog {
 		@Override
 		public void stateChanged(State s) {
 			((TorpedoRoom) PFG.s.currentLevel).cataclysm();
+		}
+	}
+	
+	class RandomizeGunnerPositions implements State.ChangeListener {
+
+		@Override
+		public void stateChanged(State s) {
+			PFG.s.torpedoRoomLevel.randomizePositions();
 		}
 	}
 }

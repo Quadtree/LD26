@@ -54,6 +54,33 @@ public class State {
 		}
 	}
 	
+	public static class Event implements ChangeListener {
+		
+		String action;
+		
+		public Event(String action){
+			this.action = action;
+		}
+
+		@Override
+		public void stateChanged(State s) {
+			PlayN.analytics().logEvent(Dialog.dialogCategory, action);
+		}
+	}
+	
+	public static class TimedEvent implements ChangeListener {
+		String action;
+		
+		public TimedEvent(String action){
+			this.action = action;
+		}
+
+		@Override
+		public void stateChanged(State s) {
+			PlayN.analytics().logEvent(Dialog.dialogCategory, action, "Timed", PFG.s.tick);
+		}
+	}
+	
 	protected String prompt;
 	
 	protected ArrayList<Transition> options = new ArrayList<Transition>();
