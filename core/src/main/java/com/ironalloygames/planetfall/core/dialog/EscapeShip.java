@@ -3,6 +3,7 @@ package com.ironalloygames.planetfall.core.dialog;
 import java.util.HashMap;
 
 import com.ironalloygames.planetfall.core.PFG;
+import com.ironalloygames.planetfall.core.info.Person;
 import com.ironalloygames.planetfall.core.item.AntiSicknessPill;
 import com.ironalloygames.planetfall.core.item.LifeformDetector;
 import com.ironalloygames.planetfall.core.item.PowerCell;
@@ -13,6 +14,20 @@ import com.ironalloygames.planetfall.core.level.Level.GroundType;
 
 public class EscapeShip extends Dialog {
 	public EscapeShip(){
+		states.put("GunnerFailed", new State("", "As your are sucked through the hole, you somehow manage to snag some torn-up wiring sticking out of the side of the hole.")
+			.add("GunnerFailed2")
+		);
+		
+		states.put("GunnerFailed2", new State("Hang on with all your might", "As hard as you try, your grip is slipping, and you can barely breathe in the thin air...")
+			.add("GunnerFailed3")
+		);
+		
+		Person marine = new Person();
+		
+		states.put("GunnerFailed3", new State("Continue", "Abruptly, a power-armor covered arm grabs yours and pulls you in. It's one of your ship's space marines. " + marine.genderSpecific("He", "She") + " carries you to a lifepod, and then dashes off as the doors close...")
+			.add("LandingCon")
+		);
+		
 		states.put("StartAlt", new State("", "The fire is just too hot! You are forced back.")
 			.add("Start")
 		);
@@ -26,23 +41,14 @@ public class EscapeShip extends Dialog {
 			.add("Landing")
 		);
 		
+		states.put("LandingCon", new State("Continue", "Your reverie is suddenly disrupted by the pod's retro-rockets firing. You must be about to land on a planet.")
+			.add("Landing2")
+			.add(new ReverieDisrupted())
+		);
+		
 		states.put("Landing", new State("Rush to the lifepod", "Your reverie is suddenly disrupted by the pod's retro-rockets firing. You must be about to land on a planet.")
 			.add("Landing2")
-			.add(new State.ChangeListener(){
-
-				@Override
-				public void stateChanged(State s) {
-					PFG.s.currentLevel.actors.remove(PFG.s.pc);
-					PFG.s.currentLevel = PFG.s.planetLevel;
-					PFG.s.currentLevel.actors.add(PFG.s.pc);
-					PFG.s.pc.curLevel = PFG.s.planetLevel;
-					
-					PFG.s.pc.x = PFG.s.planetLevel.pcLifepodX;
-					PFG.s.pc.y = PFG.s.planetLevel.pcLifepodY;
-					PFG.s.pc.temperature = PFG.s.planetLevel.ambientTemp;
-					PFG.s.pc.hp = 1;
-				}
-			})
+			.add(new ReverieDisrupted())
 		);
 		
 		states.put("Landing2", new State("Wait for the pod to settle", "The pod finishes landing automatically.")
@@ -111,5 +117,21 @@ public class EscapeShip extends Dialog {
 		);
 		
 		states.put("End", new State("Continue", "").add(new State.End()));
+	}
+	
+	static class ReverieDisrupted implements State.ChangeListener {
+
+		@Override
+		public void stateChanged(State s) {
+			PFG.s.currentLevel.actors.remove(PFG.s.pc);
+			PFG.s.currentLevel = PFG.s.planetLevel;
+			PFG.s.currentLevel.actors.add(PFG.s.pc);
+			PFG.s.pc.curLevel = PFG.s.planetLevel;
+			
+			PFG.s.pc.x = PFG.s.planetLevel.pcLifepodX;
+			PFG.s.pc.y = PFG.s.planetLevel.pcLifepodY;
+			PFG.s.pc.temperature = PFG.s.planetLevel.ambientTemp;
+			PFG.s.pc.hp = 1;
+		}
 	}
 }

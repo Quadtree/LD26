@@ -5,10 +5,12 @@ import playn.core.Color;
 import com.ironalloygames.planetfall.core.Actor;
 import com.ironalloygames.planetfall.core.PFG;
 import com.ironalloygames.planetfall.core.PFG.VisualEffect;
+import com.ironalloygames.planetfall.core.dialog.EscapeShip;
 import com.ironalloygames.planetfall.core.interactable.Debris;
 import com.ironalloygames.planetfall.core.item.FireExtinguisher;
 import com.ironalloygames.planetfall.core.item.FusionLancePistol;
 import com.ironalloygames.planetfall.core.item.FusionTorch;
+import com.ironalloygames.planetfall.core.item.SpareWarhead;
 import com.ironalloygames.planetfall.core.item.StarshipFuel;
 import com.ironalloygames.planetfall.core.level.Level.GroundType;
 import com.ironalloygames.planetfall.core.unit.PC;
@@ -37,7 +39,7 @@ public class TorpedoRoom extends Level {
 			}
 		}
 		
-		for(int i=0;i<10;++i){
+		for(int i=0;i<22;++i){
 			int sx = PFG.s.r.nextInt(14) + 15+15;
 			int sy = PFG.s.r.nextInt(11) + 25;
 			
@@ -58,6 +60,8 @@ public class TorpedoRoom extends Level {
 		for(int i=0;i<3;++i){
 			map[19+15+i][24] = GroundType.VOID;
 		}
+		
+		SpareWarhead.explosion(20+15, 24);
 	}
 
 	@Override
@@ -74,11 +78,24 @@ public class TorpedoRoom extends Level {
 			for(int y=1;y<pressure[0].length - 1;++y){
 				updatePressure(x,y);
 				
-				if(map[x][y] == GroundType.MACHINERY && PFG.s.r.nextInt(200) == 0){
+				if(map[x][y] == GroundType.MACHINERY && PFG.s.r.nextInt(600) == 0){
 					map[x][y] = GroundType.SHIP_FLOOR;
 					actors.add(new Debris(x,y,this));
 				}
 			}
+		}
+		
+		for(Actor a : actors){
+			if(a instanceof PC && a.y <= 24){
+				a.y = 24;
+				
+				PFG.s.curDialog = new EscapeShip();
+				PFG.s.curDialog.curState = "GunnerFailed";
+			}
+		}
+		
+		if(PFG.s.tick > 350){
+			PFG.s.curDialog = new EscapeShip();
 		}
 		
 		super.update();
